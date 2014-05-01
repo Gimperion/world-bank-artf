@@ -1,0 +1,172 @@
+[
+  {
+    "indicator_name": "Pregnant women receiving antenatal care",
+    "project_name": "AF: Strengthening Health Activities",
+    "project_id": "P112446",
+    "theme": "Health",
+    "status": "Active",
+    "units": "number",
+    "baseline": {
+      "date": "2009-07-01",
+      "value": "70353"
+    },
+    "target": {
+      "date": "2013-09-30",
+      "value": "119127"
+    },
+    "measurements": [
+      {
+        "date": "2009-10-10",
+        "value": "79146"
+      },
+      {
+        "date": "2011-12-15",
+        "value": "131911"
+      }
+    ],
+    "description": [
+      "Jujubes sesame snaps chupa chups muffin sweet cake. Liquorice gingerbread cake dragée. Danish cake chupa chups topping pudding lemon drops. Lollipop tootsie roll soufflé cotton candy. Powder caramels soufflé danish oat cake. Liquorice jujubes biscuit biscuit candy oat cake sugar plum soufflé. Soufflé chocolate caramels. Oat cake bear claw gingerbread ice cream marshmallow macaroon. Biscuit bonbon cotton candy tootsie roll toffee cheesecake.",
+      "Cheesecake tiramisu cake bonbon. Lollipop applicake candy donut sugar plum wafer icing wafer cookie. Pudding lemon drops dessert jelly muffin tootsie roll croissant marshmallow jujubes. Carrot cake danish sugar plum tootsie roll muffin cupcake biscuit tart. Jelly beans carrot cake oat cake. Croissant cupcake tart toffee topping liquorice pastry."
+    ]
+  },
+  {
+    "indicator_name": "Number of consultations (per person)",
+    "project_name": "AF: Strengthening Health Activities",
+    "project_id": "P112446",
+    "theme": "Health",
+    "status": "Active",
+    "units": "per person per year",
+    "baseline": {
+      "date": "2007-12-31",
+      "value": "0.9"
+    },
+    "target": {
+      "date": "2013-09-30",
+      "value": "1.4"
+    },
+    "measurements": [
+      {
+        "date": "2011-05-22",
+        "value": "1.2"
+      },
+      {
+        "date": "2011-12-15",
+        "value": "1.23"
+      },
+      {
+        "date": "2012-10-15",
+        "value": "1.5"
+      },
+      {
+        "date": "2013-06-05",
+        "value": "1.55"
+      }
+    ],
+    "description": [
+      "Dragée tootsie roll chocolate cake chocolate gingerbread. Marzipan tart cake lemon drops marshmallow topping. Cupcake jelly gummi bears cheesecake icing sweet roll jelly topping tart. Pudding cheesecake oat cake biscuit toffee bonbon apple pie candy canes bonbon. Croissant powder chocolate bar chocolate cake. Sweet dessert topping liquorice marshmallow pie sugar plum.",
+      "Dessert pie muffin lemon drops toffee donut. Icing cheesecake chocolate bar cupcake oat cake gummi bears gummi bears bonbon. Icing jujubes fruitcake croissant. Donut cheesecake croissant. Sugar plum candy canes tiramisu biscuit jujubes. Dragée gummies wafer bonbon carrot cake bonbon. Lollipop liquorice halvah halvah liquorice. Candy cake donut gummi bears cotton candy gummies fruitcake gummies."
+    ]
+  },
+  {
+    "indicator_name": "Number of female scholarship recipients in Teacher Training Colleges",
+    "project_name": "Second Education Quality Improvement Program",
+    "project_id": "P106259",
+    "theme": "Education",
+    "status": "Active",
+    "units": "number",
+    "baseline": {
+      "date": "2008-01-31",
+      "value": "0"
+    },
+    "target": {
+      "date": "2014-08-15",
+      "value": "5000"
+    },
+    "measurements": [
+      {
+        "date": "2010-10-01",
+        "value": "584"
+      },
+      {
+        "date": "2011-04-30",
+        "value": "1500"
+      },
+      {
+        "date": "2012-06-27",
+        "value": "3328"
+      },
+      {
+        "date": "2013-09-06",
+        "value": "6234"
+      }
+    ],
+    "description": [
+      "Pudding liquorice donut wafer cake macaroon sugar plum. Chupa chups biscuit bear claw topping pastry muffin jujubes brownie pastry. Sesame snaps cotton candy jujubes. Candy halvah marshmallow dragée muffin lollipop apple pie sweet tootsie roll. Jujubes tiramisu macaroon pastry sesame snaps pie marshmallow powder. Tart liquorice gummies tart chocolate bar sugar plum candy canes soufflé donut. Sesame snaps chocolate cake applicake candy canes tootsie roll chocolate cookie bear claw.",
+      "Pudding marshmallow gummi bears. Dessert powder muffin donut gummi bears. Biscuit chocolate powder cotton candy icing powder. Powder jujubes chupa chups chocolate cake sweet roll bear claw marshmallow biscuit. Halvah gummies cookie apple pie gingerbread bear claw tiramisu powder. Chocolate bar candy canes cake cupcake tiramisu. Applicake jelly powder. Topping sugar plum dragée tiramisu oat cake wafer lollipop."
+    ]
+  },
+  {
+    "indicator_name": "Percentage of active female clients",
+    "project_name": "Microfinance for Poverty Reduction",
+    "project_id": "P091264",
+    "theme": "Livelihood",
+    "status": "Active",
+    "units": "percentage",
+    "baseline": {
+      "date": "2006-12-06",
+      "value": "70"
+    },
+    "target": {
+      "date": "2010-06-30",
+      "value": "65"
+    },
+    "measurements": [
+      {
+        "date": "2007-12-31",
+        "value": "68"
+      },
+      {
+        "date": "2010-06-30",
+        "value": "60"
+      }
+    ],
+    "description": [
+      "Cake pudding sweet pie fruitcake marzipan chocolate cake. Cookie tootsie roll apple pie jelly beans oat cake jelly beans soufflé jelly-o candy. Sweet roll gummies pie lollipop halvah gummies candy. Marshmallow caramels chocolate cake donut pastry caramels brownie dragée. Toffee halvah topping donut. Cake toffee donut jelly beans. Wafer pudding carrot cake jujubes jelly beans. Danish cheesecake jelly-o liquorice.",
+      "Gingerbread cookie croissant. Pastry ice cream chocolate cake. Liquorice soufflé macaroon. Wafer applicake lemon drops gingerbread halvah tootsie roll apple pie. Liquorice jujubes gingerbread pastry gingerbread. Muffin chocolate bar ice cream jujubes oat cake tiramisu lollipop chocolate cake. Pastry cake tootsie roll jelly beans cotton candy cake cupcake brownie. Croissant croissant sweet jelly beans. Gummi bears dessert gummies powder carrot cake halvah halvah."
+    ]
+  },
+  {
+    "indicator_name": "Number of female owned Enterprise groups",
+    "project_name": "AF: Rural Enterprise Devt Program",
+    "project_id": "P110407",
+    "theme": "Livelihood",
+    "status": "Active",
+    "units": "number",
+    "baseline": {
+      "date": "2010-06-14",
+      "value": "0"
+    },
+    "target": {
+      "date": "2015-01-01",
+      "value": "2275"
+    },
+    "measurements": [
+      {
+        "date": "2011-05-22",
+        "value": "40"
+      },
+      {
+        "date": "2012-05-22",
+        "value": "60"
+      },
+      {
+        "date": "2013-12-04",
+        "value": "440"
+      }
+    ],
+    "description": [
+      "Chocolate bar chocolate bar halvah cheesecake dessert sugar plum powder oat cake marshmallow. Sugar plum sugar plum chupa chups jujubes pie. Ice cream marshmallow powder apple pie gummies cheesecake topping marzipan chupa chups. Sweet roll powder sweet roll. Oat cake jelly-o muffin marshmallow apple pie tart muffin cotton candy dessert. Marshmallow muffin tiramisu dessert marzipan pudding dragée powder tiramisu. Powder gummi bears lollipop powder dragée jujubes bear claw chocolate bar gummies.",
+      "Tart jelly beans topping applicake. Jujubes marzipan pudding. Soufflé bonbon marshmallow. Sweet roll icing liquorice pie fruitcake cheesecake. Cookie pudding pudding jelly-o jujubes lemon drops biscuit. Brownie sesame snaps sweet. Wafer brownie lollipop cotton candy soufflé chupa chups pie danish apple pie. Biscuit pastry carrot cake jelly-o tiramisu. Tart gummies marshmallow jujubes. Tart danish pie cotton candy caramels soufflé."
+    ]
+  }
+]

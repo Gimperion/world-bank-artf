@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<head>
+    <title>Afghanistan Reconstruction Trust Fund - Indicator Visualization</title>
+    <link href='http://fonts.googleapis.com/css?family=Roboto:400,700' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Bitter' rel='stylesheet' type='text/css'>
+    <link href='css/styles.css' rel='stylesheet' type='text/css'>
+</head>
+<body>
+
+    <div class='container'>
+        <div id='header'>
+            <h1>ARTF indicator visualization</h1>
+        </div>
+        <div id='filters'>
+            <form id='filter'>
+                <h3>Filter by</h3>
+                <div class='row'>
+                    <div class='column'>
+                        <label for='filter-sector'>Sector</label>
+                        <select id='filter-sector' data-field='sector'>
+                            <option value='' default>(all sectors)</option>
+                        </select>
+                    </div>
+                    <div class='column'>
+                        <label for='filter-theme'>Theme</label>
+                        <select id='filter-theme' data-field='theme'>
+                            <option value='' default>(all themes)</option>
+                        </select>
+                    </div>
+                    <div class='column'>
+                        <label for='filter-project_name'>Project</label>
+                        <select id='filter-project_name' data-field='project_name'>
+                            <option value='' default>(all projects)</option>
+                        </select>
+                    </div>
+                    <div class='column reset-container'>
+                        <button type='reset' id='filter-reset'>Clear filters</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div id='viz'></div>
+        <div id='legend'>
+            <h3>Legend</h3>
+            <img src='img/legend.png'>
+            <div id='hide-legend'><span title='hide legend'>×</a></div>
+        </div>
+        <div id='info'>
+            <h2 id='info-title'>More information</h2>
+            <div id='info-metadata'></div>
+            <div id='info-description'>
+                <p>Select an indicator to learn more.</p>
+            </div>
+        </div>
+    </div>
+
+    <script src='//cdnjs.cloudflare.com/ajax/libs/jquery/1.11.0/jquery.js'></script>
+    <script src='//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.6.0/underscore-min.js'></script>
+
+    <script src='//cdnjs.cloudflare.com/ajax/libs/d3/3.4.2/d3.min.js'></script>
+    <script src='js/tooltip.js'></script>
+
+    <script src='//cdnjs.cloudflare.com/ajax/libs/moment.js/2.6.0/moment.min.js'></script>
+
+    <script src='js/main.js'></script>
+
+</body>
+</html>

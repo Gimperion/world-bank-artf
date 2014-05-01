@@ -1,0 +1,232 @@
+/* HTML ELEMENT STYLES */
+
+body {
+    font-family: 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+    font-size: 0.8em;
+    line-height: 1.6em;
+    font-weight: 400;
+    text-rendering: optimizeLegibility;
+}
+
+* {
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Bitter', 'Helvetica Neue', Arial, sans-serif;
+    line-height: 1.2em;
+}
+
+h1 {
+    font-size: 28px;
+}
+
+h2 {
+    font-size: 22px;
+}
+
+label {
+    display: block;
+}
+
+select {
+    margin-left: 0;
+    max-width: 200px;
+}
+
+div {
+    position: relative;
+}
+
+/* LAYOUT (GENERIC) */
+
+.container {
+    width: 695px;
+}
+
+.row {
+    margin-bottom: 10px;
+}
+
+.column {
+    display: inline-block;
+}
+
+.column:not(:first-of-type) {
+    margin-left: 8px;
+}
+
+/* LAYOUT (SPECIFIC) */
+
+#viz {
+    margin-top: 20px;
+    margin-bottom: 10px;
+
+    -webkit-transition: height 250ms ease-out;
+    transition: height 250ms ease-out;
+}
+
+#legend, #filter {
+    border-radius: 5px;
+    border: 1px solid lightgray;
+    padding: 4px 18px 6px;
+}
+
+#legend img {
+    margin-top: -10px;
+    margin-left: -5px;
+    width: 100%;
+    height: auto;
+}
+
+.reset-container {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+}
+
+#hide-legend {
+    position: absolute;
+    top: 10px;
+    right: 16px;
+    cursor: pointer;
+    font-size: 20px;
+    color: gray;
+}
+
+#hide-legend:hover {
+    color: #27a9e1;
+}
+
+/* SVG & VIZ STYLES */
+
+svg {
+    /* force Firefox to display properly - why is this bug occurring? */
+    overflow: visible;
+    height: 100%;
+}
+
+.axis path, .axis line {
+    fill: none;
+    stroke: #aaa;
+    shape-rendering: crispEdges;
+}
+
+.axis line {
+    stroke: #e6e7e8;
+}
+
+.tick:nth-of-type(2n+1) line {
+    stroke: #aaa;
+}
+
+.tick text {
+    font-size: 0.9em;
+    fill: #999;
+}
+
+g.indicator.active {
+    cursor: pointer;
+}
+
+.background {
+    fill: white;
+    fill-opacity: 0;
+}
+
+g.indicator.active .background {
+    fill: whitesmoke;
+    fill-opacity: 1;
+}
+
+.indicator {
+    cursor: pointer;
+}
+
+text.label {
+    /* cursor: pointer; */
+    text-align: right;
+}
+
+text.value {
+}
+
+text.indicator-name {
+}
+
+.label-today {
+    font-size: 0.7em;
+    font-weight: 700;
+    fill: #888;
+    display: none;
+}
+
+svg circle:hover {
+    cursor: pointer;
+}
+
+svg circle.highlight {
+}
+
+svg .circle-targeted {
+    fill: white;
+    fill-opacity: 0;
+    stroke-width: 1.5;
+    stroke-opacity: 1;
+    stroke: white;
+}
+
+svg .circle-subtargets {
+    fill-opacity: 0;
+    stroke-width: 1;
+    stroke-opacity: 0.3;
+    stroke: white;
+    display: none;
+}
+
+svg .circle-latest {
+    fill-opacity: 0.5;
+    display: none;
+}
+
+svg .circle-subtargets.show,
+svg .circle-latest.show,
+g.indicator.active circle {
+    display: block;
+}
+
+g.indicator.active .indicator-name {
+    font-weight: 700;
+}
+
+svg .today line {
+    stroke: red;
+    stroke-width: 1;
+    stroke-opacity: 0.2;
+    stroke-dasharray: 5, 4;
+}
+
+rect.hoverable {
+    cursor: pointer;
+    fill: white;
+    fill-opacity: 0;
+}
+
+.indicator-line {
+    stroke: #e1e1e1;
+    stroke-width: 1;
+}
+
+.tooltip {
+    border-radius: 3px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.25);
+    padding: 5px;
+    color: #333;
+    background-color: white;
+    text-align: center;
+}
+.tooltip .date {
+    font-size: 0.85em;
+    color: gray;
+}
