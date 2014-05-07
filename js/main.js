@@ -395,7 +395,12 @@
             // Latest measurement circle
             latestCircle
                 .attr('cx', function (d, i) {
-                    return VIZ_LABEL_AREA_WIDTH + xScale(indicator.target.dateRounded);
+                    if (trendMode !== 2 || (trendMode === 2 && indicator.target.dateRounded >= _roundDateToHalfYear(new Date()))) {
+                        return VIZ_LABEL_AREA_WIDTH + xScale(indicator.target.dateRounded);
+                    } else {
+                        // If hidden, just move it way off the page
+                        return -1000;
+                    }
                 })
                 .attr('cy', yPos)
                 .attr('r', function (d) {
