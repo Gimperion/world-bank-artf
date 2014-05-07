@@ -21,6 +21,16 @@
         VIZ_MAIN_COLOR       = '#27a9e1',
         VIZ_ACCENT_COLOR     = '#c34040';
 
+    // ARTF color scheme
+    var ARTF_COLOR_GREEN     = '#66863a',  // ARTF.af headings text color
+        ARTF_COLOR_LTGREEN   = '#9db679',  // ARTF.af sidebar color
+        ARTF_COLOR_BLUE      = '#276cb0',  // ARTF.af main color
+        ARTF_COLOR_LTBLUE    = '#87a4c1',  // ARTF.af sidebar color
+        ARTF_COLOR_ORANGERED = '#c54b25';  // Color interpreted from ARTF.af header image
+
+    var MODE_COLOR_SCHEME    = 1,
+        MODE_TREND_BUBBLES   = 1
+
     // Borrowed from Colorbrewer
     // 0 is No data (gray)
     // 1-5 is the red-green scale from http://bl.ocks.org/mbostock/5577023
@@ -85,12 +95,29 @@
             $('#legend').slideUp(200);
         });
 
+        if (window.self === window.top) {
+            $('#debug').show()
+            $('#debug-close').on('click', function () {
+                $('#debug').toggleClass('hide')
+            })
+            $('#debug-color').on('change', function () {
+                createViz(data);
+            })
+            $('#debug-trend').on('change', function () {
+                createViz(data);
+            })
+        }
+
     });
 
     // Massive SVG creation function
     function createViz (data) {
         // If there is a previous SVG, remove it
         d3.select('#viz').select('svg').remove();
+
+        // Get current settings...
+        var colors = _optionGetColors($('#debug-color').val());
+        var trendMode = parseInt($('#debug-trend').val());
 
         // color scale
         // TODO: Set colors based on category, not per line
@@ -183,7 +210,121 @@
                 .attr('x1', 30)
                 .attr('x2', VIZ_VIEWPORT_WIDTH)
                 .attr('y1', yPos)
-                .attr('y2', yPos);
+                .attr('y2', yPos)
+                .style('stroke', _getProgressColor(indicator.progress));
+
+            // Baseline data group
+            var gBaselineCircle = g.append('g').attr('class', 'indicator-baseline');
+
+            var baselineCircle = gBaselineCircle.selectAll('circle')
+                .data([indicator.baseline])
+                .enter()
+                .append('circle')
+                .attr('class', 'circle-baseline')
+                .style('fill', colors.baselineCircle)
+                /*
+                .call(d3.helper.tooltip()
+                    .attr({ class: 'tooltip' })
+                    .text(function (d, i) { return '<strong>' + d.displayString + '</strong><br><span class="date">' + moment(d.date).format('MMMM D, YYYY') + '</span>'; })
+                )
+                */
+                .on('mouseover', function (d, i) { d3.select(this).classed('highlight', true); })
+                .on('mouseout', function (d, i) { d3.select(this).classed('highlight', false); });
+                //.on('mouseover.indicator', _onMouseoverIndicator)
+                //.on('mouseout.indicator', _onMouseoutIndicator)
+                //.on('click.indicator', _onClickIndicator);
+
+            // Measured data group
+            var gValues = g.append('g').attr('class', 'indicator-measured');
+
+            var circles = gValues.selectAll('circle')
+                .data(indicator.measurements)
+                .enter()
+                .append('circle')
+                .attr('class', 'circle-measured')
+                .style('fill', colors.measureCircle);
+                /*
+                .call(d3.helper.tooltip()
+                    .attr({ class: 'tooltip' })
+                    .text(function (d, i) { return '<strong>' + d.displayString + '</strong><br><span class="date">' + moment(d.date).format('MMMM D, YYYY') + '</span>'; })
+                )*/
+                //.on('mouseover.indicator', _onMouseoverIndicator)
+                //.on('mouseout.indicator', _onMouseoutIndicator)
+                //.on('click.indicator', _onClickIndicator);
+
+            // Subtarget group
+            var gSubtargets = g.append('g').attr('class', 'indicator-subtargets');
+
+            var subtargetCircles = gSubtargets.selectAll('circle')
+                .data(_makeSubtargets(indicator))
+                .enter()
+                .append('circle')
+                .classed('circle-subtargets', true)
+                .style('stroke', colors.subtargetCircle);
+                //.on('mouseover.indicator', _onMouseoverIndicator)
+                //.on('mouseout.indicator', _onMouseoutIndicator)
+                //.on('click.indicator', _onClickIndicator);
+
+            // Latest measured data group
+            // AKA PROJECTED CIRCLE
+            var gLatestCircle = g.append('g').attr('class', 'indicator-latest');
+
+            var latestCircle = gLatestCircle.selectAll('circle')
+            //  .data([indicator.projectedValue])
+                .data([indicator.measurements[indicator.measurements.length - 1]])
+                .enter()
+                .append('circle')
+                .attr('class', 'circle-latest')
+                .style('fill', colors.latestCircle);
+                /*
+                .call(d3.helper.tooltip()
+                    .attr({ class: 'tooltip' })
+                    .text(function (d, i) { return '<strong>' + d.displayString + '</strong><br><span class="date">' + moment(d.date).format('MMMM D, YYYY') + '</span>'; })
+                )*/
+                //.on('mouseover.indicator', _onMouseoverIndicator)
+                //.on('mouseout.indicator', _onMouseoutIndicator)
+                //.on('click.indicator', _onClickIndicator);
+
+            // Target group
+            var gTarget = g.append('g').attr('class', 'indicator-targeted');
+
+            var targetCircle = gTarget.selectAll('circle')
+                .data([indicator.target])
+                .enter()
+                .append('circle')
+                .classed('circle-targeted', true)
+                .style('stroke', colors.targetCircle);
+                /*
+                .call(d3.helper.tooltip()
+                    .attr({ class: 'tooltip' })
+                    .text(function (d, i) { return '<strong>' + d.displayString + '</strong><br><span class="date">' + moment(d.date).format('MMMM D, YYYY') + '</span>'; })
+                )
+*/
+               //.on('mouseover.indicator', _onMouseoverIndicator)
+               // .on('mouseout.indicator', _onMouseoutIndicator)
+               // .on('click.indicator', _onClickIndicator);
+
+            // Text label groups
+            var gBaselineLabel = g.append('g').attr('class', 'indicator-baseline-label');
+
+            var baselineLabel = gBaselineLabel.selectAll('text')
+                .data([indicator.baseline])
+                .enter()
+                .append('text');
+
+            var gMeasurementLabel = g.append('g').attr('class', 'indicator-measurement-label');
+
+            var measurementLabel = gMeasurementLabel.selectAll('text')
+                .data(indicator.measurements)
+                .enter()
+                .append('text');
+
+            var gTargetLabel = g.append('g').attr('class', 'indicator-target-label');
+
+            var targetLabel = gTargetLabel.selectAll('text')
+                .data([indicator.target])
+                .enter()
+                .append('text');
 
             // Special rect shape for interaction hover area
             var gHoverArea = g.append('rect')
@@ -196,90 +337,9 @@
                 .on('mouseout.indicator', _onMouseoutIndicator)
                 .on('click.indicator', _onClickIndicator);
 
-            // Baseline data group
-            var gBaselineCircle = g.append('g').attr('class', 'indicator-baseline');
-
-            var baselineCircle = gBaselineCircle.selectAll('circle')
-                .data([indicator.baseline])
-                .enter()
-                .append('circle')
-                .attr('class', 'circle-baseline')
-                .style('fill', VIZ_ACCENT_COLOR)
-                .call(d3.helper.tooltip()
-                    .attr({ class: 'tooltip' })
-                    .text(function (d, i) { return '<strong>' + d.displayString + '</strong><br><span class="date">' + moment(d.date).format('MMMM D, YYYY') + '</span>'; })
-                )
-                .on('mouseover', function (d, i) { d3.select(this).classed('highlight', true); })
-                .on('mouseout', function (d, i) { d3.select(this).classed('highlight', false); })
-                .on('mouseover.indicator', _onMouseoverIndicator)
-                .on('mouseout.indicator', _onMouseoutIndicator)
-                .on('click.indicator', _onClickIndicator);
-
-            // Measured data group
-            var gValues = g.append('g').attr('class', 'indicator-measured');
-
-            var circles = gValues.selectAll('circle')
-                .data(indicator.measurements)
-                .enter()
-                .append('circle')
-                .attr('class', 'circle-measured')
-                .style('fill', VIZ_MAIN_COLOR)
-                .call(d3.helper.tooltip()
-                    .attr({ class: 'tooltip' })
-                    .text(function (d, i) { return '<strong>' + d.displayString + '</strong><br><span class="date">' + moment(d.date).format('MMMM D, YYYY') + '</span>'; })
-                )
-                .on('mouseover.indicator', _onMouseoverIndicator)
-                .on('mouseout.indicator', _onMouseoutIndicator)
-                .on('click.indicator', _onClickIndicator);
-
-            // Subtarget group
-            var gSubtargets = g.append('g').attr('class', 'indicator-subtargets');
-
-            var subtargetCircles = gSubtargets.selectAll('circle')
-                .data(_makeSubtargets(indicator))
-                .enter()
-                .append('circle')
-                .classed('circle-subtargets', true)
-                .style('stroke', VIZ_ACCENT_COLOR)
-                .on('mouseover.indicator', _onMouseoverIndicator)
-                .on('mouseout.indicator', _onMouseoutIndicator)
-                .on('click.indicator', _onClickIndicator);
-
-            // Latest measured data group
-            var gLatestCircle = g.append('g').attr('class', 'indicator-latest');
-
-            var latestCircle = gLatestCircle.selectAll('circle')
-                .data([indicator.measurements[indicator.measurements.length - 1]])
-                .enter()
-                .append('circle')
-                .attr('class', 'circle-latest')
-                .style('fill', VIZ_MAIN_COLOR)
-                .call(d3.helper.tooltip()
-                    .attr({ class: 'tooltip' })
-                    .text(function (d, i) { return '<strong>' + d.displayString + '</strong><br><span class="date">' + moment(d.date).format('MMMM D, YYYY') + '</span>'; })
-                )
-                .on('mouseover.indicator', _onMouseoverIndicator)
-                .on('mouseout.indicator', _onMouseoutIndicator)
-                .on('click.indicator', _onClickIndicator);
-
-            // Target group
-            var gTarget = g.append('g').attr('class', 'indicator-targeted');
-
-            var targetCircle = gTarget.selectAll('circle')
-                .data([indicator.target])
-                .enter()
-                .append('circle')
-                .classed('circle-targeted', true)
-                .style('stroke', VIZ_ACCENT_COLOR)
-                .call(d3.helper.tooltip()
-                    .attr({ class: 'tooltip' })
-                    .text(function (d, i) { return '<strong>' + d.displayString + '</strong><br><span class="date">' + moment(d.date).format('MMMM D, YYYY') + '</span>'; })
-                )
-                .on('mouseover.indicator', _onMouseoverIndicator)
-                .on('mouseout.indicator', _onMouseoutIndicator)
-                .on('click.indicator', _onClickIndicator);
 
             // Hoverable data group
+            /*
             var gData = g.append('g').attr('class', 'indicator-data');
 
             var dataRect = gData.selectAll('rect')
@@ -287,13 +347,7 @@
                 .enter()
                 .append('rect')
                 .classed
-
-            /*
-            var text = g.selectAll('text')
-                .data(indicator['articles'])
-                .enter()
-                .append('text');
-            */
+                */
 
             // Set radius of circle sizes
             // For the upper range, calculate based on width of viewport and number of
@@ -301,7 +355,6 @@
             var radiusLowerRange = 4;
             var radiusUpperRange = 14;
             // TODO
-
 
 
             // Radius scale for circle
@@ -364,11 +417,48 @@
             // Subtarget circles
             subtargetCircles
                 .attr('cx', function (d) {
-                    return VIZ_LABEL_AREA_WIDTH + xScale(d.date);
+                    if (trendMode !== 2 || (trendMode === 2 && d.date > new Date())) {
+                        return VIZ_LABEL_AREA_WIDTH + xScale(d.date);
+                    } else {
+                        // If hidden, just move it way off the page
+                        return -1000;
+                    }
                 })
                 .attr('cy', yPos)
                 .attr('r', function (d) { return rScale(d.value); });
 
+            // Baseline labels
+            baselineLabel
+                .attr('x', function (d) {
+                    return VIZ_LABEL_AREA_WIDTH + xScale(d.dateRounded);
+                })
+                .attr('y', yPos - 10)
+                .attr('text-anchor', 'middle')
+                .attr('class', 'hidden label label-baseline')
+                .style('fill', colors.baselineLabel)
+                .text(function (d) { return d.displayValue; })
+
+            // Measurement labels.
+            measurementLabel
+                .attr('x', function (d) {
+                    return VIZ_LABEL_AREA_WIDTH + xScale(d.dateRounded);
+                })
+                .attr('y', yPos + 15)
+                .attr('text-anchor', 'middle')
+                .attr('class', 'hidden label label-measure')
+                .style('fill', colors.measureLabel)
+                .text(function (d) { return d.displayValue; })
+
+            // Target labels
+            targetLabel
+                .attr('x', function (d) {
+                    return VIZ_LABEL_AREA_WIDTH + xScale(d.dateRounded);
+                })
+                .attr('y', yPos - 10)
+                .attr('text-anchor', 'middle')
+                .attr('class', 'hidden label label-target')
+                .style('fill', colors.targetLabel)
+                .text(function (d) { return d.displayValue; })
             /*
             text
                 .attr('y', j*20+25)
@@ -385,7 +475,7 @@
                 .attr('y', yPos - 24)
                 .attr('text-anchor', 'start')
                 .text(indicator['indicator_name'])
-                .style('fill', VIZ_MAIN_COLOR)
+                .style('fill', colors.indicatorLabel)
                 .classed('indicator-name', true)
                 .on('mouseover', _onMouseoverIndicator)
                 .on('mouseout', _onMouseoutIndicator)
@@ -413,7 +503,8 @@
 
         // Create the today line
         var today     = new Date(),
-            todayXPos = VIZ_LABEL_AREA_WIDTH + xScale(_roundDateToHalfYear(today)),
+            todayRounded = _roundDateToHalfYear(today),
+            todayXPos = VIZ_LABEL_AREA_WIDTH + xScale(todayRounded),
             todayLine = gToday.selectAll('line')
                 .data([today])
                 .enter()
@@ -448,15 +539,21 @@
         // * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
         function _onMouseoverIndicator (p) {
-            var g = d3.select(this).node().parentNode.parentNode;
+            var g = d3.select(this).node().parentNode;
             d3.select(g).selectAll('.circle-subtargets').classed('show', true);
             d3.select(g).selectAll('.circle-latest').classed('show', true);
+            d3.select(g).selectAll('.label').classed('hidden', false);
+            d3.select(g).selectAll('circle').attr('opacity', 0.20);
         }
 
         function _onMouseoutIndicator (p) {
-            var g = d3.select(this).node().parentNode.parentNode;
+            var g = d3.select(this).node().parentNode;
             d3.select(g).selectAll('.circle-subtargets').classed('show', false);
             d3.select(g).selectAll('.circle-latest').classed('show', false);
+            if (!d3.select(g).classed('active')) {
+                d3.select(g).selectAll('.label').classed('hidden', true);
+                d3.select(g).selectAll('circle').attr('opacity', 1);
+            }
         }
 
         function _onMouseoverToday (p) {
@@ -469,7 +566,7 @@
         }
 
         function _onClickIndicator () {
-            var g = d3.select(this).node().parentNode.parentNode;
+            var g = d3.select(this).node().parentNode;
             var gAll = d3.select(g).node().parentNode;
 
             //if ($(this).hasClas)
@@ -478,6 +575,8 @@
             d3.select(gAll).selectAll('.active').classed('active', false);
             d3.select(gAll).selectAll('.circle-subtargets').classed('show', false);
             d3.select(gAll).selectAll('.circle-latest').classed('show', false);
+            d3.select(gAll).selectAll('.label').classed('hidden', true);
+            d3.select(gAll).selectAll('circle').attr('opacity', 1);
 
             // Clear info box
             $('#info-title').text('');
@@ -488,9 +587,11 @@
             d3.select(g).classed('active', true);
             d3.select(g).selectAll('.circle-subtargets').classed('show', true);
             d3.select(g).selectAll('.circle-latest').classed('show', true);
+            d3.select(g).selectAll('.label').classed('hidden', false);
+            d3.select(g).selectAll('circle').attr('opacity', 0.20);
 
             // Display the infos below
-            var title = $(this).closest('.indicator').find('text').text();
+            var title = $(this).closest('.indicator').find('.indicator-name').text();
             $('#info-title').text(title);
 
             var indicator = _.findWhere(data, { indicator_name: title });
@@ -523,7 +624,8 @@
 
             // Other information to encode
             data[k].targetIsIncreasing = _isTargetIncreasing(data[k]);
-            data[k].progressCode = _getProgress(data[k]);
+            data[k].projectedValue = _getProjectedValue(data[k]);
+            data[k].progress = _getProgress(data[k]);
         }
 
         return data;
@@ -588,8 +690,67 @@
         [4] On target (if trend continues, projected success) - LIGHT GREEN
         [5] Target reached (success) - GREEN!
         */
+
+        // If there are no measurements, we can't tell what the progress is.
+        // Return code zero
+        if (indicator.measurements.length < 1) {
+            return 0
+        }
+
+        var baseline     = indicator.baseline,
+            target       = indicator.target,
+            measurements = indicator.measurements,
+            latest       = measurements[measurements.length - 1],
+            today        = new Date()
+
+        // For targets that are increasing
+        if (indicator.targetIsIncreasing) {
+            // If target date has passed
+            if (target.date < today) {
+                // and the most recent measurement has surpassed the target?
+                if (latest.value >= target.value) {
+                    return 5
+                // and the most recent measurement has not surpassed the target?
+                } else {
+                    return 1
+                }
+            // Else if the target date near today or in the future
+            } else {
+                // and the projected value at target date is greater than the target?
+                if (latest.value >= target.value) {
+                    return 4
+                // and the projected value at target date is not greater than the target?
+                } else {
+                    return 2
+                }
+            }
+        // Else, this target is decreasing
+        } else {
+            if (target.date < today) {
+                // and the most recent measurement has surpassed the target?
+                if (latest.value <= target.value) {
+                    return 5
+                // and the most recent measurement has not surpassed the target?
+                } else {
+                    return 1
+                }
+            // Else if the target date near today or in the future
+            } else {
+                // and the projected value at target date is greater than the target?
+                if (latest.value <= target.value) {
+                    return 4
+                // and the projected value at target date is not greater than the target?
+                } else {
+                    return 2
+                }
+            }
+        }
         // TODO
-        return 0;
+        // return _.random(0, 5);
+    }
+
+    function _getProgressColor (code) {
+        return INDICATOR_COLOR_SCALE[code];
     }
 
     // Returns data array in a different order intended for visualization
@@ -597,6 +758,11 @@
         return _.sortBy(data, function (indicator) {
             return (indicator.targetIsIncreasing) ? 0 : 1;
         });
+    }
+
+    // Figure out what the projected value is
+    function _getProjectedValue (indicator) {
+
     }
 
     // Gets the earliest start date for the visualization, based on earliest baseline date of provided data.
@@ -642,8 +808,10 @@
         var baseline   = indicator.baseline;
         var target     = indicator.target;
 
+        var trendMode  = parseInt($('#debug-trend').val());
+
         // Get all the dates between baseline (inclusive) and target (exclusive)
-        var interval   = d3.time.month.range(baseline.dateRounded, target.dateRounded, 6);
+        var interval = d3.time.month.range(baseline.dateRounded, target.dateRounded, 6);
 
         var subtargets = [],
             divisor    = interval.length;
@@ -674,6 +842,7 @@
         // Note: we start counting at 1 because position 0 of the interval array
         // is the baseline date, which we don't need again.
         for (var i = 1; i < interval.length; i++) {
+
             if (target.value > baseline.value) {
                 // If target is increasing
                 var difference = target.value - baseline.value;
@@ -694,6 +863,51 @@
 
         return subtargets;
 
+    }
+
+    function _optionGetColors (mode) {
+        switch (parseInt(mode)) {
+            case 3: // Original
+                return {
+                    indicatorLabel:  VIZ_MAIN_COLOR,
+                    baselineCircle:  VIZ_ACCENT_COLOR,
+                    measureCircle:   VIZ_MAIN_COLOR,
+                    subtargetCircle: VIZ_ACCENT_COLOR,
+                    targetCircle:    VIZ_ACCENT_COLOR,
+                    latestCircle:    VIZ_MAIN_COLOR,
+                    baselineLabel:   VIZ_ACCENT_COLOR,
+                    measureLabel:    VIZ_MAIN_COLOR,
+                    targetLabel:     VIZ_ACCENT_COLOR
+                }
+                break;
+            case 2: // All blue
+                return {
+                    indicatorLabel:  ARTF_COLOR_GREEN,
+                    baselineCircle:  ARTF_COLOR_BLUE,
+                    measureCircle:   ARTF_COLOR_LTBLUE,
+                    subtargetCircle: ARTF_COLOR_LTBLUE,
+                    targetCircle:    ARTF_COLOR_BLUE,
+                    latestCircle:    ARTF_COLOR_LTBLUE,
+                    baselineLabel:   ARTF_COLOR_BLUE,
+                    measureLabel:    ARTF_COLOR_BLUE,
+                    targetLabel:     ARTF_COLOR_BLUE
+                }
+                break;
+            case 1: // ARTF Color scheme
+            default:
+                return {
+                    indicatorLabel:  ARTF_COLOR_GREEN,
+                    baselineCircle:  ARTF_COLOR_ORANGERED,
+                    measureCircle:   ARTF_COLOR_BLUE,
+                    subtargetCircle: ARTF_COLOR_ORANGERED,
+                    targetCircle:    ARTF_COLOR_ORANGERED,
+                    latestCircle:    ARTF_COLOR_BLUE,
+                    baselineLabel:   ARTF_COLOR_ORANGERED,
+                    measureLabel:    ARTF_COLOR_BLUE,
+                    targetLabel:     ARTF_COLOR_ORANGERED
+                }
+                break;
+        }
     }
 
 })(jQuery);
