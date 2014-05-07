@@ -63,8 +63,7 @@
 
         // Filter behavior
         $('#filter select').on('change', function (e) {
-            var selected = $(this).data('field'),
-                filter   = {};
+            var selected = $(this).data('field')
 
             // Create our filter
             $('#filter select').each(function (index) {
@@ -72,17 +71,10 @@
 
                 // If combining filters is disabled, we'll reset the other filters first
                 if (!FILTER_INTERSECTION_MODE && field !== selected) this.selectedIndex = 0;
-
-                // Gather values for the filter
-                var value = $(this).val();
-                if (value) filter[field] = value;
             });
 
-            // Apply the filter to our data
-            var filteredData = _.where(data, filter);
-
             // Redraw visualization
-            createViz(filteredData);
+            createViz(data);
         });
 
         // Resets visualization
@@ -118,6 +110,18 @@
         // Get current settings...
         var colors = _optionGetColors($('#debug-color').val());
         var trendMode = parseInt($('#debug-trend').val());
+
+        // Get current filters...
+        var filter   = {};
+        // Create our filter
+        $('#filter select').each(function (index) {
+            var field = $(this).data('field');
+            // Gather values for the filter
+            var value = $(this).val();
+            if (value) filter[field] = value;
+        });
+        // Apply the filter to our data
+        data = _.where(data, filter);
 
         // color scale
         // TODO: Set colors based on category, not per line
