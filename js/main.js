@@ -515,6 +515,7 @@
                 .attr('y2', todayYEnd); // TODO: Don't hardcode the end point
 
         // Special rect shape for interaction hover area
+        /*
         var todayHoverRect = gToday.append('rect')
             .classed('hoverable', true)
             .attr('x', todayXPos - 5)
@@ -523,6 +524,7 @@
             .attr('height', todayYHeight)
             .on('mouseover.today', _onMouseoverToday)
             .on('mouseout.today', _onMouseoutToday);
+            */
 
         // Add a label for the indicator that appears on hover
         var todayLabel = gToday.append('text')

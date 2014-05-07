@@ -228,7 +228,6 @@ text.indicator-name {
     font-size: 0.7em;
     font-weight: 700;
     fill: #888;
-    display: none;
 }
 
 svg circle:hover {
