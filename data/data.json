@@ -1396,37 +1396,6 @@
     },
     {
         "baseline": {
-            "date": "2013-07-01",
-            "value": "0.00"
-        },
-        "description": "THIS IS SOME DESCRIPTION, WE MIGHT NOT BE ABLE TO GENERATE ALL THIS DATA",
-        "indicator_name": "Staff trained in ISE",
-        "measurements": [
-            {
-                "date": "2009-10-10",
-                "value": "4671855.00"
-            },
-            {
-                "date": "2009-10-10",
-                "value": "4671855.00"
-            },
-            {
-                "date": "2009-10-10",
-                "value": "4671855.00"
-            }
-        ],
-        "project_id": "P120397",
-        "project_name": "Improving Agricultural Inputs Delivery",
-        "sector": "Agriculture",
-        "status": "Active",
-        "target": {
-            "date": "2018-06-30",
-            "value": "57.00"
-        },
-        "units": "Number"
-    },
-    {
-        "baseline": {
             "date": "2013-06-03",
             "value": "4.00"
         },
