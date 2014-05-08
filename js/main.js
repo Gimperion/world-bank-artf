@@ -10,7 +10,7 @@
     var DATA_API_ENDPOINT    = 'data/data.json';
 
     var FILTER_INTERSECTION_MODE = false,
-        FILTER_FIELDS        = ['sector', 'project_name', 'sector'];
+        FILTER_FIELDS        = ['theme', 'project_name', 'sector'];
 
     var VIZ_MARGINS          = {top: 25, right: 30, bottom: 0, left: 0},
         VIZ_WIDTH            = document.querySelector('.container').offsetWidth,
@@ -607,7 +607,7 @@
 
             var indicator = _.findWhere(data, { indicator_name: title });
             $('#info-metadata').append('<strong>Project:</strong> ' + indicator.project_name + '<br>');
-            $('#info-metadata').append('<strong>Sector:</strong> ' + indicator.sector + '<br>');
+            $('#info-metadata').append('<strong>Theme:</strong> ' + indicator.theme + '<br>');
             $('#info-metadata').append('<strong>Baseline measurement:</strong> ' + indicator.baseline.displayString + '<br>');
             $('#info-metadata').append('<strong>Target goal:</strong> ' + indicator.target.displayString + '<br>');
             for (var i = 0; i < indicator.description.length; i++) {
