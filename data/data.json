@@ -47,57 +47,6 @@
     },
     {
         "baseline": {
-            "date": "2008-03-10",
-            "value": "37000.00"
-        },
-        "description": "THIS IS SOME DESCRIPTION, WE MIGHT NOT BE ABLE TO GENERATE ALL THIS DATA",
-        "indicator_name": "Number of additional qualified primary teachers resulting from project interventions.",
-        "measurements": [
-            {
-                "date": "2012-10-31",
-                "value": "156683.00"
-            },
-            {
-                "date": "2012-06-27",
-                "value": "67528.00"
-            },
-            {
-                "date": "2012-10-31",
-                "value": "156683.00"
-            },
-            {
-                "date": "2013-10-07",
-                "value": "34253.00"
-            },
-            {
-                "date": "2011-09-10",
-                "value": "67528.00"
-            },
-            {
-                "date": "2010-10-01",
-                "value": "65544.00"
-            },
-            {
-                "date": "2011-07-01",
-                "value": "32787.00"
-            },
-            {
-                "date": "2011-04-30",
-                "value": "62556.00"
-            }
-        ],
-        "project_id": "P106259",
-        "project_name": "Second Education Quality Improvement Program",
-        "sector": "Education",
-        "status": "Active",
-        "target": {
-            "date": "2014-09-01",
-            "value": "200000.00"
-        },
-        "units": "Number"
-    },
-    {
-        "baseline": {
             "date": "2008-12-31",
             "value": "85.00"
         },
@@ -160,6 +109,53 @@
     },
     {
         "baseline": {
+            "date": "2009-03-01",
+            "value": "0.00"
+        },
+        "description": "THIS IS SOME DESCRIPTION, WE MIGHT NOT BE ABLE TO GENERATE ALL THIS DATA",
+        "indicator_name": "Knowledge base and analytical tools developed for Kabul and other targeted basins",
+        "measurements": [
+            {
+                "date": "2013-01-16",
+                "value": "2.50"
+            },
+            {
+                "date": "2010-12-21",
+                "value": "1.00"
+            },
+            {
+                "date": "2011-12-14",
+                "value": "1.00"
+            },
+            {
+                "date": "2013-03-10",
+                "value": "3.00"
+            },
+            {
+                "date": "2011-06-28",
+                "value": "1.00"
+            },
+            {
+                "date": "2012-11-09",
+                "value": "2.50"
+            },
+            {
+                "date": "2012-04-30",
+                "value": "1.50"
+            }
+        ],
+        "project_id": "P112097",
+        "project_name": "Water Resources Development Technical Assistance Project",
+        "sector": "Governance",
+        "status": "Closed",
+        "target": {
+            "date": "2013-03-31",
+            "value": "5.00"
+        },
+        "units": "Number"
+    },
+    {
+        "baseline": {
             "date": "2011-12-31",
             "value": "30.00"
         },
@@ -187,26 +183,38 @@
     },
     {
         "baseline": {
-            "date": "2005-12-15",
-            "value": "72.1"
+            "date": "2007-10-17",
+            "value": "0.00"
         },
         "description": "THIS IS SOME DESCRIPTION, WE MIGHT NOT BE ABLE TO GENERATE ALL THIS DATA",
-        "indicator_name": "Percentage of eligible O&M expenditures reviewed by the MA vs submitted",
+        "indicator_name": "Departments with MCP's achieving rating of satisfactory (or equivalent) following annual performance assessment",
         "measurements": [
             {
-                "date": "2013-10-31",
-                "value": "98"
+                "date": "2011-07-29",
+                "value": "0.00"
+            },
+            {
+                "date": "2011-12-14",
+                "value": "0.00"
+            },
+            {
+                "date": "2010-11-10",
+                "value": "0.00"
+            },
+            {
+                "date": "2010-11-10",
+                "value": "0.00"
             }
         ],
-        "project_id": "P091258",
-        "project_name": "Recurrent & Capital Costs Component",
-        "sector": "Operational Expenditure",
-        "status": "Active",
+        "project_id": "P106170",
+        "project_name": "Management Capacity Program",
+        "sector": "Governance",
+        "status": "Closed",
         "target": {
-            "date": "2013-02-28",
-            "value": "100"
+            "date": "2011-12-31",
+            "value": "70.00"
         },
-        "units": "Text"
+        "units": "Percentage"
     },
     {
         "baseline": {
@@ -520,32 +528,55 @@
     },
     {
         "baseline": {
-            "date": "2005-12-15",
-            "value": "100"
+            "date": "2004-06-30",
+            "value": "284000"
         },
         "description": "THIS IS SOME DESCRIPTION, WE MIGHT NOT BE ABLE TO GENERATE ALL THIS DATA",
-        "indicator_name": "Percentage of withdrawal applications reviewed and approved by the MA",
+        "indicator_name": "70% increase in grid-supplied power consumption by customer in Kabul (Fiscal year basis)",
         "measurements": [
             {
-                "date": "2012-11-30",
-                "value": "100"
+                "date": "2010-03-22",
+                "value": "1237000"
             },
             {
-                "date": "2013-10-31",
-                "value": "100"
+                "date": "2011-03-22",
+                "value": "1237000"
             },
             {
-                "date": "2012-05-15",
-                "value": "100"
+                "date": "2010-03-22",
+                "value": "639000"
             }
         ],
-        "project_id": "P091258",
-        "project_name": "Recurrent & Capital Costs Component",
-        "sector": "Operational Expenditure",
-        "status": "Active",
+        "project_id": "P083908",
+        "project_name": "Rehabilitation of Naghlu Hydropower Plant",
+        "sector": "Infrastructure",
+        "status": "Closed",
         "target": {
-            "date": "2013-02-28",
-            "value": "100"
+            "date": "2013-03-31",
+            "value": "482000"
+        },
+        "units": "Text"
+    },
+    {
+        "baseline": {
+            "date": "2009-09-06",
+            "value": "0"
+        },
+        "description": "THIS IS SOME DESCRIPTION, WE MIGHT NOT BE ABLE TO GENERATE ALL THIS DATA",
+        "indicator_name": "15,000 producer households confirm receiving horticulture extension services in focus districts",
+        "measurements": [
+            {
+                "date": "2010-02-24",
+                "value": "72"
+            }
+        ],
+        "project_id": "P098256",
+        "project_name": "Horticulture and Livestock Program",
+        "sector": "Agriculture",
+        "status": "Closed",
+        "target": {
+            "date": "2011-12-31",
+            "value": "15000"
         },
         "units": "Text"
     },
@@ -714,6 +745,29 @@
     },
     {
         "baseline": {
+            "date": "2009-09-06",
+            "value": "0"
+        },
+        "description": "THIS IS SOME DESCRIPTION, WE MIGHT NOT BE ABLE TO GENERATE ALL THIS DATA",
+        "indicator_name": "120 Horticulture Extension Workers trained",
+        "measurements": [
+            {
+                "date": "2010-09-30",
+                "value": "132"
+            }
+        ],
+        "project_id": "P098256",
+        "project_name": "Horticulture and Livestock Program",
+        "sector": "Agriculture",
+        "status": "Closed",
+        "target": {
+            "date": "2011-12-31",
+            "value": "120"
+        },
+        "units": "Text"
+    },
+    {
+        "baseline": {
             "date": "2013-07-01",
             "value": "0"
         },
@@ -769,7 +823,7 @@
     {
         "baseline": {
             "date": "2009-07-01",
-            "value": "70353.00"
+            "value": "0.00"
         },
         "description": "THIS IS SOME DESCRIPTION, WE MIGHT NOT BE ABLE TO GENERATE ALL THIS DATA",
         "indicator_name": "Pregnant women receiving antenatal care during a visit to a health provider",
@@ -853,26 +907,38 @@
     },
     {
         "baseline": {
-            "date": "2005-12-15",
-            "value": "84.9"
+            "date": "2009-03-01",
+            "value": "0.00"
         },
         "description": "THIS IS SOME DESCRIPTION, WE MIGHT NOT BE ABLE TO GENERATE ALL THIS DATA",
-        "indicator_name": "Percentage of eligible payroll expenditures reviewed by the MA vs submitted",
+        "indicator_name": "Number of staff trained on key water resource issues (including integrated water resources management, transboundary water management)",
         "measurements": [
             {
-                "date": "2013-10-31",
-                "value": "98"
+                "date": "2010-12-21",
+                "value": "4.00"
+            },
+            {
+                "date": "2011-06-28",
+                "value": "4.00"
+            },
+            {
+                "date": "2011-12-14",
+                "value": "5.00"
+            },
+            {
+                "date": "2012-04-30",
+                "value": "7.00"
             }
         ],
-        "project_id": "P091258",
-        "project_name": "Recurrent & Capital Costs Component",
-        "sector": "Operational Expenditure",
-        "status": "Active",
+        "project_id": "P112097",
+        "project_name": "Water Resources Development Technical Assistance Project",
+        "sector": "Governance",
+        "status": "Closed",
         "target": {
-            "date": "2013-02-28",
-            "value": "100"
+            "date": "2013-03-31",
+            "value": "14.00"
         },
-        "units": "Text"
+        "units": "Number"
     },
     {
         "baseline": {
@@ -992,32 +1058,24 @@
     },
     {
         "baseline": {
-            "date": "2005-12-15",
-            "value": "100"
+            "date": "2006-11-30",
+            "value": "0"
         },
         "description": "THIS IS SOME DESCRIPTION, WE MIGHT NOT BE ABLE TO GENERATE ALL THIS DATA",
-        "indicator_name": "Assurance that goods and services procured with ARTF funds are used exclusively for authorized purposes in obtained through MA agent's review of withdrawal applications",
+        "indicator_name": "110 kV transmission line constructed to connect Chimtallah 220 kV substation with Kabul network and 2 nos. 110 KV substations in Kabul City, and transmission line from Naghlu to Kabul rehabilitated.",
         "measurements": [
             {
-                "date": "2013-10-31",
-                "value": "25"
-            },
-            {
-                "date": "2013-05-31",
-                "value": "67"
-            },
-            {
-                "date": "2012-11-29",
-                "value": "100"
+                "date": "2011-12-20",
+                "value": "72.8"
             }
         ],
-        "project_id": "P091258",
-        "project_name": "Recurrent & Capital Costs Component",
-        "sector": "Operational Expenditure",
-        "status": "Active",
+        "project_id": "P083908",
+        "project_name": "Rehabilitation of Naghlu Hydropower Plant",
+        "sector": "Infrastructure",
+        "status": "Closed",
         "target": {
-            "date": "2018-12-31",
-            "value": "100"
+            "date": "2013-03-31",
+            "value": "77.6"
         },
         "units": "Text"
     },
@@ -1041,6 +1099,29 @@
         "target": {
             "date": "2015-09-30",
             "value": "90"
+        },
+        "units": "Text"
+    },
+    {
+        "baseline": {
+            "date": "2006-11-30",
+            "value": "0"
+        },
+        "description": "THIS IS SOME DESCRIPTION, WE MIGHT NOT BE ABLE TO GENERATE ALL THIS DATA",
+        "indicator_name": "11 km of 110 kV line constructed to connect Chimtallah 220 kV substation with Kabul network and 2 nos. 110 KV substations upgraded in Kabul City.",
+        "measurements": [
+            {
+                "date": "2011-12-20",
+                "value": "77.6"
+            }
+        ],
+        "project_id": "P083908",
+        "project_name": "Rehabilitation of Naghlu Hydropower Plant",
+        "sector": "Infrastructure",
+        "status": "Closed",
+        "target": {
+            "date": "2013-03-31",
+            "value": "77.6"
         },
         "units": "Text"
     },
@@ -1190,8 +1271,31 @@
         "sector": "Human Development",
         "status": "Active",
         "target": {
-            "date": "2012-05-10",
-            "value": "6.00"
+            "date": "2010-06-30",
+            "value": "4"
+        },
+        "units": "Text"
+    },
+    {
+        "baseline": {
+            "date": "2011-12-14",
+            "value": "54.20"
+        },
+        "description": "THIS IS SOME DESCRIPTION, WE MIGHT NOT BE ABLE TO GENERATE ALL THIS DATA",
+        "indicator_name": "Focus MCP's on 10 priority ministries",
+        "measurements": [
+            {
+                "date": "2010-11-10",
+                "value": "32.00"
+            }
+        ],
+        "project_id": "P106170",
+        "project_name": "Management Capacity Program",
+        "sector": "Governance",
+        "status": "Closed",
+        "target": {
+            "date": "2011-12-31",
+            "value": "70.00"
         },
         "units": "Text"
     },
@@ -1414,6 +1518,33 @@
     },
     {
         "baseline": {
+            "date": "2009-09-06",
+            "value": "0"
+        },
+        "description": "THIS IS SOME DESCRIPTION, WE MIGHT NOT BE ABLE TO GENERATE ALL THIS DATA",
+        "indicator_name": "At least 60 % of (or 619) producer groups achieving at least 50 % of their group action plan",
+        "measurements": [
+            {
+                "date": "2010-09-30",
+                "value": "95"
+            },
+            {
+                "date": "2010-12-31",
+                "value": "58"
+            }
+        ],
+        "project_id": "P098256",
+        "project_name": "Horticulture and Livestock Program",
+        "sector": "Agriculture",
+        "status": "Closed",
+        "target": {
+            "date": "2011-12-31",
+            "value": "60"
+        },
+        "units": "Text"
+    },
+    {
+        "baseline": {
             "date": "2008-06-23",
             "value": "0"
         },
@@ -1593,6 +1724,33 @@
     },
     {
         "baseline": {
+            "date": "2007-11-17",
+            "value": "0.00"
+        },
+        "description": "THIS IS SOME DESCRIPTION, WE MIGHT NOT BE ABLE TO GENERATE ALL THIS DATA",
+        "indicator_name": "% appointments at subnational level",
+        "measurements": [
+            {
+                "date": "2011-12-14",
+                "value": "5.00"
+            },
+            {
+                "date": "2010-11-10",
+                "value": "5.00"
+            }
+        ],
+        "project_id": "P106170",
+        "project_name": "Management Capacity Program",
+        "sector": "Governance",
+        "status": "Closed",
+        "target": {
+            "date": "2011-12-31",
+            "value": "20.00"
+        },
+        "units": "Text"
+    },
+    {
+        "baseline": {
             "date": "2008-06-23",
             "value": "0"
         },
@@ -1626,7 +1784,7 @@
         "status": "Active",
         "target": {
             "date": "2013-12-31",
-            "value": "1243"
+            "value": "1195"
         },
         "units": "Text"
     },
@@ -1702,6 +1860,57 @@
             "value": "70"
         },
         "units": "Text"
+    },
+    {
+        "baseline": {
+            "date": "2008-03-10",
+            "value": "37000.00"
+        },
+        "description": "THIS IS SOME DESCRIPTION, WE MIGHT NOT BE ABLE TO GENERATE ALL THIS DATA",
+        "indicator_name": "Number of additional qualified primary teachers resulting from project interventions.",
+        "measurements": [
+            {
+                "date": "2012-10-31",
+                "value": "156683.00"
+            },
+            {
+                "date": "2012-06-27",
+                "value": "67528.00"
+            },
+            {
+                "date": "2012-10-31",
+                "value": "156683.00"
+            },
+            {
+                "date": "2013-10-07",
+                "value": "34253.00"
+            },
+            {
+                "date": "2011-09-10",
+                "value": "67528.00"
+            },
+            {
+                "date": "2010-10-01",
+                "value": "65544.00"
+            },
+            {
+                "date": "2011-07-01",
+                "value": "32787.00"
+            },
+            {
+                "date": "2011-04-30",
+                "value": "62556.00"
+            }
+        ],
+        "project_id": "P106259",
+        "project_name": "Second Education Quality Improvement Program",
+        "sector": "Education",
+        "status": "Active",
+        "target": {
+            "date": "2014-09-01",
+            "value": "200000.00"
+        },
+        "units": "Number"
     },
     {
         "baseline": {
@@ -1892,7 +2101,7 @@
         "status": "Active",
         "target": {
             "date": "2013-12-31",
-            "value": "29112"
+            "value": "1570"
         },
         "units": "Text"
     },
@@ -1999,7 +2208,7 @@
     {
         "baseline": {
             "date": "2006-12-31",
-            "value": "34.60"
+            "value": "18.90"
         },
         "description": "THIS IS SOME DESCRIPTION, WE MIGHT NOT BE ABLE TO GENERATE ALL THIS DATA",
         "indicator_name": "Births attended by skilled attendants",
@@ -2111,7 +2320,7 @@
     {
         "baseline": {
             "date": "2012-11-21",
-            "value": "0"
+            "value": "0.00"
         },
         "description": "THIS IS SOME DESCRIPTION, WE MIGHT NOT BE ABLE TO GENERATE ALL THIS DATA",
         "indicator_name": "Number of Teachers completing INSET - III, IV and V",
@@ -2135,14 +2344,14 @@
         "status": "Active",
         "target": {
             "date": "2014-08-15",
-            "value": "170000.00"
+            "value": "140000.00"
         },
         "units": "Number"
     },
     {
         "baseline": {
-            "date": "2008-01-31",
-            "value": "0"
+            "date": "2008-01-01",
+            "value": "0.00"
         },
         "description": "THIS IS SOME DESCRIPTION, WE MIGHT NOT BE ABLE TO GENERATE ALL THIS DATA",
         "indicator_name": "Number of female scholarship recipients in Teacher Training Colleges",
@@ -2192,41 +2401,6 @@
     },
     {
         "baseline": {
-            "date": "2005-12-15",
-            "value": "95"
-        },
-        "description": "THIS IS SOME DESCRIPTION, WE MIGHT NOT BE ABLE TO GENERATE ALL THIS DATA",
-        "indicator_name": "Percentage of Monitoring Agent reports accepted by the Bank as TF Administrator",
-        "measurements": [
-            {
-                "date": "2012-11-29",
-                "value": "100"
-            },
-            {
-                "date": "2013-10-31",
-                "value": "100"
-            },
-            {
-                "date": "2013-05-31",
-                "value": "100"
-            },
-            {
-                "date": "2012-05-15",
-                "value": "100"
-            }
-        ],
-        "project_id": "P091258",
-        "project_name": "Recurrent & Capital Costs Component",
-        "sector": "Operational Expenditure",
-        "status": "Active",
-        "target": {
-            "date": "2018-12-31",
-            "value": "100"
-        },
-        "units": "Text"
-    },
-    {
-        "baseline": {
             "date": "2013-01-01",
             "value": "0.00"
         },
@@ -2245,6 +2419,29 @@
         "target": {
             "date": "2013-12-31",
             "value": "97500.00"
+        },
+        "units": "Number"
+    },
+    {
+        "baseline": {
+            "date": "2013-07-01",
+            "value": "0.00"
+        },
+        "description": "THIS IS SOME DESCRIPTION, WE MIGHT NOT BE ABLE TO GENERATE ALL THIS DATA",
+        "indicator_name": "Staff trained in ISE",
+        "measurements": [
+            {
+                "date": "2013-11-21",
+                "value": "0.00"
+            }
+        ],
+        "project_id": "P120397",
+        "project_name": "Improving Agricultural Inputs Delivery",
+        "sector": "Agriculture",
+        "status": "Active",
+        "target": {
+            "date": "2018-06-30",
+            "value": "57.00"
         },
         "units": "Number"
     },
@@ -2286,6 +2483,37 @@
             "value": "80.00"
         },
         "units": "Number"
+    },
+    {
+        "baseline": {
+            "date": "2008-06-18",
+            "value": "427"
+        },
+        "description": "THIS IS SOME DESCRIPTION, WE MIGHT NOT BE ABLE TO GENERATE ALL THIS DATA",
+        "indicator_name": "Increase in power supply to project areas in Kabul (in MWh).",
+        "measurements": [
+            {
+                "date": "2010-08-31",
+                "value": "755.2"
+            },
+            {
+                "date": "2011-07-31",
+                "value": "1237"
+            },
+            {
+                "date": "2011-03-22",
+                "value": "639"
+            }
+        ],
+        "project_id": "P106654",
+        "project_name": "Kabul-Aybak/Mazar-e-Sharif Power Project",
+        "sector": "Infrastructure",
+        "status": "Closed",
+        "target": {
+            "date": "2013-03-12",
+            "value": "482"
+        },
+        "units": "Text"
     },
     {
         "baseline": {
@@ -2386,6 +2614,53 @@
     },
     {
         "baseline": {
+            "date": "2009-03-01",
+            "value": "0.00"
+        },
+        "description": "THIS IS SOME DESCRIPTION, WE MIGHT NOT BE ABLE TO GENERATE ALL THIS DATA",
+        "indicator_name": "Number of preparation studies completed for priority investment options (at least to pre-feasibility levels)",
+        "measurements": [
+            {
+                "date": "2013-01-16",
+                "value": "0.00"
+            },
+            {
+                "date": "2010-12-21",
+                "value": "4.00"
+            },
+            {
+                "date": "2011-06-28",
+                "value": "0.00"
+            },
+            {
+                "date": "2013-01-16",
+                "value": "0.00"
+            },
+            {
+                "date": "2012-04-30",
+                "value": "0.00"
+            },
+            {
+                "date": "2012-04-30",
+                "value": "0.00"
+            },
+            {
+                "date": "2011-12-14",
+                "value": "0.00"
+            }
+        ],
+        "project_id": "P112097",
+        "project_name": "Water Resources Development Technical Assistance Project",
+        "sector": "Governance",
+        "status": "Closed",
+        "target": {
+            "date": "2013-03-31",
+            "value": "1.00"
+        },
+        "units": "Number"
+    },
+    {
+        "baseline": {
             "date": "2013-07-01",
             "value": "0"
         },
@@ -2432,41 +2707,6 @@
     },
     {
         "baseline": {
-            "date": "2005-12-15",
-            "value": "96.6"
-        },
-        "description": "THIS IS SOME DESCRIPTION, WE MIGHT NOT BE ABLE TO GENERATE ALL THIS DATA",
-        "indicator_name": "Disbursement as percentage of annual ceiling",
-        "measurements": [
-            {
-                "date": "2012-11-29",
-                "value": "64"
-            },
-            {
-                "date": "2013-10-31",
-                "value": "100"
-            },
-            {
-                "date": "2013-05-31",
-                "value": "50"
-            },
-            {
-                "date": "2012-05-15",
-                "value": "100"
-            }
-        ],
-        "project_id": "P091258",
-        "project_name": "Recurrent & Capital Costs Component",
-        "sector": "Operational Expenditure",
-        "status": "Active",
-        "target": {
-            "date": "2013-02-28",
-            "value": "100"
-        },
-        "units": "Text"
-    },
-    {
-        "baseline": {
             "date": "2011-03-16",
             "value": "3.00"
         },
@@ -2506,6 +2746,33 @@
     },
     {
         "baseline": {
+            "date": "2009-03-01",
+            "value": "0"
+        },
+        "description": "THIS IS SOME DESCRIPTION, WE MIGHT NOT BE ABLE TO GENERATE ALL THIS DATA",
+        "indicator_name": "Length of roads rehabilitated.",
+        "measurements": [
+            {
+                "date": "2011-08-31",
+                "value": "11.91"
+            },
+            {
+                "date": "2011-07-31",
+                "value": "11.91"
+            }
+        ],
+        "project_id": "P107101",
+        "project_name": "Kabul Urban Roads Improvement Project",
+        "sector": "Urban Development",
+        "status": "Closed",
+        "target": {
+            "date": "2011-12-31",
+            "value": "11.91"
+        },
+        "units": "Text"
+    },
+    {
+        "baseline": {
             "date": "2013-06-06",
             "value": "0.00"
         },
@@ -2526,6 +2793,33 @@
             "value": "35.00"
         },
         "units": "Number"
+    },
+    {
+        "baseline": {
+            "date": "2004-06-30",
+            "value": "0"
+        },
+        "description": "THIS IS SOME DESCRIPTION, WE MIGHT NOT BE ABLE TO GENERATE ALL THIS DATA",
+        "indicator_name": "100 MW of hydropower capacity rehabilitated",
+        "measurements": [
+            {
+                "date": "2012-09-30",
+                "value": "46"
+            },
+            {
+                "date": "2013-02-28",
+                "value": "69"
+            }
+        ],
+        "project_id": "P083908",
+        "project_name": "Rehabilitation of Naghlu Hydropower Plant",
+        "sector": "Infrastructure",
+        "status": "Closed",
+        "target": {
+            "date": "2013-12-31",
+            "value": "100"
+        },
+        "units": "Text"
     },
     {
         "baseline": {
@@ -2710,6 +3004,56 @@
         "target": {
             "date": "2012-09-01",
             "value": "4500000.00"
+        },
+        "units": "Text"
+    },
+    {
+        "baseline": {
+            "date": "2007-10-17",
+            "value": "0.00"
+        },
+        "description": "THIS IS SOME DESCRIPTION, WE MIGHT NOT BE ABLE TO GENERATE ALL THIS DATA",
+        "indicator_name": "Numbers of MCP's in key centre and subnational positions",
+        "measurements": [
+            {
+                "date": "2010-11-10",
+                "value": "105.00"
+            },
+            {
+                "date": "2011-12-14",
+                "value": "153.00"
+            }
+        ],
+        "project_id": "P106170",
+        "project_name": "Management Capacity Program",
+        "sector": "Governance",
+        "status": "Closed",
+        "target": {
+            "date": "2011-12-31",
+            "value": "175.00"
+        },
+        "units": "Number"
+    },
+    {
+        "baseline": {
+            "date": "2009-09-06",
+            "value": "0"
+        },
+        "description": "THIS IS SOME DESCRIPTION, WE MIGHT NOT BE ABLE TO GENERATE ALL THIS DATA",
+        "indicator_name": "Around 1032 male and female producer groups operating",
+        "measurements": [
+            {
+                "date": "2011-06-30",
+                "value": "782"
+            }
+        ],
+        "project_id": "P098256",
+        "project_name": "Horticulture and Livestock Program",
+        "sector": "Agriculture",
+        "status": "Closed",
+        "target": {
+            "date": "2011-12-31",
+            "value": "1032"
         },
         "units": "Text"
     },
@@ -2978,6 +3322,33 @@
     },
     {
         "baseline": {
+            "date": "2007-11-20",
+            "value": "0.00"
+        },
+        "description": "THIS IS SOME DESCRIPTION, WE MIGHT NOT BE ABLE TO GENERATE ALL THIS DATA",
+        "indicator_name": "Distribution lines rehabilitated under the project",
+        "measurements": [
+            {
+                "date": "2012-12-17",
+                "value": "553.00"
+            },
+            {
+                "date": "2012-12-17",
+                "value": "553.00"
+            }
+        ],
+        "project_id": "P106654",
+        "project_name": "Kabul-Aybak/Mazar-e-Sharif Power Project",
+        "sector": "Infrastructure",
+        "status": "Closed",
+        "target": {
+            "date": "2013-03-31",
+            "value": "553.00"
+        },
+        "units": "KilometersSub Type, Breakdown"
+    },
+    {
+        "baseline": {
             "date": "2013-01-01",
             "value": "0.00"
         },
@@ -2996,6 +3367,53 @@
         "target": {
             "date": "2018-12-31",
             "value": "5.00"
+        },
+        "units": "Number"
+    },
+    {
+        "baseline": {
+            "date": "2009-03-01",
+            "value": "0.00"
+        },
+        "description": "THIS IS SOME DESCRIPTION, WE MIGHT NOT BE ABLE TO GENERATE ALL THIS DATA",
+        "indicator_name": "Investment priorities in Kabul and other targeted basins identified",
+        "measurements": [
+            {
+                "date": "2009-04-30",
+                "value": "1.00"
+            },
+            {
+                "date": "2011-06-28",
+                "value": "1.00"
+            },
+            {
+                "date": "2012-01-16",
+                "value": "1.50"
+            },
+            {
+                "date": "2013-03-10",
+                "value": "1.50"
+            },
+            {
+                "date": "2011-04-30",
+                "value": "1.50"
+            },
+            {
+                "date": "2011-04-30",
+                "value": "1.50"
+            },
+            {
+                "date": "2011-06-28",
+                "value": "1.50"
+            }
+        ],
+        "project_id": "P112097",
+        "project_name": "Water Resources Development Technical Assistance Project",
+        "sector": "Governance",
+        "status": "Closed",
+        "target": {
+            "date": "2013-03-31",
+            "value": "2.00"
         },
         "units": "Number"
     },
@@ -3040,8 +3458,54 @@
     },
     {
         "baseline": {
-            "date": "2008-01-31",
+            "date": "2009-09-06",
             "value": "0"
+        },
+        "description": "THIS IS SOME DESCRIPTION, WE MIGHT NOT BE ABLE TO GENERATE ALL THIS DATA",
+        "indicator_name": "At least 120 government veterinary clinics transferred to private sector operation",
+        "measurements": [
+            {
+                "date": "2010-12-31",
+                "value": "114"
+            }
+        ],
+        "project_id": "P098256",
+        "project_name": "Horticulture and Livestock Program",
+        "sector": "Agriculture",
+        "status": "Closed",
+        "target": {
+            "date": "2011-12-31",
+            "value": "120"
+        },
+        "units": "Text"
+    },
+    {
+        "baseline": {
+            "date": "2007-11-20",
+            "value": "0.00"
+        },
+        "description": "THIS IS SOME DESCRIPTION, WE MIGHT NOT BE ABLE TO GENERATE ALL THIS DATA",
+        "indicator_name": "Distribution lines constructed or rehabilitated under the project",
+        "measurements": [
+            {
+                "date": "2013-03-12",
+                "value": "553.00"
+            }
+        ],
+        "project_id": "P106654",
+        "project_name": "Kabul-Aybak/Mazar-e-Sharif Power Project",
+        "sector": "Infrastructure",
+        "status": "Closed",
+        "target": {
+            "date": "2013-03-31",
+            "value": "553.00"
+        },
+        "units": "Kilometers"
+    },
+    {
+        "baseline": {
+            "date": "2008-01-01",
+            "value": "0.00"
         },
         "description": "THIS IS SOME DESCRIPTION, WE MIGHT NOT BE ABLE TO GENERATE ALL THIS DATA",
         "indicator_name": "Number of teachers completing INSET-II",
@@ -3087,8 +3551,8 @@
     },
     {
         "baseline": {
-            "date": "2008-01-31",
-            "value": "0"
+            "date": "2008-01-01",
+            "value": "0.00"
         },
         "description": "THIS IS SOME DESCRIPTION, WE MIGHT NOT BE ABLE TO GENERATE ALL THIS DATA",
         "indicator_name": "Number of additional teachers completing INSET I under EQUIP II",
@@ -3123,7 +3587,7 @@
         "sector": "Education",
         "status": "Active",
         "target": {
-            "date": "2014-08-15",
+            "date": "2012-12-31",
             "value": "100000.00"
         },
         "units": "Text"
@@ -3276,6 +3740,37 @@
     },
     {
         "baseline": {
+            "date": "2008-11-26",
+            "value": "94.24"
+        },
+        "description": "THIS IS SOME DESCRIPTION, WE MIGHT NOT BE ABLE TO GENERATE ALL THIS DATA",
+        "indicator_name": "Increase in power supply to customers in Mazar-e-Sharif (in MWh)",
+        "measurements": [
+            {
+                "date": "2010-08-31",
+                "value": "126.5"
+            },
+            {
+                "date": "2011-08-31",
+                "value": "126"
+            },
+            {
+                "date": "2010-11-30",
+                "value": "134"
+            }
+        ],
+        "project_id": "P106654",
+        "project_name": "Kabul-Aybak/Mazar-e-Sharif Power Project",
+        "sector": "Infrastructure",
+        "status": "Closed",
+        "target": {
+            "date": "2013-03-31",
+            "value": "113"
+        },
+        "units": "Text"
+    },
+    {
+        "baseline": {
             "date": "2009-03-30",
             "value": "0.00"
         },
@@ -3399,6 +3894,33 @@
     },
     {
         "baseline": {
+            "date": "2007-11-17",
+            "value": "0"
+        },
+        "description": "THIS IS SOME DESCRIPTION, WE MIGHT NOT BE ABLE TO GENERATE ALL THIS DATA",
+        "indicator_name": "% terminations following performance appraisal process",
+        "measurements": [
+            {
+                "date": "2010-11-10",
+                "value": "3"
+            },
+            {
+                "date": "2011-12-14",
+                "value": "3.5"
+            }
+        ],
+        "project_id": "P106170",
+        "project_name": "Management Capacity Program",
+        "sector": "Governance",
+        "status": "Closed",
+        "target": {
+            "date": "2011-12-31",
+            "value": "5"
+        },
+        "units": "Text, Breakdown"
+    },
+    {
+        "baseline": {
             "date": "2013-01-01",
             "value": "0.00"
         },
@@ -3470,7 +3992,7 @@
         "status": "Active",
         "target": {
             "date": "2014-08-15",
-            "value": "7740.00"
+            "value": "7330.00"
         },
         "units": "Number"
     },
@@ -3543,7 +4065,7 @@
         "status": "Active",
         "target": {
             "date": "2018-06-30",
-            "value": "10.00"
+            "value": "140.00"
         },
         "units": "Number"
     },
@@ -3784,8 +4306,35 @@
     },
     {
         "baseline": {
+            "date": "2007-11-17",
+            "value": "0.00"
+        },
+        "description": "THIS IS SOME DESCRIPTION, WE MIGHT NOT BE ABLE TO GENERATE ALL THIS DATA",
+        "indicator_name": "Appointment of MCPs",
+        "measurements": [
+            {
+                "date": "2011-12-14",
+                "value": "153.00"
+            },
+            {
+                "date": "2010-11-10",
+                "value": "105.00"
+            }
+        ],
+        "project_id": "P106170",
+        "project_name": "Management Capacity Program",
+        "sector": "Governance",
+        "status": "Closed",
+        "target": {
+            "date": "2011-12-31",
+            "value": "175.00"
+        },
+        "units": "Number"
+    },
+    {
+        "baseline": {
             "date": "2006-12-31",
-            "value": "74750.00"
+            "value": "0.00"
         },
         "description": "THIS IS SOME DESCRIPTION, WE MIGHT NOT BE ABLE TO GENERATE ALL THIS DATA",
         "indicator_name": "Children immunized",
@@ -3846,8 +4395,8 @@
     },
     {
         "baseline": {
-            "date": "2008-01-31",
-            "value": "0"
+            "date": "2008-01-01",
+            "value": "0.00"
         },
         "description": "THIS IS SOME DESCRIPTION, WE MIGHT NOT BE ABLE TO GENERATE ALL THIS DATA",
         "indicator_name": "Number of schools that have received and used the infrastructure development grant",
@@ -3887,7 +4436,7 @@
         "status": "Active",
         "target": {
             "date": "2014-08-15",
-            "value": "1073.00"
+            "value": "1088.00"
         },
         "units": "Text"
     },
