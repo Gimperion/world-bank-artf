@@ -25,7 +25,7 @@ form, fieldset {
 #header {
 	height: 118px;
 	margin: 0 0 3px;
-	background: url(../images/bg-header.gif) repeat-x top center;
+	background: url(http://artf.af/images/bg-header.gif) repeat-x top center;
 }
 .header-top {
 	width: 935px;
@@ -44,7 +44,7 @@ form, fieldset {
 	left: 13px;
 	top: 31px;
 	margin: 0;
-	background: url(../images/logo.png) no-repeat;
+	background: url(http://artf.af/images/logo.png) no-repeat;
 }
 .logo a {
 	display: block;
@@ -56,9 +56,9 @@ form, fieldset {
 	float: right;
 	text-indent: -9999px;
 	overflow: hidden;
-	background: url(../images/txt-afg.png) no-repeat;
+	background: url(http://artf.af/images/txt-afg.png) no-repeat;
 }
-.header-bottom { background: url(../images/bg-nav.gif) repeat-x; }
+.header-bottom { background: url(http://artf.af/images/bg-nav.gif) repeat-x; }
 .header-bottom .holder {
 	width: 950px;
 	height: 43px;
@@ -71,7 +71,7 @@ form, fieldset {
 	margin: 1px 4px 0 0;
 	text-indent: -9999px;
 	overflow: hidden;
-	background: url(../images/flag.gif) no-repeat;
+	background: url(http://artf.af/images/flag.gif) no-repeat;
 	display:none;
 }
 .header-bottom .flag a {
@@ -81,10 +81,10 @@ form, fieldset {
 /* navigation css  start*/
 
 #nav {width: 100%; height: 43px;list-style: none;	margin: 0 0 0 100px;padding: 0;	font-size: 12px;line-height: 36px;text-transform: uppercase;z-index: 99;}
-#nav li {float: left;	position: relative; background: url(../images/separator.gif) no-repeat 0 15px;	max-width:125px;}
+#nav li {float: left;	position: relative; background: url(http://artf.af/images/separator.gif) no-repeat 0 15px;	max-width:125px;}
 #nav li a {	color: #fff;display: block;	height: 39px; padding:0px 17px;	font-size:10px;	line-height:13px; text-align:center;vertical-align: middle;
 	display:table-cell;	text-decoration:none;}
-#nav li.here, #nav li:hover { margin: 0 0 0 0;	background: url(../images/nav-hover.gif) repeat-x;}
+#nav li.here, #nav li:hover { margin: 0 0 0 0;	background: url(http://artf.af/images/nav-hover.gif) repeat-x;}
 
 /*Who We Are*/
 #subnav li.active{ margin: 0 0 0 0; background-color:#A4BBD1;}
@@ -109,7 +109,7 @@ form, fieldset {
 #nav li:hover ul li:first-child { border: none; }
 #nav li:hover ul li a {	color: #fff; padding:10px 17px 12px 17px; display: block; width:212px; text-align:left; height:auto;}
 #nav li:hover ul li a:hover{ background: #4d672b;text-decoration: none;}
-#nav li:hover ul li.here { margin: 0 0 0 0;	background: url(../images/nav-hover.gif) repeat-x;}
+#nav li:hover ul li.here { margin: 0 0 0 0;	background: url(http://artf.af/images/nav-hover.gif) repeat-x;}
 
 /*sub-nav2*/
 #nav li:hover ul li ul{ display:none;}
@@ -199,11 +199,11 @@ form, fieldset {
 }
 .visual .btn-prev {
 	left: 5px;
-	background: url(../images/btn-prev.png) no-repeat;
+	background: url(http://artf.af/images/btn-prev.png) no-repeat;
 }
 .visual .btn-next {
 	right: 8px;
-	background: url(../images/btn-next.png) no-repeat;
+	background: url(http://artf.af/images/btn-next.png) no-repeat;
 }
 #main {
 	width: 950px;
@@ -226,7 +226,7 @@ form, fieldset {
 	margin: 0 0 6px;
 	padding: 0 12px;
 	font-size: 10px;
-	background: url(../images/bg-heading-green.png) repeat-x;
+	background: url(http://artf.af/images/bg-heading-green.png) repeat-x;
 }
 #content .block {
 	width: 385px;
@@ -242,7 +242,7 @@ form, fieldset {
 }
 .highlights li {
 	padding: 0 0 0 21px;
-	background: url(../images/bullet-green.gif) no-repeat 0 5px;
+	background: url(http://artf.af/images/bullet-green.gif) no-repeat 0 5px;
 }
 .highlights a {
 	color: #454545;
@@ -265,7 +265,7 @@ form, fieldset {
 .events li {
 	padding: 0 0 0 18px;
 	margin: 0 0 22px;
-	background: url(../images/bullet.gif) no-repeat 0 5px;
+	background: url(http://artf.af/images/bullet.gif) no-repeat 0 5px;
 }
 .events a {
 	color: #454545;
@@ -282,7 +282,7 @@ form, fieldset {
 	padding: 0 8px;
 	font-size: 10px;
 	text-transform: uppercase;
-	background: url(../images/bg-heading-blue.png) repeat-x;
+	background: url(http://artf.af/images/bg-heading-blue.png) repeat-x;
 }
 .stories, .reports, .use-our-data ul {
 	list-style: none;
@@ -291,7 +291,7 @@ form, fieldset {
 }
 .stories li, .reports li, .use-our-data li {
 	padding: 0 0 0 16px;
-	background: url(../images/bullet.gif) no-repeat 0 4px;
+	background: url(http://artf.af/images/bullet.gif) no-repeat 0 4px;
 }
 .stories a, .reports a, .use-our-data a {
 	color: #454545;
@@ -369,10 +369,10 @@ form, fieldset {
 #subnav .dropdown ul a, #subnav .dropdown>li>a, #subnav>li>a { color: #fff; }
 #subnav>.here>a {
 	padding: 22px 65px 13px 12px;
-	background: url(../images/white-arrow.gif) no-repeat -1px 22px #87a4c1;
+	background: url(http://artf.af/images/white-arrow.gif) no-repeat -1px 22px #87a4c1;
 }
 #subnav>.here>a:hover {
-	background: url(../images/white-arrow.gif) no-repeat -1px 22px #a4bbd1;
+	background: url(http://artf.af/images/white-arrow.gif) no-repeat -1px 22px #a4bbd1;
 	color: #606060;
 }
 #subnav>.here { border-bottom: 1px solid #fff; }
@@ -405,13 +405,13 @@ form, fieldset {
 #subnav ul ul li.here a, #subnav .dropdown ul li a {
 	display: block;
 	padding: 0 0 0 41px;
-	background: url(../images/white-bullet.png) no-repeat 31px 4px;
+	background: url(http://artf.af/images/white-bullet.png) no-repeat 31px 4px;
 }
 #subnav li.open .dropdown, #subnav .dropdown li.open ul { display: block; }
 #subnav ul ul li.here a, #subnav ul ul li a:hover {
 	text-decoration: none;
 	color: #606060;
-	background: url(../images/grey-bullet.png) no-repeat 31px 4px #a4bbd1;
+	background: url(http://artf.af/images/grey-bullet.png) no-repeat 31px 4px #a4bbd1;
 }
 .inner #main { margin: 0 auto 30px; }
 .inner #main #content {
@@ -425,7 +425,7 @@ form, fieldset {
 	/* text-indent: -9999px; */
 	overflow: hidden;
 	margin: 0 0 21px;
-	/* background: url(../images/txt-portfolio.gif) no-repeat; */
+	/* background: url(http://artf.af/images/txt-portfolio.gif) no-repeat; */
 }
 .inner #main #content h2.large {
 	color: #66863a;
@@ -490,7 +490,7 @@ form, fieldset {
 }
 .project .text li {
 	padding: 0 0 0 15px;
-	background: url(../images/grey-bullet.png) no-repeat 0 5px;
+	background: url(http://artf.af/images/grey-bullet.png) no-repeat 0 5px;
 }
 .inner #footer {
 	border-top: 2px solid #9db679;
@@ -505,7 +505,7 @@ form, fieldset {
 	padding: 0 0 0 8px;
 	margin: 0 0 0 5px;
 	color: #454545;
-	background: url(../images/divider.gif) no-repeat 0 3px;
+	background: url(http://artf.af/images/divider.gif) no-repeat 0 3px;
 }
 .copyrights { font-size: 10px; }
 .copyrights a { color: #454545; }
@@ -526,11 +526,11 @@ form, fieldset {
 	position: absolute;
 	left: 0;
 	bottom: 0;
-	background: url(../images/img-discription.png) no-repeat;
+	background: url(http://artf.af/images/img-discription.png) no-repeat;
 	font-size:10px;
 }
 .img-right .description-wide {
-	background: url(../images/img-discription-v1.png) no-repeat;
+	background: url(http://artf.af/images/img-discription-v1.png) no-repeat;
 	margin-left:0;
 	width:239px;
 }
@@ -549,7 +549,7 @@ form, fieldset {
 .inner .col-right ul li {
 	padding: 0 0 0 17px;
 	margin: 0;
-	background: url(../images/bullet.gif) no-repeat 0 4px;
+	background: url(http://artf.af/images/bullet.gif) no-repeat 0 4px;
 }
 .inner .col-right a {
 	color: #454545;
@@ -562,9 +562,9 @@ form, fieldset {
 .inner .col-right .heading-grey {
 	padding: 0 16px;
 	margin: 0 0 8px;
-	background: url(../images/bg-heading-grey.gif) repeat-x;
+	background: url(http://artf.af/images/bg-heading-grey.gif) repeat-x;
 }
-.inner .col-right .grey li { background: url(../images/bullet-grey.gif) no-repeat 0 4px; }
+.inner .col-right .grey li { background: url(http://artf.af/images/bullet-grey.gif) no-repeat 0 4px; }
 .inner2 #main { margin: 0 auto 35px; }
 .inner2 #main #content {
 	width: 439px;
