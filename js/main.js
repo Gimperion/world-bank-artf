@@ -608,7 +608,7 @@
             $('#info-title').text(title);
 
             var indicator = _.findWhere(data, { indicator_name: title });
-            $('#info-metadata').append('<strong>Project:</strong> ' + indicator.project_name + '<br>');
+            $('#info-metadata').append('<strong>Project:</strong> ' + indicator.project_id + ' ' + indicator.project_name + '<br>');
             $('#info-metadata').append('<strong>Status:</strong> ' + indicator.status + '<br>');
             $('#info-metadata').append('<strong>Baseline measurement:</strong> ' + indicator.baseline.displayString + '<br>');
             $('#info-metadata').append('<strong>Target goal:</strong> ' + indicator.target.displayString + '<br>');
