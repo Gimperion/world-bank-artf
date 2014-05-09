@@ -301,7 +301,7 @@ rect.hoverable {
 
 .indicator-line {
     stroke: #e1e1e1;
-    stroke-width: 1;
+    stroke-width: 2;
 }
 
 .tooltip {
