@@ -5,10 +5,10 @@ body {
     text-rendering: optimizeLegibility;
 }
 
-#content {
-    width: 620px !important;
+#main #content {
+	width: 620px !important;
+	float: left;
 }
-
 * {
     -moz-box-sizing: border-box;
     box-sizing: border-box;
