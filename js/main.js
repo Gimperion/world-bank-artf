@@ -483,7 +483,9 @@
                 .attr('x', 10)
                 .attr('y', yPos - 24)
                 .attr('text-anchor', 'start')
-                .text(indicator['indicator_name'])
+                .text(function(d){
+                    return indicator['project_id'] + ' ' + indicator['indicator_name']
+                })
                 .style('fill', colors.indicatorLabel)
                 .classed('indicator-name', true)
                 .on('mouseover', _onMouseoverIndicator)
