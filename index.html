@@ -7,7 +7,7 @@
 </head>
 <body>
 
-    <div class='container'>
+    <div class='container float-legend'>
         <div id='header'>
             <h1>ARTF indicator visualization</h1>
         </div>
@@ -16,15 +16,15 @@
                 <h3>Filter by</h3>
                 <div class='row'>
                     <div class='column'>
-                        <label for='filter-sector'>Sector</label>
-                        <select id='filter-sector' data-field='sector'>
-                            <option value='' default>(all sectors)</option>
+                        <label for='filter-theme'>Status</label>
+                        <select id='filter-theme' data-field='status'>
+                            <option value='' default>(all projects)</option>
                         </select>
                     </div>
                     <div class='column'>
-                        <label for='filter-theme'>Theme</label>
-                        <select id='filter-theme' data-field='theme'>
-                            <option value='' default>(all themes)</option>
+                        <label for='filter-sector'>Sector</label>
+                        <select id='filter-sector' data-field='sector'>
+                            <option value='' default>(all sectors)</option>
                         </select>
                     </div>
                     <div class='column'>
@@ -74,7 +74,7 @@
         </div>
     </div>
 
-    <script src='//cdnjs.cloudflare.com/ajax/libs/jquery/1.11.0/jquery.js'></script>
+    <script src='//cdnjs.cloudflare.com/ajax/libs/jquery/1.11.1/jquery.js'></script>
     <script src='//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.6.0/underscore-min.js'></script>
 
     <script src='//cdnjs.cloudflare.com/ajax/libs/d3/3.4.2/d3.min.js'></script>

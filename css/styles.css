@@ -45,6 +45,10 @@ div {
     width: 695px;
 }
 
+.container.float-legend {
+    margin-bottom: 160px; /* Space for floating legend */
+}
+
 .row {
     margin-bottom: 10px;
 }
@@ -71,6 +75,15 @@ div {
     border-radius: 5px;
     border: 1px solid lightgray;
     padding: 4px 18px 6px;
+}
+
+#legend {
+    position: fixed;
+    bottom: 0;
+    width: 695px;
+    margin: 10px 0;
+    background-color: white;
+    z-index: 300;
 }
 
 #legend img {
@@ -195,22 +208,27 @@ svg {
     fill: #999;
 }
 
+g.indicator {
+    cursor: pointer;
+}
+
 g.indicator.active {
     cursor: pointer;
 }
 
-.background {
+g rect.background {
     fill: white;
     fill-opacity: 0;
 }
 
-g.indicator.active .background {
+g.indicator.active rect.background {
     fill: whitesmoke;
     fill-opacity: 1;
 }
 
-.indicator {
-    cursor: pointer;
+line.indicator-line {
+    stroke: #e1e1e1;
+    stroke-width: 2;
 }
 
 text.label {
@@ -224,28 +242,32 @@ text.value {
 text.indicator-name {
 }
 
-.label-today {
+g.indicator.active text.indicator-name {
+    font-weight: 700;
+}
+
+text.label-today {
     font-size: 0.7em;
     font-weight: 700;
     fill: #888;
 }
 
-svg circle:hover {
+circle:hover {
     cursor: pointer;
 }
 
-svg circle.highlight {
+circle.highlight {
 }
 
-svg .circle-targeted {
+circle.circle-target {
     fill: white;
     fill-opacity: 0;
-    stroke-width: 1.5;
+    stroke-width: 2;
     stroke-opacity: 1;
     stroke: white;
 }
 
-svg .circle-subtargets {
+circle.circle-subtargets {
     fill-opacity: 0;
     stroke-width: 1;
     stroke-opacity: 1;
@@ -253,19 +275,15 @@ svg .circle-subtargets {
     display: none;
 }
 
-svg .circle-latest {
+circle.circle-latest {
     fill-opacity: 0.5;
     display: none;
 }
 
-svg .circle-subtargets.show,
-svg .circle-latest.show,
+circle.circle-subtargets.show,
+circle.circle-latest.show,
 g.indicator.active circle {
     display: block;
-}
-
-g.indicator.active .indicator-name {
-    font-weight: 700;
 }
 
 text.label {
@@ -273,22 +291,22 @@ text.label {
     font-size: 11px;
 }
 
-.label-baseline {
-
+text.label-baseline {
 }
-.label-measure {
 
+text.label-measure {
 }
-.label-target {
 
+text.label-target {
 }
+
 text.hidden {
     display: none;
 }
 
-svg .today line {
+g.today line {
     stroke: red;
-    stroke-width: 1;
+    stroke-width: 2;
     stroke-opacity: 0.2;
     stroke-dasharray: 5, 4;
 }
@@ -297,22 +315,4 @@ rect.hoverable {
     cursor: pointer;
     fill: white;
     fill-opacity: 0;
-}
-
-.indicator-line {
-    stroke: #e1e1e1;
-    stroke-width: 1;
-}
-
-.tooltip {
-    border-radius: 3px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.25);
-    padding: 5px;
-    color: #333;
-    background-color: white;
-    text-align: center;
-}
-.tooltip .date {
-    font-size: 0.85em;
-    color: gray;
 }

@@ -9,9 +9,17 @@
 
     var DATA_API_ENDPOINT    = 'data/data.json';
 
-    var FILTER_INTERSECTION_MODE = false,
-        FILTER_FIELDS        = ['theme', 'project_name', 'sector'];
+    // This option sets how the filter behaves.
+    // If true, filters intersect (AND)
+    // If false, filters exclude each other (OR)
+    var FILTER_INTERSECTION_MODE = true;
 
+    // These are data fields / columns to filter on.
+    // The filter dropdowns are automatically generated,
+    // but you will have to add the selects yourself.
+    var FILTER_FIELDS        = ['status', 'project_name', 'sector'];
+
+    // Set visualization options.
     var VIZ_MARGINS          = {top: 25, right: 30, bottom: 0, left: 0},
         VIZ_WIDTH            = document.querySelector('.container').offsetWidth,
         VIZ_VIEWPORT_WIDTH   = VIZ_WIDTH - VIZ_MARGINS.right - VIZ_MARGINS.left,
@@ -28,8 +36,11 @@
         ARTF_COLOR_LTBLUE    = '#87a4c1',  // ARTF.af sidebar color
         ARTF_COLOR_ORANGERED = '#c54b25';  // Color interpreted from ARTF.af header image
 
-    var MODE_COLOR_SCHEME    = 1,
-        MODE_TREND_BUBBLES   = 1
+    // Set some view options.
+    // Do not edit.
+    var DEBUG_MODE           = false,
+        MODE_COLOR_SCHEME    = 1,
+        MODE_TREND_BUBBLES   = 1;
 
     // Borrowed from Colorbrewer
     // 0 is No data (gray)
@@ -79,6 +90,7 @@
 
         // Resets visualization
         $('#filter-reset').on('click', function (e) {
+            e.preventDefault();
             createViz(data);
         });
 
@@ -87,10 +99,12 @@
             $('#legend').slideUp(200);
         });
 
-        if (window.self === window.top) {
+        // Only show the debug window when this page is viewed directly
+        // It is hidden if iframed
+        if (window.self === window.top && DEBUG_MODE === true) {
             $('#debug').show()
             $('#debug-close').on('click', function () {
-                $('#debug').toggleClass('hide')
+                $('#debug').toggleClass('hide');
             })
             $('#debug-color').on('change', function () {
                 createViz(data);
@@ -139,7 +153,7 @@
         if (data.length < 1) {
             svg.append('text')
                 .attr('x', VIZ_VIEWPORT_WIDTH / 2)
-                .attr('y', VIZ_ROW_SPACING)
+                .attr('y', VIZ_ROW_SPACING - 50)
                 .attr('text-anchor', 'middle')
                 .text('No indicators match your filter criteria.')
                 .style('fill', 'gray');
@@ -226,48 +240,28 @@
                 .append('circle')
                 .attr('class', 'circle-baseline')
                 .style('fill', colors.baselineCircle)
-                /*
-                .call(d3.helper.tooltip()
-                    .attr({ class: 'tooltip' })
-                    .text(function (d, i) { return '<strong>' + d.displayString + '</strong><br><span class="date">' + moment(d.date).format('MMMM D, YYYY') + '</span>'; })
-                )
-                */
                 .on('mouseover', function (d, i) { d3.select(this).classed('highlight', true); })
                 .on('mouseout', function (d, i) { d3.select(this).classed('highlight', false); });
-                //.on('mouseover.indicator', _onMouseoverIndicator)
-                //.on('mouseout.indicator', _onMouseoutIndicator)
-                //.on('click.indicator', _onClickIndicator);
 
             // Measured data group
             var gValues = g.append('g').attr('class', 'indicator-measured');
 
-            var circles = gValues.selectAll('circle')
+            var measuredCircles = gValues.selectAll('circle')
                 .data(indicator.measurements)
                 .enter()
                 .append('circle')
                 .attr('class', 'circle-measured')
                 .style('fill', colors.measureCircle);
-                /*
-                .call(d3.helper.tooltip()
-                    .attr({ class: 'tooltip' })
-                    .text(function (d, i) { return '<strong>' + d.displayString + '</strong><br><span class="date">' + moment(d.date).format('MMMM D, YYYY') + '</span>'; })
-                )*/
-                //.on('mouseover.indicator', _onMouseoverIndicator)
-                //.on('mouseout.indicator', _onMouseoutIndicator)
-                //.on('click.indicator', _onClickIndicator);
 
             // Subtarget group
             var gSubtargets = g.append('g').attr('class', 'indicator-subtargets');
 
             var subtargetCircles = gSubtargets.selectAll('circle')
-                .data(_makeSubtargets(indicator))
+                .data(indicator.subtargets)
                 .enter()
                 .append('circle')
                 .classed('circle-subtargets', true)
                 .style('stroke', colors.subtargetCircle);
-                //.on('mouseover.indicator', _onMouseoverIndicator)
-                //.on('mouseout.indicator', _onMouseoutIndicator)
-                //.on('click.indicator', _onClickIndicator);
 
             // Latest measured data group
             // AKA PROJECTED CIRCLE
@@ -280,33 +274,16 @@
                 .append('circle')
                 .attr('class', 'circle-latest')
                 .style('fill', colors.latestCircle);
-                /*
-                .call(d3.helper.tooltip()
-                    .attr({ class: 'tooltip' })
-                    .text(function (d, i) { return '<strong>' + d.displayString + '</strong><br><span class="date">' + moment(d.date).format('MMMM D, YYYY') + '</span>'; })
-                )*/
-                //.on('mouseover.indicator', _onMouseoverIndicator)
-                //.on('mouseout.indicator', _onMouseoutIndicator)
-                //.on('click.indicator', _onClickIndicator);
 
             // Target group
-            var gTarget = g.append('g').attr('class', 'indicator-targeted');
+            var gTarget = g.append('g').attr('class', 'indicator-target');
 
             var targetCircle = gTarget.selectAll('circle')
                 .data([indicator.target])
                 .enter()
                 .append('circle')
-                .classed('circle-targeted', true)
+                .classed('circle-target', true)
                 .style('stroke', colors.targetCircle);
-                /*
-                .call(d3.helper.tooltip()
-                    .attr({ class: 'tooltip' })
-                    .text(function (d, i) { return '<strong>' + d.displayString + '</strong><br><span class="date">' + moment(d.date).format('MMMM D, YYYY') + '</span>'; })
-                )
-*/
-               //.on('mouseover.indicator', _onMouseoverIndicator)
-               // .on('mouseout.indicator', _onMouseoutIndicator)
-               // .on('click.indicator', _onClickIndicator);
 
             // Text label groups
             var gBaselineLabel = g.append('g').attr('class', 'indicator-baseline-label');
@@ -341,25 +318,12 @@
                 .on('mouseout.indicator', _onMouseoutIndicator)
                 .on('click.indicator', _onClickIndicator);
 
-
-            // Hoverable data group
-            /*
-            var gData = g.append('g').attr('class', 'indicator-data');
-
-            var dataRect = gData.selectAll('rect')
-                .data(['hey'])
-                .enter()
-                .append('rect')
-                .classed
-                */
-
             // Set radius of circle sizes
             // For the upper range, calculate based on width of viewport and number of
             // ticks so as to never overlap circles, but never more than 14
             var radiusLowerRange = 4;
             var radiusUpperRange = 14;
             // TODO
-
 
             // Radius scale for circle
             // If baseline measurement is lower than the target, it should increase on the X-axis
@@ -383,7 +347,7 @@
                 .attr('r', function (d) { return rScale(d.value); });
 
             // Measured circles
-            circles
+            measuredCircles
                 .attr('cx', function (d, i) {
                     return VIZ_LABEL_AREA_WIDTH + xScale(d.dateRounded);
                 })
@@ -483,7 +447,11 @@
                 .attr('x', 10)
                 .attr('y', yPos - 24)
                 .attr('text-anchor', 'start')
-                .text(indicator['indicator_name'])
+                .text(function (d) {
+                    return indicator['project_id'] + ' ' + indicator['indicator_name']
+                })
+                .attr('data-id', indicator['project_id'])
+                .attr('data-name', indicator['indicator_name'])
                 .style('fill', colors.indicatorLabel)
                 .classed('indicator-name', true)
                 .on('mouseover', _onMouseoverIndicator)
@@ -580,8 +548,6 @@
             var g = d3.select(this).node().parentNode;
             var gAll = d3.select(g).node().parentNode;
 
-            //if ($(this).hasClas)
-
             // Deselect all indicators
             d3.select(gAll).selectAll('.active').classed('active', false);
             d3.select(gAll).selectAll('.circle-subtargets').classed('show', false);
@@ -602,12 +568,12 @@
             d3.select(g).selectAll('circle').attr('opacity', 0.20);
 
             // Display the infos below
-            var title = $(this).closest('.indicator').find('.indicator-name').text();
+            var title = $(this).closest('.indicator').find('.indicator-name').data('name');
             $('#info-title').text(title);
 
             var indicator = _.findWhere(data, { indicator_name: title });
-            $('#info-metadata').append('<strong>Project:</strong> ' + indicator.project_name + '<br>');
-            $('#info-metadata').append('<strong>Theme:</strong> ' + indicator.theme + '<br>');
+            $('#info-metadata').append('<strong>Project:</strong> ' + indicator.project_id + ' ' + indicator.project_name + '<br>');
+            $('#info-metadata').append('<strong>Status:</strong> ' + indicator.status + '<br>');
             $('#info-metadata').append('<strong>Baseline measurement:</strong> ' + indicator.baseline.displayString + '<br>');
             $('#info-metadata').append('<strong>Target goal:</strong> ' + indicator.target.displayString + '<br>');
             for (var i = 0; i < indicator.description.length; i++) {
@@ -632,6 +598,7 @@
             for (var j = 0; j < data[k].measurements.length; j++) {
                 data[k].measurements[j] = _transformMeasurement(data[k].measurements[j], units);
             }
+            data[k].subtargets = _makeSubtargets(data[k]);
 
             // Other information to encode
             data[k].targetIsIncreasing = _isTargetIncreasing(data[k]);
@@ -705,19 +672,36 @@
         // If there are no measurements, we can't tell what the progress is.
         // Return code zero
         if (indicator.measurements.length < 1) {
-            return 0
+            return 0;
         }
 
         var baseline     = indicator.baseline,
             target       = indicator.target,
             measurements = indicator.measurements,
-            latest       = measurements[measurements.length - 1],
-            today        = new Date()
+            subtargets   = indicator.subtargets,
+            latest       = _.last(measurements),
+            today        = new Date();
+
+        // via Hackpad
+        // Take the latest measurement
+        // Is it below or above 75% of where it should be on that date
+        // according to a linear progression between the baseline
+        // and the target?
+
+        // Get the value of the subtarget around the same
+        // date as the most recent measurement
+        var subgoal;
+        for (var i = 0; i < subtargets.length; i++) {
+            var check = moment(subtargets[i].date);
+            if (moment(latest.dateRounded).isSame(check, 'month')) {
+                subgoal = subtargets[i];
+            }
+        }
 
         // For targets that are increasing
         if (indicator.targetIsIncreasing) {
             // If target date has passed
-            if (target.date < today) {
+            if (!subgoal || target.date <= today) {
                 // and the most recent measurement has surpassed the target?
                 if (latest.value >= target.value) {
                     return 5
@@ -725,39 +709,40 @@
                 } else {
                     return 1
                 }
-            // Else if the target date near today or in the future
+            // If the target date has not passed
             } else {
-                // and the projected value at target date is greater than the target?
-                if (latest.value >= target.value) {
-                    return 4
-                // and the projected value at target date is not greater than the target?
+                // and the most recent measurement is 75% or more of the way to the subtarget of the same date?
+                if ((latest.value - baseline.value) >= (0.75 * (target.value - subgoal.value))) {
+                    return 4;
+                // and the most recent measurement is less than 75% of the way to the subtarget of the same date?
                 } else {
-                    return 2
+                    return 2;
                 }
             }
         // Else, this target is decreasing
         } else {
-            if (target.date < today) {
+            if (!subgoal || target.date <= today) {
                 // and the most recent measurement has surpassed the target?
                 if (latest.value <= target.value) {
-                    return 5
+                    return 5;
                 // and the most recent measurement has not surpassed the target?
                 } else {
-                    return 1
+                    return 1;
                 }
-            // Else if the target date near today or in the future
+            // If the target date has not passed
             } else {
-                // and the projected value at target date is greater than the target?
-                if (latest.value <= target.value) {
-                    return 4
-                // and the projected value at target date is not greater than the target?
+                // and the most recent measurement is 75% or less of the way to the subtarget of the same date?
+                if (-(latest.value - baseline.value) >= (0.75 * -(target.value - subgoal.value))) {
+                    return 4;
+                // and the most recent measurement is more than 75% of the way to subtarget of the same date?
                 } else {
-                    return 2
+                    return 2;
                 }
             }
         }
-        // TODO
-        // return _.random(0, 5);
+
+        // Catch-all: return 0 for 'no data'
+        return 0;
     }
 
     function _getProgressColor (code) {
@@ -873,7 +858,6 @@
         }
 
         return subtargets;
-
     }
 
     function _optionGetColors (mode) {
