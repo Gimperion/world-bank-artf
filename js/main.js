@@ -99,6 +99,7 @@
         // Hide legend
         $('#hide-legend').on('click', function (e) {
             $('#legend').slideUp(200);
+            $('.container').removeClass('float-legend');
         });
 
         // Only show the debug window when this page is viewed directly
@@ -363,6 +364,7 @@
                 });
 
             // Latest measurement circle
+            /*
             latestCircle
                 .attr('cx', function (d, i) {
                     if (trendMode !== 2 || (trendMode === 2 && indicator.target.dateRounded >= _roundDateToHalfYear(new Date()))) {
@@ -380,6 +382,7 @@
                     // readability, we'll clamp the minimum radius to 2 pixels.
                     return (rScale(d.value) >= 2) ? rScale(d.value) : 2;
                 });
+            */
 
             // Target circle
             targetCircle
@@ -450,7 +453,7 @@
                 .attr('y', yPos - 24)
                 .attr('text-anchor', 'start')
                 .text(function (d) {
-                    return indicator['project_id'] + ' ' + indicator['indicator_name']
+                    return '[' + indicator['project_id'] + '] ' + indicator['indicator_name']
                 })
                 .attr('data-id', indicator['project_id'])
                 .attr('data-name', indicator['indicator_name'])
@@ -574,7 +577,7 @@
             $('#info-title').text(title);
 
             var indicator = _.findWhere(data, { indicator_name: title });
-            $('#info-metadata').append('<strong>Project:</strong> ' + indicator.project_id + ' ' + indicator.project_name + '<br>');
+            $('#info-metadata').append('<strong>Project:</strong> ' + indicator.project_id + ' &mdash; ' + indicator.project_name + '<br>');
             $('#info-metadata').append('<strong>Status:</strong> ' + indicator.status + '<br>');
             $('#info-metadata').append('<strong>Baseline measurement:</strong> ' + indicator.baseline.displayString + '<br>');
             $('#info-metadata').append('<strong>Target goal:</strong> ' + indicator.target.displayString + '<br>');
