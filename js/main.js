@@ -54,6 +54,8 @@
 
         data = _parseData(response);
 
+        $('#loading').hide();
+
         // Get dropdown options for the filters
         for (var i = 0; i < FILTER_FIELDS.length; i++) {
             var field   = FILTER_FIELDS[i];
