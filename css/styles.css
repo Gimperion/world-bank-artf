@@ -1,11 +1,10 @@
 /* HTML ELEMENT STYLES */
 
 body {
-    font-family: 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
     font-size: 0.8em;
     line-height: 1.6em;
     font-weight: 400;
-    text-rendering: optimizeLegibility;
 }
 
 * {
@@ -14,7 +13,7 @@ body {
 }
 
 h1, h2, h3, h4, h5, h6 {
-    font-family: 'Bitter', 'Helvetica Neue', Arial, sans-serif;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
     line-height: 1.2em;
 }
 

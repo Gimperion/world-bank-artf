@@ -176,7 +176,7 @@
         var xScale = d3.time.scale()
             .domain([startDate, endDate])
             .nice(d3.time.year)
-            .range([30, VIZ_CHART_AREA_WIDTH]);
+            .range([20, VIZ_CHART_AREA_WIDTH]);
 
         // Set up the X-axis itself
         // Tick formatting labels only the year, with empty strings for months
@@ -226,7 +226,7 @@
             // Add horizontal line
             var gLine = g.append('line')
                 .attr('class', 'indicator-line')
-                .attr('x1', 30)
+                .attr('x1', 20)
                 .attr('x2', VIZ_VIEWPORT_WIDTH)
                 .attr('y1', yPos)
                 .attr('y2', yPos);
@@ -428,13 +428,13 @@
             g.append('circle')
                 .classed({'data-circle': false, 'circle-progress': true})
                 .style('fill', _getProgressColor(indicator.progress))
-                .attr('cx', 16)
+                .attr('cx', 10)
                 .attr('cy', yPos - 50)
                 .attr('r', 8);
 
             // Name of each indicator
             g.append('text')
-                .attr('x', 30)
+                .attr('x', 20)
                 .attr('y', yPos - 46)
                 .attr('text-anchor', 'start')
                 .text(function (d) {
@@ -447,7 +447,7 @@
 
             // Project & theme info
             g.append('text')
-                .attr('x', 30)
+                .attr('x', 20)
                 .attr('y', yPos - 32)
                 .attr('text-anchor', 'start')
                 .text(function (d) {
