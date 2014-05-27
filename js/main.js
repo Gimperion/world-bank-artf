@@ -140,11 +140,6 @@
         // Apply the filter to our data
         data = _.where(data, filter);
 
-        // color scale
-        // TODO: Set colors based on category, not per line
-        // c(i) where i = index -> returns a color
-        var c = d3.scale.category10();
-
         // Set up SVG display area
         var svg = d3.select('#viz').append('svg')
             .attr('width', VIZ_WIDTH)
@@ -231,8 +226,8 @@
                 .attr('x1', 30)
                 .attr('x2', VIZ_VIEWPORT_WIDTH)
                 .attr('y1', yPos)
-                .attr('y2', yPos)
-                .style('stroke', _getProgressColor(indicator.progress));
+                .attr('y2', yPos);
+                //.style('stroke', _getProgressColor(indicator.progress));
 
             // Baseline data group
             var gBaselineCircle = g.append('g').attr('class', 'indicator-baseline');
@@ -241,7 +236,7 @@
                 .data([indicator.baseline])
                 .enter()
                 .append('circle')
-                .attr('class', 'circle-baseline')
+                .classed({'data-circle': true, 'circle-baseline': true})
                 .style('fill', colors.baselineCircle)
                 .on('mouseover', function (d, i) { d3.select(this).classed('highlight', true); })
                 .on('mouseout', function (d, i) { d3.select(this).classed('highlight', false); });
@@ -253,7 +248,7 @@
                 .data(indicator.measurements)
                 .enter()
                 .append('circle')
-                .attr('class', 'circle-measured')
+                .classed({'data-circle': true, 'circle-measured': true})
                 .style('fill', colors.measureCircle);
 
             // Subtarget group
@@ -263,7 +258,7 @@
                 .data(indicator.subtargets)
                 .enter()
                 .append('circle')
-                .classed('circle-subtargets', true)
+                .classed({'data-circle': true, 'circle-subtargets': true})
                 .style('stroke', colors.subtargetCircle);
 
             // Latest measured data group
@@ -275,7 +270,7 @@
                 .data([indicator.measurements[indicator.measurements.length - 1]])
                 .enter()
                 .append('circle')
-                .attr('class', 'circle-latest')
+                .classed({'data-circle': true, 'circle-latest': true})
                 .style('fill', colors.latestCircle);
 
             // Target group
@@ -285,7 +280,7 @@
                 .data([indicator.target])
                 .enter()
                 .append('circle')
-                .classed('circle-target', true)
+                .classed({'data-circle': true, 'circle-target': true})
                 .style('stroke', colors.targetCircle);
 
             // Text label groups
@@ -437,20 +432,19 @@
                 .attr('class', 'hidden label label-target')
                 .style('fill', colors.targetLabel)
                 .text(function (d) { return d.displayValue; })
-            /*
-            text
-                .attr('y', j*20+25)
-                .attr('x',function (d, i) { return xScale(d[0])-5; })
-                .attr('class','value')
-                .text(function (d){ return d[1]; })
-                .style('fill', mockupColor)
-                .style('display','none');
-            */
 
-            // Labels for each indicator
+            // Progress indicator
+            g.append('circle')
+                .classed({'data-circle': false, 'circle-progress': true})
+                .style('fill', _getProgressColor(indicator.progress))
+                .attr('cx', 16)
+                .attr('cy', yPos - 40)
+                .attr('r', 8);
+
+            // Name of each indicator
             g.append('text')
-                .attr('x', 10)
-                .attr('y', yPos - 36)
+                .attr('x', 30)
+                .attr('y', yPos - 35)
                 .attr('text-anchor', 'start')
                 .text(function (d) {
                     return '[' + indicator['project_id'] + '] ' + indicator['indicator_name']
@@ -527,7 +521,7 @@
             d3.select(g).selectAll('.circle-subtargets').classed('show', true);
             d3.select(g).selectAll('.circle-latest').classed('show', true);
             d3.select(g).selectAll('.label').classed('hidden', false);
-            d3.select(g).selectAll('circle').attr('opacity', 0.20);
+            d3.select(g).selectAll('.data-circle').attr('opacity', 0.20);
         }
 
         function _onMouseoutIndicator (p) {
@@ -536,7 +530,7 @@
             d3.select(g).selectAll('.circle-latest').classed('show', false);
             if (!d3.select(g).classed('active')) {
                 d3.select(g).selectAll('.label').classed('hidden', true);
-                d3.select(g).selectAll('circle').attr('opacity', 1);
+                d3.select(g).selectAll('.data-circle').attr('opacity', 1);
             }
         }
 
@@ -558,7 +552,7 @@
             d3.select(gAll).selectAll('.circle-subtargets').classed('show', false);
             d3.select(gAll).selectAll('.circle-latest').classed('show', false);
             d3.select(gAll).selectAll('.label').classed('hidden', true);
-            d3.select(gAll).selectAll('circle').attr('opacity', 1);
+            d3.select(gAll).selectAll('.data-circle').attr('opacity', 1);
 
             // Clear info box
             $('#info-title').text('');
@@ -570,7 +564,7 @@
             d3.select(g).selectAll('.circle-subtargets').classed('show', true);
             d3.select(g).selectAll('.circle-latest').classed('show', true);
             d3.select(g).selectAll('.label').classed('hidden', false);
-            d3.select(g).selectAll('circle').attr('opacity', 0.20);
+            d3.select(g).selectAll('.data-circle').attr('opacity', 0.20);
 
             // Display the infos below
             var title = $(this).closest('.indicator').find('.indicator-name').data('name');
@@ -672,6 +666,11 @@
         [3] NOT USED (Yellow)
         [4] On target (if trend continues, projected success) - LIGHT GREEN
         [5] Target reached (success) - GREEN!
+
+        // NEW SCHEMA
+        [0] Unknown / no data - GRAY
+        [1] Target not reached, off-track - RED
+        [5] Target reached, on-track - GREEN
         */
 
         // If there are no measurements, we can't tell what the progress is.
