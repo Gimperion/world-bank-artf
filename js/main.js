@@ -269,8 +269,7 @@ var artf = (function ($) {
             var gLatestCircle = g.append('g').attr('class', 'indicator-latest');
 
             var latestCircle = gLatestCircle.selectAll('circle')
-            //  .data([indicator.projectedValue])
-                .data([indicator.measurements[indicator.measurements.length - 1]])
+                .data([indicator.projectedValue])
                 .enter()
                 .append('circle')
                 .classed({'data-circle': true, 'circle-latest': true})
@@ -343,18 +342,17 @@ var artf = (function ($) {
                 })
                 .attr('cy', yPos)
                 .attr('r', function (d) {
-                    // If the target is decreasing, and a measurement overshoots it, the
-                    // linear scale could result in a r-value less than 0. This would cause
-                    // an error because a radius can't be less than 0. For sake of
-                    // readability, we'll clamp the minimum radius to 2 pixels.
-                    return (rScale(d.value) >= 2) ? rScale(d.value) : 2;
+                    // Clamp radius to minimum of 2 or maximum of 24
+                    if (rScale(d.value) < 2) return 2;
+                    else if (rScale(d.value) > 24) return 24;
+                    else return rScale(d.value);
                 });
 
             // Latest measurement circle
-            /*
             latestCircle
                 .attr('cx', function (d, i) {
-                    if (trendMode !== 2 || (trendMode === 2 && indicator.target.dateRounded >= _roundDateToHalfYear(new Date()))) {
+                    // Only display if the target is in the future.
+                    if (indicator.target.dateRounded >= _roundDateToHalfYear(new Date())) {
                         return VIZ_LABEL_AREA_WIDTH + xScale(indicator.target.dateRounded);
                     } else {
                         // If hidden, just move it way off the page
@@ -363,13 +361,11 @@ var artf = (function ($) {
                 })
                 .attr('cy', yPos)
                 .attr('r', function (d) {
-                    // If the target is decreasing, and a measurement overshoots it, the
-                    // linear scale could result in a r-value less than 0. This would cause
-                    // an error because a radius can't be less than 0. For sake of
-                    // readability, we'll clamp the minimum radius to 2 pixels.
-                    return (rScale(d.value) >= 2) ? rScale(d.value) : 2;
+                    // Clamp radius to minimum of 2 or maximum of 24
+                    if (rScale(d) < 2) return 2;
+                    else if (rScale(d) > 24) return 24;
+                    else return rScale(d);
                 });
-            */
 
             // Target circle
             targetCircle
@@ -429,7 +425,7 @@ var artf = (function ($) {
             g.append('circle')
                 .classed({'data-circle': false, 'circle-progress': true})
                 .style('fill', _getProgressColor(indicator.progress))
-                .attr('cx', 10)
+                .attr('cx', 8)
                 .attr('cy', yPos - 50)
                 .attr('r', 8);
 
@@ -581,6 +577,7 @@ var artf = (function ($) {
             $('#info-title').text(title);
 
             var indicator = _.findWhere(data, { indicator_name: title });
+            console.log(indicator);
             $('#info-metadata').append('<strong>Project:</strong> ' + indicator.project_id + ' &mdash; ' + indicator.project_name + '<br>');
             $('#info-metadata').append('<strong>Status:</strong> ' + indicator.status + '<br>');
             $('#info-metadata').append('<strong>Baseline measurement:</strong> ' + indicator.baseline.displayString + '<br>');
@@ -816,7 +813,23 @@ var artf = (function ($) {
 
     // Figure out what the projected value is
     function _getProjectedValue (indicator) {
+        var latest = _.max(indicator.measurements, function (datum) {
+                return datum.date;
+            });
+        var baseline = indicator.baseline;
+        var target   = indicator.target;
 
+        // Difference between the latest and baseline values
+        // Divided by time interval to get a rate of change
+        // Multiply by time interval between target and baseline dates to get a projected difference
+        // Add to baseline value to get the projected value at time of target
+        var diff = latest.value - baseline.value;
+        var timeDiff = moment(latest.date).diff(baseline.date, 'months');
+        var rate = diff/timeDiff; // Rate of change per month
+        var timeSpan = moment(target.date).diff(baseline.date, 'months');
+        var projected = baseline.value + (rate * timeSpan);
+
+        return projected;
     }
 
     // Gets the earliest start date for the visualization, based on earliest baseline date of provided data.
