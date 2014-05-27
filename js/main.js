@@ -659,9 +659,7 @@ var artf = (function ($) {
         // included in the viz.
         var latestMeasures = []
         _.each(grouped, function (group) {
-            latestMeasures.push(_.max(group, function (datum) {
-                return datum.date;
-            }));
+            latestMeasures.push(_getLatestDatum(group));
         });
 
         // For each measurement, if it is NOT in latestMeasures,
@@ -734,7 +732,7 @@ var artf = (function ($) {
             target       = indicator.target,
             measurements = indicator.measurements,
             subtargets   = indicator.subtargets,
-            latest       = _.last(measurements),
+            latest       = _getLatestDatum(measurements),
             today        = new Date();
 
         // via Hackpad
@@ -745,59 +743,38 @@ var artf = (function ($) {
 
         // Get the value of the subtarget around the same
         // date as the most recent measurement
+        // If the last measurement is on or after the target, the target
+        // is what we compare to
         var subgoal;
-        for (var i = 0; i < subtargets.length; i++) {
-            var check = moment(subtargets[i].date);
-            if (moment(latest.dateRounded).isSame(check, 'month')) {
-                subgoal = subtargets[i];
-            }
-        }
-
-        // For targets that are increasing
-        if (indicator.targetIsIncreasing) {
-            // If target date has passed
-            if (!subgoal || target.date <= today) {
-                // and the most recent measurement has surpassed the target?
-                if (latest.value >= target.value) {
-                    return 2
-                // and the most recent measurement has not surpassed the target?
-                } else {
-                    return 1
-                }
-            // If the target date has not passed
-            } else {
-                // and the most recent measurement is 75% or more of the way to the subtarget of the same date?
-                if ((latest.value - baseline.value) >= (0.75 * (target.value - subgoal.value))) {
-                    return 2;
-                // and the most recent measurement is less than 75% of the way to the subtarget of the same date?
-                } else {
-                    return 1;
-                }
-            }
-        // Else, this target is decreasing
+        if (moment(latest.dateRounded).isSame(target.dateRounded) || moment(latest.dateRounded).isAfter(target.dateRounded)) {
+            subgoal = target;
         } else {
-            if (!subgoal || target.date <= today) {
-                // and the most recent measurement has surpassed the target?
-                if (latest.value <= target.value) {
-                    return 2;
-                // and the most recent measurement has not surpassed the target?
-                } else {
-                    return 1;
-                }
-            // If the target date has not passed
-            } else {
-                // and the most recent measurement is 75% or less of the way to the subtarget of the same date?
-                if (-(latest.value - baseline.value) >= (0.75 * -(target.value - subgoal.value))) {
-                    return 2;
-                // and the most recent measurement is more than 75% of the way to subtarget of the same date?
-                } else {
-                    return 1;
+            for (var i = 0; i < subtargets.length; i++) {
+                var check = moment(subtargets[i].date);
+                if (moment(latest.dateRounded).isSame(check, 'month')) {
+                    subgoal = subtargets[i];
                 }
             }
         }
 
         // Catch-all: return 0 for 'no data'
-        return 0;
+        if (!subgoal) return 0;
+
+        var idealDiff = Math.abs(subgoal.value - baseline.value),
+            actualDiff = Math.abs(latest.value - baseline.value);
+
+        if (actualDiff >= 0.75 * idealDiff) {
+            return 2;
+        } else {
+            return 1;
+        }
+    }
+
+    // Given an array of data points, return the one with the latest date
+    function _getLatestDatum (array) {
+        return _.max(array, function (datum) {
+            return datum.date;
+        });
     }
 
     function _getProgressColor (code) {
@@ -813,11 +790,9 @@ var artf = (function ($) {
 
     // Figure out what the projected value is
     function _getProjectedValue (indicator) {
-        var latest = _.max(indicator.measurements, function (datum) {
-                return datum.date;
-            });
-        var baseline = indicator.baseline;
-        var target   = indicator.target;
+        var latest   = _getLatestDatum(indicator.measurements),
+            baseline = indicator.baseline,
+            target   = indicator.target;
 
         // Difference between the latest and baseline values
         // Divided by time interval to get a rate of change
