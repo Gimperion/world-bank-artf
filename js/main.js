@@ -21,7 +21,7 @@ var artf = (function ($) {
     var FILTER_FIELDS        = ['status', 'project_name', 'sector'];
 
     // Set visualization options.
-    var VIZ_MARGINS          = {top: 25, right: 20, bottom: 0, left: 0},
+    var VIZ_MARGINS          = {top: 25, right: 30, bottom: 0, left: 0},
         VIZ_WIDTH            = document.querySelector('.container').offsetWidth,
         VIZ_VIEWPORT_WIDTH   = VIZ_WIDTH - VIZ_MARGINS.right - VIZ_MARGINS.left,
         VIZ_CHART_AREA_WIDTH = VIZ_VIEWPORT_WIDTH,
@@ -426,8 +426,8 @@ var artf = (function ($) {
             g.append('circle')
                 .classed({'data-circle': false, 'circle-progress': true})
                 .style('fill', _getProgressColor(indicator.progress))
-                .attr('cx', 8)
-                .attr('cy', yPos - 50)
+                .attr('cx', 10)
+                .attr('cy', yPos - 51)
                 .attr('r', 8);
 
             // Name of each indicator

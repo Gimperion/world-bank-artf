@@ -2,7 +2,6 @@
 
 body {
     font-family: 'Helvetica Neue', Arial, sans-serif;
-    font-size: 0.8em;
     line-height: 1.6em;
     font-weight: 400;
 }
@@ -32,7 +31,7 @@ div {
 }
 
 .container.float-legend {
-    margin-bottom: 160px; /* Space for floating legend */
+    margin-bottom: 180px; /* Space for floating legend */
 }
 
 .row {
@@ -257,7 +256,7 @@ text.indicator-name {
 }
 
 text.indicator-details {
-    font-size: 0.9em;
+    font-size: 0.75em;
     fill: #aaa;
 }
 
@@ -303,7 +302,7 @@ g.indicator.active circle {
 
 text.label {
     font-weight: 700;
-    font-size: 11px;
+    font-size: 0.9em;
 }
 
 text.label-baseline {
