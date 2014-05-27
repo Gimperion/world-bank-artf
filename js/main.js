@@ -632,8 +632,6 @@ var artf = (function ($) {
         measurement.units         = units;
         measurement.displayValue  = measurement.value.toLocaleString();
         measurement.displayString = _parseValueForDisplay(measurement);
-        // TODO: In case we want to keep all measurements and use this value
-        // to determine whether to include in viz
         measurement.display       = true;
 
         return measurement;
@@ -659,7 +657,9 @@ var artf = (function ($) {
             return datum.dateRounded;
         });
 
-        // In each group, get the one with the latest actual date
+        // In each group, get the ones with the latest actual date.
+        // This returns an array of all datums which SHOULD be
+        // included in the viz.
         var latestMeasures = []
         _.each(grouped, function (group) {
             latestMeasures.push(_.max(group, function (datum) {
@@ -667,7 +667,18 @@ var artf = (function ($) {
             }));
         });
 
-        return latestMeasures;
+        // For each measurement, if it is NOT in latestMeasures,
+        // set its display value to false.
+        var doNotDisplay = _.difference(measurements, latestMeasures);
+        for (var i = 0; i < measurements.length; i++) {
+            for (var j = 0; j < doNotDisplay.length; j++) {
+                if (_.isEqual(measurements[i], doNotDisplay[j])) {
+                    measurements[i].display = false;
+                }
+            }
+        }
+
+        return measurements;
     }
 
     // Given a value and units, create a string suitable for display
