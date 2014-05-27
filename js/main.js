@@ -20,7 +20,7 @@
     var FILTER_FIELDS        = ['status', 'project_name', 'sector'];
 
     // Set visualization options.
-    var VIZ_MARGINS          = {top: 25, right: 30, bottom: 0, left: 0},
+    var VIZ_MARGINS          = {top: 25, right: 20, bottom: 0, left: 0},
         VIZ_WIDTH            = document.querySelector('.container').offsetWidth,
         VIZ_VIEWPORT_WIDTH   = VIZ_WIDTH - VIZ_MARGINS.right - VIZ_MARGINS.left,
         VIZ_CHART_AREA_WIDTH = VIZ_VIEWPORT_WIDTH,
@@ -34,7 +34,7 @@
         ARTF_COLOR_LTGREEN   = '#9db679',  // ARTF.af sidebar color
         ARTF_COLOR_BLUE      = '#276cb0',  // ARTF.af main color
         ARTF_COLOR_LTBLUE    = '#87a4c1',  // ARTF.af sidebar color
-        ARTF_COLOR_ORANGERED = '#c54b25';  // Color interpreted from ARTF.af header image
+        ARTF_COLOR_ORANGERED = '#de7927'; //'#c54b25';  // Color interpreted from ARTF.af header image
 
     // Set some view options.
     // Do not edit.

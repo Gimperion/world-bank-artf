@@ -64,7 +64,7 @@ div {
 /* LAYOUT (SPECIFIC) */
 
 #viz {
-    margin-top: 20px;
+    margin-top: 10px;
     margin-bottom: 10px;
 
     -webkit-transition: height 250ms ease-out;
@@ -208,14 +208,6 @@ svg {
     fill: #999;
 }
 
-g.indicator {
-    cursor: pointer;
-}
-
-g.indicator.active {
-    cursor: pointer;
-}
-
 g rect.background {
     fill: white;
     fill-opacity: 0;
@@ -244,7 +236,7 @@ text.indicator-name {
 
 text.indicator-details {
     font-size: 0.9em;
-    fill: gray;
+    fill: #aaa;
 }
 
 g.indicator.active text.indicator-name {
@@ -255,10 +247,6 @@ text.label-today {
     font-size: 0.7em;
     font-weight: 700;
     fill: #888;
-}
-
-circle:hover {
-    cursor: pointer;
 }
 
 circle.highlight {
