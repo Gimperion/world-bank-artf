@@ -11,6 +11,10 @@ body {
     box-sizing: border-box;
 }
 
+h1, h2, h3 {
+    margin: 0.5em 0;
+}
+
 label {
     display: block;
 }
@@ -49,7 +53,7 @@ div {
 /* LAYOUT (SPECIFIC) */
 
 #viz {
-    margin-top: 10px;
+    margin-top: 20px;
     margin-bottom: 10px;
 
     -webkit-transition: height 250ms ease-out;

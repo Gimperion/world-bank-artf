@@ -9,6 +9,7 @@ var artf = (function ($) {
 
     var artf = {};
     var DATA_API_ENDPOINT    = 'data/data.json';
+    var SOCRATA_API_ENDPOINT = 'http://lou.demo.socrata.com/resource/9sf6-hht4.json';
 
     // This option sets how the filter behaves.
     // If true, filters intersect (AND)
@@ -53,9 +54,11 @@ var artf = (function ($) {
     // Get data!
     var data = artf.data = [];
 
+    //$.get(SOCRATA_API_ENDPOINT, function (response) {
     $.get(DATA_API_ENDPOINT, function (response) {
+        var vizData = _transformSocrataResponse(response);
 
-        data = artf.data = _parseData(response);
+        data = artf.data = _parseData(vizData);
 
         $('#loading').hide();
 
@@ -593,6 +596,16 @@ var artf = (function ($) {
     }
 
     // UTILITY FUNCTIONS
+
+    // Transforms Socrata JSON response to JSON structure used by this visualization
+    function _transformSocrataResponse (json) {
+        var data = [];
+
+        var intermediate = _.groupBy(json, 'indicator_name');
+
+        // TODO!
+        return json;
+    }
 
     // Parse dates and values from database API response
     function _parseData (data) {
