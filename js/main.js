@@ -4,9 +4,10 @@
 
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-(function ($) {
+var artf = (function ($) {
     'use strict';
 
+    var artf = {};
     var DATA_API_ENDPOINT    = 'data/data.json';
 
     // This option sets how the filter behaves.
@@ -50,11 +51,11 @@
     var INDICATOR_PROGRESS_COLORS = ['#cdcdcd', '#d7191c', '#1a9641'];
 
     // Get data!
-    var data =[];
+    var data = artf.data = [];
 
     $.get(DATA_API_ENDPOINT, function (response) {
 
-        data = _parseData(response);
+        data = artf.data = _parseData(response);
 
         $('#loading').hide();
 
@@ -140,7 +141,7 @@
             if (value) filter[field] = value;
         });
         // Apply the filter to our data
-        data = _.where(data, filter);
+        data = artf.data = _.where(data, filter);
 
         // Set up SVG display area
         var svg = d3.select('#viz').append('svg')
@@ -161,7 +162,7 @@
         }
 
         // Sort the data by display order
-        data = _sortDataInDisplayOrder(data);
+        data = artf.data = _sortDataInDisplayOrder(data);
 
         var startDate = _getStartDate(data),
             endDate   = _getEndDate(data);
@@ -247,7 +248,7 @@
             var gValues = g.append('g').attr('class', 'indicator-measured');
 
             var measuredCircles = gValues.selectAll('circle')
-                .data(indicator.measurements)
+                .data(_.where(indicator.measurements, {display:true}))
                 .enter()
                 .append('circle')
                 .classed({'data-circle': true, 'circle-measured': true})
@@ -296,7 +297,7 @@
             var gMeasurementLabel = g.append('g').attr('class', 'indicator-measurement-label');
 
             var measurementLabel = gMeasurementLabel.selectAll('text')
-                .data(indicator.measurements)
+                .data(_.where(indicator.measurements, {display:true}))
                 .enter()
                 .append('text');
 
@@ -631,6 +632,9 @@
         measurement.units         = units;
         measurement.displayValue  = measurement.value.toLocaleString();
         measurement.displayString = _parseValueForDisplay(measurement);
+        // TODO: In case we want to keep all measurements and use this value
+        // to determine whether to include in viz
+        measurement.display       = true;
 
         return measurement;
     }
@@ -647,15 +651,23 @@
         return measurements;
     }
 
+    // Given an array of measurements, only keep the latest measurement
+    // that occupies the same spot on the time chart.
     function _removeDuplicateMeasurements (measurements) {
-        var removed = measurements;
+        // Group measurements by its dateRounded property
+        var grouped = _.groupBy(measurements, function (datum) {
+            return datum.dateRounded;
+        });
 
-        // Array of measurements
-        // Wherever the dateRounded property is the same,
-        // Find the one with the latest date
-        // then drop all the other ones.
+        // In each group, get the one with the latest actual date
+        var latestMeasures = []
+        _.each(grouped, function (group) {
+            latestMeasures.push(_.max(group, function (datum) {
+                return datum.date;
+            }));
+        });
 
-        return removed;
+        return latestMeasures;
     }
 
     // Given a value and units, create a string suitable for display
@@ -916,5 +928,8 @@
                 break;
         }
     }
+
+    // Expose internals
+    return artf;
 
 })(jQuery);
