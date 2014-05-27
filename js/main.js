@@ -101,7 +101,8 @@ var artf = (function ($) {
 
         // Hide legend
         $('#hide-legend').on('click', function (e) {
-            $('#legend').slideUp(200);
+            $('#legend-container').toggleClass('hide');
+            // $('#legend').slideUp(200);
             $('.container').removeClass('float-legend');
         });
 

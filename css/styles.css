@@ -64,12 +64,7 @@ div {
 }
 
 #legend {
-    position: fixed;
-    bottom: 0;
-    width: 695px;
-    margin: 10px 0;
-    background-color: white;
-    z-index: 300;
+    margin: 2px 0 10px 0;
 }
 
 #legend img {
@@ -77,6 +72,19 @@ div {
     margin-left: -5px;
     width: 100%;
     height: auto;
+}
+
+#legend h3 {
+    margin-top: 5px;
+}
+
+#legend-container {
+    position: fixed;
+    bottom: 0;
+    width: 695px;
+    padding: 10px 0;
+    background-color: white;
+    z-index: 300;
 }
 
 .reset-container {
@@ -87,16 +95,44 @@ div {
 
 #hide-legend {
     position: absolute;
-    top: 10px;
+    top: 20px;
     right: 16px;
     cursor: pointer;
     font-size: 20px;
     color: gray;
+    z-index: 350;
 }
 
 #hide-legend:hover {
     color: #27a9e1;
 }
+
+#legend-container.hide {
+    bottom: 0;
+    height: 30px;
+    overflow: hidden;
+}
+
+#legend-container.hide #legend {
+    display: none;
+}
+
+#legend-container.hide #hide-legend {
+    top: 0;
+}
+
+#legend-container.hide #hide-legend:after {
+    content: 'show legend';
+    position: absolute;
+    right: 0;
+    background-color: white;
+    font-size: 13px;
+    white-space: nowrap;
+    border: 1px solid lightgray;
+    border-radius: 3px;
+    padding: 2px 10px;
+}
+
 
 #debug {
     display: none;
