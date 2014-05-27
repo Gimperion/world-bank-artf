@@ -45,7 +45,9 @@
     // Borrowed from Colorbrewer
     // 0 is No data (gray)
     // 1-5 is the red-green scale from http://bl.ocks.org/mbostock/5577023
-    var INDICATOR_COLOR_SCALE = ['#cdcdcd','#d7191c','#fdae61','#ffffbf','#a6d96a','#1a9641'];
+    // TODO: DEPRECATE / REMOVE
+    // var INDICATOR_COLOR_SCALE = ['#cdcdcd','#d7191c','#fdae61','#ffffbf','#a6d96a','#1a9641'];
+    var INDICATOR_PROGRESS_COLORS = ['#cdcdcd', '#d7191c', '#1a9641'];
 
     // Get data!
     var data =[];
@@ -219,6 +221,7 @@
                 .attr('y', yPos - (VIZ_ROW_SPACING / 2) - 16) // Offsets to include extra text area at top
                 .attr('width', VIZ_WIDTH)
                 .attr('height', VIZ_ROW_SPACING);
+                // Note: if yPos changes here, also, change the hoverable rect below
 
             // Add horizontal line
             var gLine = g.append('line')
@@ -227,7 +230,6 @@
                 .attr('x2', VIZ_VIEWPORT_WIDTH)
                 .attr('y1', yPos)
                 .attr('y2', yPos);
-                //.style('stroke', _getProgressColor(indicator.progress));
 
             // Baseline data group
             var gBaselineCircle = g.append('g').attr('class', 'indicator-baseline');
@@ -457,7 +459,7 @@
             g.append('rect')
                 .classed('hoverable', true)
                 .attr('x', 0)
-                .attr('y', yPos - (VIZ_ROW_SPACING / 2))
+                .attr('y', yPos - (VIZ_ROW_SPACING / 2) - 16)
                 .attr('width', VIZ_VIEWPORT_WIDTH)
                 .attr('height', VIZ_ROW_SPACING)
                 .on('mouseover.indicator', _onMouseoverIndicator)
@@ -606,6 +608,12 @@
             }
             data[k].subtargets = _makeSubtargets(data[k]);
 
+            // Measurements that occur after the target date should be shifted to the target date
+            data[k].measurements = _shiftLateMeasurements(data[k].measurements, data[k].target.dateRounded);
+
+            // Remove measurement data points that are overlapping on the same point
+            data[k].measurements = _removeDuplicateMeasurements(data[k].measurements);
+
             // Other information to encode
             data[k].targetIsIncreasing = _isTargetIncreasing(data[k]);
             data[k].projectedValue = _getProjectedValue(data[k]);
@@ -615,7 +623,7 @@
         return data;
     }
 
-    // Format and transform measurement data to useful bits
+    // Format and transform measurements to make them useful for the visualization
     function _transformMeasurement (measurement, units) {
         measurement.date          = new Date(Date.parse(measurement.date));
         measurement.dateRounded   = _roundDateToHalfYear(measurement.date);
@@ -625,6 +633,29 @@
         measurement.displayString = _parseValueForDisplay(measurement);
 
         return measurement;
+    }
+
+    // Given an array of measurements and the target date, shift all future
+    // measurements to be equal to the target date. Works off of the "date rounded"
+    // field, because that governs each points' location in the viz.
+    function _shiftLateMeasurements (measurements, targetDate) {
+        for (var i = 0; i < measurements.length; i++) {
+            if (moment(measurements[i].dateRounded).isAfter(targetDate)) {
+                measurements[i].dateRounded = targetDate;
+            }
+        }
+        return measurements;
+    }
+
+    function _removeDuplicateMeasurements (measurements) {
+        var removed = measurements;
+
+        // Array of measurements
+        // Wherever the dateRounded property is the same,
+        // Find the one with the latest date
+        // then drop all the other ones.
+
+        return removed;
     }
 
     // Given a value and units, create a string suitable for display
@@ -667,17 +698,10 @@
     function _getProgress (indicator) {
         /*
         Progress codes
-        [0] Progress unknown (not enough measurements) - GRAY
-        [1] Target not reached (failure) - RED!
-        [2] Needs improvement (if trend continues, projected failure) - LIGHT RED / ORANGE
-        [3] NOT USED (Yellow)
-        [4] On target (if trend continues, projected success) - LIGHT GREEN
-        [5] Target reached (success) - GREEN!
-
         // NEW SCHEMA
         [0] Unknown / no data - GRAY
         [1] Target not reached, off-track - RED
-        [5] Target reached, on-track - GREEN
+        [2] Target reached, on-track - GREEN
         */
 
         // If there are no measurements, we can't tell what the progress is.
@@ -715,7 +739,7 @@
             if (!subgoal || target.date <= today) {
                 // and the most recent measurement has surpassed the target?
                 if (latest.value >= target.value) {
-                    return 5
+                    return 2
                 // and the most recent measurement has not surpassed the target?
                 } else {
                     return 1
@@ -724,10 +748,10 @@
             } else {
                 // and the most recent measurement is 75% or more of the way to the subtarget of the same date?
                 if ((latest.value - baseline.value) >= (0.75 * (target.value - subgoal.value))) {
-                    return 4;
+                    return 2;
                 // and the most recent measurement is less than 75% of the way to the subtarget of the same date?
                 } else {
-                    return 2;
+                    return 1;
                 }
             }
         // Else, this target is decreasing
@@ -735,7 +759,7 @@
             if (!subgoal || target.date <= today) {
                 // and the most recent measurement has surpassed the target?
                 if (latest.value <= target.value) {
-                    return 5;
+                    return 2;
                 // and the most recent measurement has not surpassed the target?
                 } else {
                     return 1;
@@ -744,10 +768,10 @@
             } else {
                 // and the most recent measurement is 75% or less of the way to the subtarget of the same date?
                 if (-(latest.value - baseline.value) >= (0.75 * -(target.value - subgoal.value))) {
-                    return 4;
+                    return 2;
                 // and the most recent measurement is more than 75% of the way to subtarget of the same date?
                 } else {
-                    return 2;
+                    return 1;
                 }
             }
         }
@@ -757,7 +781,7 @@
     }
 
     function _getProgressColor (code) {
-        return INDICATOR_COLOR_SCALE[code];
+        return INDICATOR_PROGRESS_COLORS[code];
     }
 
     // Returns data array in a different order intended for visualization
@@ -804,7 +828,6 @@
     // Round a given Date object to the nearest 6 months, using D3.
     function _roundDateToHalfYear (date) {
         // TODO: Verify that this is returning optimal rounding
-        // TODO: What happens if a rounded date is the same as another measurement?
         var lowerRange = d3.time.month.offset(date, -3);
         var upperRange = d3.time.month.offset(date, 3);
         return d3.time.month.range(lowerRange, upperRange, 6)[0];
