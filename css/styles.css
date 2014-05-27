@@ -242,6 +242,11 @@ text.value {
 text.indicator-name {
 }
 
+text.indicator-details {
+    font-size: 0.9em;
+    fill: gray;
+}
+
 g.indicator.active text.indicator-name {
     font-weight: 700;
 }

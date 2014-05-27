@@ -25,7 +25,7 @@
         VIZ_VIEWPORT_WIDTH   = VIZ_WIDTH - VIZ_MARGINS.right - VIZ_MARGINS.left,
         VIZ_CHART_AREA_WIDTH = VIZ_VIEWPORT_WIDTH,
         VIZ_LABEL_AREA_WIDTH = 0,
-        VIZ_ROW_SPACING      = 80,
+        VIZ_ROW_SPACING      = 90,
         VIZ_MAIN_COLOR       = '#27a9e1',
         VIZ_ACCENT_COLOR     = '#c34040';
 
@@ -208,7 +208,7 @@
             var indicator = data[j]
 
             // Vertical position of indicator
-            var yPos = (j + 1) * VIZ_ROW_SPACING - 30;
+            var yPos = (j + 1) * VIZ_ROW_SPACING - 20;
 
             // Create group for each indicator
             var g = svg.append('g').attr('class', 'indicator');
@@ -216,7 +216,7 @@
             var gBg = g.append('g').append('rect')
                 .classed('background', true)
                 .attr('x', 0)
-                .attr('y', yPos - (VIZ_ROW_SPACING / 2) - 10) // Offsets to include extra text area at top
+                .attr('y', yPos - (VIZ_ROW_SPACING / 2) - 16) // Offsets to include extra text area at top
                 .attr('width', VIZ_WIDTH)
                 .attr('height', VIZ_ROW_SPACING);
 
@@ -304,17 +304,6 @@
                 .data([indicator.target])
                 .enter()
                 .append('text');
-
-            // Special rect shape for interaction hover area
-            var gHoverArea = g.append('rect')
-                .classed('hoverable', true)
-                .attr('x', 0)
-                .attr('y', yPos - (VIZ_ROW_SPACING / 2))
-                .attr('width', VIZ_VIEWPORT_WIDTH)
-                .attr('height', VIZ_ROW_SPACING)
-                .on('mouseover.indicator', _onMouseoverIndicator)
-                .on('mouseout.indicator', _onMouseoutIndicator)
-                .on('click.indicator', _onClickIndicator);
 
             // Set radius of circle sizes
             // For the upper range, calculate based on width of viewport and number of
@@ -438,13 +427,13 @@
                 .classed({'data-circle': false, 'circle-progress': true})
                 .style('fill', _getProgressColor(indicator.progress))
                 .attr('cx', 16)
-                .attr('cy', yPos - 40)
+                .attr('cy', yPos - 50)
                 .attr('r', 8);
 
             // Name of each indicator
             g.append('text')
                 .attr('x', 30)
-                .attr('y', yPos - 35)
+                .attr('y', yPos - 46)
                 .attr('text-anchor', 'start')
                 .text(function (d) {
                     return '[' + indicator['project_id'] + '] ' + indicator['indicator_name']
@@ -452,10 +441,28 @@
                 .attr('data-id', indicator['project_id'])
                 .attr('data-name', indicator['indicator_name'])
                 .style('fill', colors.indicatorLabel)
-                .classed('indicator-name', true)
-                .on('mouseover', _onMouseoverIndicator)
-                .on('mouseout', _onMouseoutIndicator)
-                .on('click', _onClickIndicator);
+                .classed('indicator-name', true);
+
+            // Project & theme info
+            g.append('text')
+                .attr('x', 30)
+                .attr('y', yPos - 32)
+                .attr('text-anchor', 'start')
+                .text(function (d) {
+                    return 'in ' + indicator['sector'] + ' — ' + indicator['project_name']
+                })
+                .classed('indicator-details', true)
+
+            // Special rect shape for interaction hover area
+            g.append('rect')
+                .classed('hoverable', true)
+                .attr('x', 0)
+                .attr('y', yPos - (VIZ_ROW_SPACING / 2))
+                .attr('width', VIZ_VIEWPORT_WIDTH)
+                .attr('height', VIZ_ROW_SPACING)
+                .on('mouseover.indicator', _onMouseoverIndicator)
+                .on('mouseout.indicator', _onMouseoutIndicator)
+                .on('click.indicator', _onClickIndicator);
         };
 
         // * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
@@ -816,28 +823,6 @@
         var subtargets = [],
             divisor    = interval.length;
 
-        // Significant digits
-
-        //Function: getSigFigFromNum( num ), provides the significant digits of a number.
-        //@num must be a number (base 10) that is a string. example "01"
-        var getSigFigFromNum = function( num ){
-            if( isNaN( +num ) ){
-                throw new Error( "getSigFigFromNum(): num (" + num + ") is not a number." );
-            }
-            // We need to get rid of the leading zeros for the numbers.
-            num = num.toString();
-            num = num.replace( /^0+/, '');
-            // re is a RegExp to get the numbers from first non-zero to last non-zero
-            var re = /[^0](\d*[^0])?/;
-            return ( /\./.test( num ) )? num.length - 1 : (num.match( re ) || [''])[0].length;
-        };
-
-        var baselineSigfig = getSigFigFromNum(baseline.value);
-        var targetSigfig = getSigFigFromNum(target.value);
-        var sigfig = Math.max(baselineSigfig, targetSigfig);
-        // don't use sig 0
-        if (sigfig < 1) sigfig = 1;
-
         // Start making a new subtarget array.
         // Note: we start counting at 1 because position 0 of the interval array
         // is the baseline date, which we don't need again.
@@ -857,7 +842,7 @@
 
             subtargets.push({
                 date:  interval[i],
-                value: parseFloat(subvalue.toPrecision(sigfig))
+                value: parseFloat(subvalue)
             });
         }
 
