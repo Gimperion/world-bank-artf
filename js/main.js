@@ -221,7 +221,7 @@
             var gBg = g.append('g').append('rect')
                 .classed('background', true)
                 .attr('x', 0)
-                .attr('y', yPos - (VIZ_ROW_SPACING / 2))
+                .attr('y', yPos - (VIZ_ROW_SPACING / 2) - 10) // Offsets to include extra text area at top
                 .attr('width', VIZ_WIDTH)
                 .attr('height', VIZ_ROW_SPACING);
 
@@ -450,7 +450,7 @@
             // Labels for each indicator
             g.append('text')
                 .attr('x', 10)
-                .attr('y', yPos - 24)
+                .attr('y', yPos - 36)
                 .attr('text-anchor', 'start')
                 .text(function (d) {
                     return '[' + indicator['project_id'] + '] ' + indicator['indicator_name']
