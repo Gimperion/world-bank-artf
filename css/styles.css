@@ -1,7 +1,8 @@
 /* HTML ELEMENT STYLES */
 
-body {
+html, body {
     font: 11px/16px Verdana, Geneva, sans-serif;
+    overflow-x: hidden;
 }
 
 * {
@@ -28,6 +29,10 @@ div {
 }
 
 /* LAYOUT (GENERIC) */
+
+body.iframed {
+    margin: 0;
+}
 
 .container {
     width: 695px;

@@ -134,6 +134,11 @@ var artf = (function ($) {
             createViz(data);
         });
 
+        // Detect if iframed
+        if (window.self !== window.top) {
+            $('body').addClass('iframed');
+        }
+
         // Only show the debug window when this page is viewed directly
         // It is hidden if iframed
         if (window.self === window.top && DEBUG_MODE === true) {
