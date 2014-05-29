@@ -8,6 +8,10 @@ var artf = (function ($) {
     'use strict';
 
     var artf = {};
+
+    var params = _getParams();
+    console.log(params);
+
     var DATA_API_ENDPOINT    = 'data/data.json';
     var SOCRATA_API_ENDPOINT = 'http://lou.demo.socrata.com/resource/9sf6-hht4.json';
 
@@ -27,7 +31,7 @@ var artf = (function ($) {
         VIZ_VIEWPORT_WIDTH   = VIZ_WIDTH - VIZ_MARGINS.right - VIZ_MARGINS.left,
         VIZ_CHART_AREA_WIDTH = VIZ_VIEWPORT_WIDTH,
         VIZ_LABEL_AREA_WIDTH = 0,
-        VIZ_ROW_SPACING      = 90,
+        VIZ_ROW_SPACING      = 70,
         VIZ_MAIN_COLOR       = '#27a9e1',
         VIZ_ACCENT_COLOR     = '#c34040';
 
@@ -74,6 +78,17 @@ var artf = (function ($) {
             }
         }
 
+        // Default behaviors
+        if (!params.sector && params.clear !== true) {
+            params.sector = 'Agriculture';
+        }
+        if (!params.limit && params.clear !== true) {
+            params.limit = 6;
+        }
+
+        // TODO: Update params in query string
+        $('#filter-sector').val(params.sector);
+
         // Create SVG viz
         createViz(data);
     });
@@ -99,6 +114,9 @@ var artf = (function ($) {
         // Resets visualization
         $('#filter-reset').on('click', function (e) {
             e.preventDefault();
+            $('#filter select').each(function (index) {
+                $(this).val('');
+            })
             createViz(data);
         });
 
@@ -106,7 +124,14 @@ var artf = (function ($) {
         $('#hide-legend').on('click', function (e) {
             $('#legend-container').toggleClass('hide');
             // $('#legend').slideUp(200);
-            $('.container').removeClass('float-legend');
+            $('.container').toggleClass('float-legend');
+        });
+
+        $('#more-nav .show-all').on('click', function (e) {
+            e.preventDefault();
+            params.limit = 0;
+            params.clear = true;
+            createViz(data);
         });
 
         // Only show the debug window when this page is viewed directly
@@ -146,6 +171,9 @@ var artf = (function ($) {
         });
         // Apply the filter to our data
         data = artf.data = _.where(data, filter);
+
+        // Shuffle the list
+        data = artf.data = _.shuffle(data);
 
         // Set up SVG display area
         var svg = d3.select('#viz').append('svg')
@@ -209,13 +237,31 @@ var artf = (function ($) {
 
         // * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-        // Data and formatting specific to each data set
-        for (var j = 0; j < data.length; j++) {
+        // Determine maximum number to show.
+        // Either a parameter limit, or all
+        var vizLimit = (params.limit) ? params.limit : data.length;
 
-            var indicator = data[j]
+        $('#more-nav').hide();
+        if (params.limit < data.length && params.limit > 0) {
+            $('#more-nav .page-limit').text(params.limit);
+            $('#more-nav .indicator-count').text(data.length);
+            $('#more-nav .show-all').show();
+            $('#more-nav').show();
+        } else if (params.limit === 0) {
+            $('#more-nav .page-limit').text('all');
+            $('#more-nav .indicator-count').text(data.length);
+            $('#more-nav .show-all').hide();
+            $('#more-nav').show();
+        }
+
+        // Data and formatting specific to each data set
+        for (var j = 0; j < vizLimit; j++) {
+
+            if (!data[j]) break;
+            else var indicator = data[j];
 
             // Vertical position of indicator
-            var yPos = (j + 1) * VIZ_ROW_SPACING - 20;
+            var yPos = (j + 1) * VIZ_ROW_SPACING - 10; // Offset closer to year line
 
             // Create group for each indicator
             var g = svg.append('g').attr('class', 'indicator');
@@ -313,9 +359,9 @@ var artf = (function ($) {
 
             // Set radius of circle sizes
             // For the upper range, calculate based on width of viewport and number of
-            // ticks so as to never overlap circles, but never more than 14
-            var radiusLowerRange = 4;
-            var radiusUpperRange = 14;
+            // ticks so as to never overlap circles, but never more than 12
+            var radiusLowerRange = 3;
+            var radiusUpperRange = 12;
             // TODO
 
             // Radius scale for circle
@@ -426,20 +472,29 @@ var artf = (function ($) {
                 .text(function (d) { return d.displayValue; })
 
             // Progress indicator
+            /*
             g.append('circle')
                 .classed({'data-circle': false, 'circle-progress': true})
                 .style('fill', _getProgressColor(indicator.progress))
                 .attr('cx', 10)
                 .attr('cy', yPos - 51)
                 .attr('r', 8);
+            */
+            g.append('rect')
+                .classed({'data-circle': false, 'circle-progress': true})
+                .style('fill', _getProgressColor(indicator.progress))
+                .attr('x', 5)
+                .attr('y', yPos - 47)
+                .attr('width', 10)
+                .attr('height', 10);
 
             // Name of each indicator
             g.append('text')
                 .attr('x', 20)
-                .attr('y', yPos - 46)
+                .attr('y', yPos - 38)
                 .attr('text-anchor', 'start')
                 .text(function (d) {
-                    return '[' + indicator['project_id'] + '] ' + indicator['indicator_name']
+                    return indicator['indicator_name'];
                 })
                 .attr('data-id', indicator['project_id'])
                 .attr('data-name', indicator['indicator_name'])
@@ -449,10 +504,10 @@ var artf = (function ($) {
             // Project & theme info
             g.append('text')
                 .attr('x', 20)
-                .attr('y', yPos - 32)
+                .attr('y', yPos - 24)
                 .attr('text-anchor', 'start')
                 .text(function (d) {
-                    return 'in ' + indicator['sector'] + ' — ' + indicator['project_name']
+                    return 'in ' + indicator['sector'] + ' — ' + '[' + indicator['project_id'] + '] ' + indicator['project_name'];
                 })
                 .classed('indicator-details', true)
 
@@ -515,7 +570,7 @@ var artf = (function ($) {
         // Add a label for the indicator that appears on hover
         var todayLabel = gToday.append('text')
             .attr('x', todayXPos)
-            .attr('y', todayYEnd)
+            .attr('y', -4)
             .attr('text-anchor', 'middle')
             .text('Now')
             .classed('label-today', true);
@@ -574,7 +629,7 @@ var artf = (function ($) {
             d3.select(g).selectAll('.circle-subtargets').classed('show', true);
             d3.select(g).selectAll('.circle-latest').classed('show', true);
             d3.select(g).selectAll('.label').classed('hidden', false);
-            d3.select(g).selectAll('.data-circle').attr('opacity', 0.20);
+            d3.select(g).selectAll('.data-circle').attr('opacity', 0.30);
 
             // Display the infos below
             var title = $(this).closest('.indicator').find('.indicator-name').data('name');
@@ -939,6 +994,59 @@ var artf = (function ($) {
                     targetLabel:     ARTF_COLOR_ORANGERED
                 }
                 break;
+        }
+    }
+
+    // Get query string params 
+    function _getParams () {
+        var queryString = window.location.search.substring(1),
+            queries     = queryString.split('&'),
+            params      = {};
+
+        // If there is no query string just return an empty object
+        if (queries.length === 1 && queries[0] == '') {
+            return params;
+        }
+
+        // Basic attempt at recognizing typeofs
+        for (var i = 0; i < queries.length; i++) {
+            var split = queries[i].split('=');
+            if (!isNaN(parseFloat(split[1]))) {
+                params[split[0]] = parseFloat(split[1]);
+            } else if (_.isBoolean(stringToBoolean(split[1]))) {
+                params[split[0]] = stringToBoolean(split[1]);
+            } else {
+                params[split[0]] = split[1];
+            }
+        }
+
+        return params;
+    }
+
+    function _setURLString (params) {
+        return false;
+        // TODO: DON'T DO THIS
+        /*
+        if (_.size(params) > 0) {
+            var queryString = '?'
+            for (var key in params) {
+                queryString += key + '=' + params[key] + '&';
+            }
+            window.location.search = queryString;
+        }
+        */
+    }
+
+    function stringToBoolean (string) {
+        switch (_.isString(string) && string.toLowerCase().trim()) {
+            case 'true':
+            case 'yes':
+                return true;
+            case 'false':
+            case 'no':
+                return false;
+            default: 
+                return string;
         }
     }
 
