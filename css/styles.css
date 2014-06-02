@@ -88,11 +88,15 @@ body.iframed {
 #legend-container {
     position: fixed;
     bottom: 0;
-    left: 0;
+    left: 10px;
     width: 695px;
     padding: 10px 0;
     background-color: white;
     z-index: 300;
+}
+
+body.iframed #legend-container {
+    left: 0;
 }
 
 .reset-container {
