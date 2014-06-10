@@ -282,6 +282,11 @@ svg {
     height: 100%;
 }
 
+/* reset all pointer events */
+svg path, svg line, svg rect, svg circle, svg text, svg g {
+    pointer-events: none;
+}
+
 .axis path, .axis line {
     fill: none;
     stroke: #aaa;
@@ -396,10 +401,9 @@ g.today line {
     stroke-dasharray: 5, 4;
 }
 
-rect.hoverable {
+rect.background {
     cursor: pointer;
-    fill: white;
-    fill-opacity: 0;
+    pointer-events: auto;
 }
 
 /* LOADING */

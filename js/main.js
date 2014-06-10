@@ -54,7 +54,7 @@ var artf = (function ($) {
         VIZ_VIEWPORT_WIDTH   = VIZ_WIDTH - VIZ_MARGINS.right - VIZ_MARGINS.left,
         VIZ_CHART_AREA_WIDTH = VIZ_VIEWPORT_WIDTH,
         VIZ_LABEL_AREA_WIDTH = 0,
-        VIZ_ROW_SPACING      = 70,
+        VIZ_ROW_SPACING      = 90,
         VIZ_MAIN_COLOR       = '#27a9e1',
         VIZ_ACCENT_COLOR     = '#c34040';
 
@@ -106,7 +106,7 @@ var artf = (function ($) {
             params.sector = 'Agriculture';
         }
         if (!params.limit && params.clear !== true) {
-            params.limit = 6;
+            params.limit = 5;
         }
 
         // TODO: Update params in query string
@@ -299,8 +299,10 @@ var artf = (function ($) {
                 .attr('x', 0)
                 .attr('y', yPos - (VIZ_ROW_SPACING / 2) - 16) // Offsets to include extra text area at top
                 .attr('width', VIZ_WIDTH)
-                .attr('height', VIZ_ROW_SPACING);
-                // Note: if yPos changes here, also, change the hoverable rect below
+                .attr('height', VIZ_ROW_SPACING)
+                .on('mouseover.indicator', _onMouseoverIndicator)
+                .on('mouseout.indicator', _onMouseoutIndicator)
+                .on('click.indicator', _onClickIndicator);
 
             // Add horizontal line
             var gLine = g.append('line')
@@ -512,14 +514,14 @@ var artf = (function ($) {
                 .classed({'data-circle': false, 'circle-progress': true})
                 .style('fill', _getProgressColor(indicator.progress))
                 .attr('x', 5)
-                .attr('y', yPos - 47)
+                .attr('y', yPos - 56)
                 .attr('width', 10)
                 .attr('height', 10);
 
             // Name of each indicator
             g.append('text')
                 .attr('x', 20)
-                .attr('y', yPos - 38)
+                .attr('y', yPos - 46)
                 .attr('text-anchor', 'start')
                 .text(function (d) {
                     return indicator['indicator_name'];
@@ -532,7 +534,7 @@ var artf = (function ($) {
             // Project & theme info
             g.append('text')
                 .attr('x', 20)
-                .attr('y', yPos - 24)
+                .attr('y', yPos - 30)
                 .attr('text-anchor', 'start')
                 .text(function (d) {
                     return 'in ' + indicator['sector'] + ' — ' + '[' + indicator['project_id'] + '] ' + indicator['project_name'];
@@ -540,6 +542,7 @@ var artf = (function ($) {
                 .classed('indicator-details', true)
 
             // Special rect shape for interaction hover area
+            /*
             g.append('rect')
                 .classed('hoverable', true)
                 .attr('x', 0)
@@ -549,6 +552,7 @@ var artf = (function ($) {
                 .on('mouseover.indicator', _onMouseoverIndicator)
                 .on('mouseout.indicator', _onMouseoutIndicator)
                 .on('click.indicator', _onClickIndicator);
+            */
         };
 
         // * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
@@ -610,7 +614,7 @@ var artf = (function ($) {
         // * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
         function _onMouseoverIndicator (p) {
-            var g = d3.select(this).node().parentNode;
+            var g = d3.select(this).node().parentNode.parentNode;
             d3.select(g).selectAll('.circle-subtargets').classed('show', true);
             d3.select(g).selectAll('.circle-latest').classed('show', true);
             d3.select(g).selectAll('.label').classed('hidden', false);
@@ -618,7 +622,7 @@ var artf = (function ($) {
         }
 
         function _onMouseoutIndicator (p) {
-            var g = d3.select(this).node().parentNode;
+            var g = d3.select(this).node().parentNode.parentNode;
             d3.select(g).selectAll('.circle-subtargets').classed('show', false);
             d3.select(g).selectAll('.circle-latest').classed('show', false);
             if (!d3.select(g).classed('active')) {
@@ -637,7 +641,7 @@ var artf = (function ($) {
         }
 
         function _onClickIndicator () {
-            var g = d3.select(this).node().parentNode;
+            var g = d3.select(this).node().parentNode.parentNode;
             var gAll = d3.select(g).node().parentNode;
 
             // Deselect all indicators
