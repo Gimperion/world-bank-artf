@@ -35,8 +35,8 @@ var artf = (function ($) {
     var params = _getParams();
     console.log(params);
 
-    var DATA_API_ENDPOINT    = 'data/data.json';
-    var SOCRATA_API_ENDPOINT = 'http://lou.demo.socrata.com/resource/9sf6-hht4.json';
+    var DATA_API_ENDPOINT       = 'data/data.json';
+    var SOCRATA_API_ENDPOINT    = 'http://lou.demo.socrata.com/resource/9sf6-hht4.json';
 
     // This option sets how the filter behaves.
     // If true, filters intersect (AND)
@@ -46,30 +46,36 @@ var artf = (function ($) {
     // These are data fields / columns to filter on.
     // The filter dropdowns are automatically generated,
     // but you will have to add the selects yourself.
-    var FILTER_FIELDS        = ['status', 'project_name', 'sector'];
+    var FILTER_FIELDS           = ['status', 'project_name', 'sector'];
 
     // Set visualization options.
-    var VIZ_MARGINS          = {top: 25, right: 30, bottom: 0, left: 0},
-        VIZ_WIDTH            = document.querySelector('.container').offsetWidth,
-        VIZ_VIEWPORT_WIDTH   = VIZ_WIDTH - VIZ_MARGINS.right - VIZ_MARGINS.left,
-        VIZ_CHART_AREA_WIDTH = VIZ_VIEWPORT_WIDTH,
-        VIZ_LABEL_AREA_WIDTH = 0,
-        VIZ_ROW_SPACING      = 90,
-        VIZ_MAIN_COLOR       = '#27a9e1',
-        VIZ_ACCENT_COLOR     = '#c34040';
+    var VIZ_MARGINS             = {top: 25, right: 30, bottom: 0, left: 0},
+        VIZ_WIDTH               = document.querySelector('.container').offsetWidth,
+        VIZ_VIEWPORT_WIDTH      = VIZ_WIDTH - VIZ_MARGINS.right - VIZ_MARGINS.left,
+        VIZ_CHART_AREA_WIDTH    = VIZ_VIEWPORT_WIDTH,
+        VIZ_LABEL_AREA_WIDTH    = 0,
+        VIZ_ROW_SPACING         = 90,
+        VIZ_MAIN_COLOR          = '#27a9e1',
+        VIZ_ACCENT_COLOR        = '#c34040',
+        VIZ_MIN_BUBBLE_SIZE     = 3,
+        VIZ_MAX_BUBBLE_SIZE     = 15;
+
+    // TODO
+    // For the upper range, calculate based on width of viewport and number of
+    // ticks so as to never overlap circles, but never more than 12
 
     // ARTF color scheme
-    var ARTF_COLOR_GREEN     = '#66863a',  // ARTF.af headings text color
-        ARTF_COLOR_LTGREEN   = '#9db679',  // ARTF.af sidebar color
-        ARTF_COLOR_BLUE      = '#276cb0',  // ARTF.af main color
-        ARTF_COLOR_LTBLUE    = '#87a4c1',  // ARTF.af sidebar color
-        ARTF_COLOR_ORANGERED = '#de7927'; //'#c54b25';  // Color interpreted from ARTF.af header image
+    var ARTF_COLOR_GREEN        = '#66863a',  // ARTF.af headings text color
+        ARTF_COLOR_LTGREEN      = '#9db679',  // ARTF.af sidebar color
+        ARTF_COLOR_BLUE         = '#276cb0',  // ARTF.af main color
+        ARTF_COLOR_LTBLUE       = '#87a4c1',  // ARTF.af sidebar color
+        ARTF_COLOR_ORANGERED    = '#de7927'; //'#c54b25';  // Color interpreted from ARTF.af header image
 
     // Set some view options.
     // Do not edit.
-    var DEBUG_MODE           = false,
-        MODE_COLOR_SCHEME    = 1,
-        MODE_TREND_BUBBLES   = 1;
+    var DEBUG_MODE              = false,
+        MODE_COLOR_SCHEME       = 1,
+        MODE_TREND_BUBBLES      = 1;
 
     // Borrowed from Colorbrewer
     // 0 is No data (gray)
@@ -387,24 +393,17 @@ var artf = (function ($) {
                 .enter()
                 .append('text');
 
-            // Set radius of circle sizes
-            // For the upper range, calculate based on width of viewport and number of
-            // ticks so as to never overlap circles, but never more than 12
-            var radiusLowerRange = 3;
-            var radiusUpperRange = 12;
-            // TODO
-
             // Radius scale for circle
             // If baseline measurement is lower than the target, it should increase on the X-axis
             // Flip the range if baseline is higher than the target measurement.
             if (indicator.targetIsIncreasing === true) {
                 var rScale = d3.scale.linear()
                     .domain([indicator.baseline.value, indicator.target.value])
-                    .range([radiusLowerRange, radiusUpperRange]);
+                    .range([VIZ_MIN_BUBBLE_SIZE, VIZ_MAX_BUBBLE_SIZE]);
             } else {
                 var rScale = d3.scale.linear()
                     .domain([indicator.baseline.value, indicator.target.value])
-                    .range([radiusUpperRange, radiusLowerRange]);
+                    .range([VIZ_MAX_BUBBLE_SIZE, VIZ_MIN_BUBBLE_SIZE]);
             }
 
             // Baseline circle
@@ -540,19 +539,6 @@ var artf = (function ($) {
                     return 'in ' + indicator['sector'] + ' — ' + '[' + indicator['project_id'] + '] ' + indicator['project_name'];
                 })
                 .classed('indicator-details', true)
-
-            // Special rect shape for interaction hover area
-            /*
-            g.append('rect')
-                .classed('hoverable', true)
-                .attr('x', 0)
-                .attr('y', yPos - (VIZ_ROW_SPACING / 2) - 16)
-                .attr('width', VIZ_VIEWPORT_WIDTH)
-                .attr('height', VIZ_ROW_SPACING)
-                .on('mouseover.indicator', _onMouseoverIndicator)
-                .on('mouseout.indicator', _onMouseoutIndicator)
-                .on('click.indicator', _onClickIndicator);
-            */
         };
 
         // * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
@@ -586,18 +572,6 @@ var artf = (function ($) {
                 .attr('x2', todayXPos)
                 .attr('y1', todayYStart)
                 .attr('y2', todayYEnd); // TODO: Don't hardcode the end point
-
-        // Special rect shape for interaction hover area
-        /*
-        var todayHoverRect = gToday.append('rect')
-            .classed('hoverable', true)
-            .attr('x', todayXPos - 5)
-            .attr('y', todayYStart)
-            .attr('width', '10')
-            .attr('height', todayYHeight)
-            .on('mouseover.today', _onMouseoverToday)
-            .on('mouseout.today', _onMouseoutToday);
-            */
 
         // Add a label for the indicator that appears on hover
         var todayLabel = gToday.append('text')
