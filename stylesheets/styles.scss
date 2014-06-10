@@ -1,0 +1,12 @@
+@charset 'utf-8';
+
+// Specify import order! It matters!
+// Baseline styles imported up top; customizations below
+
+// Import resets first
+@import 'vendor/normalize.css';   // Normalize.css for cross-browser consistent styling
+@import 'vendor/main.css';        // HTML5 Boilerplate best practices
+
+@import 'layout';
+@import 'loading';
+@import 'svg';
