@@ -720,13 +720,11 @@ var artf = (function ($) {
     // Parse dates and values from database API response
     function _parseData (data) {
         for (var k = 0; k < data.length; k++) {
-            var units = data[k].unit_meta;
-
             // Data transformations that will make things handy for us later
-            data[k].baseline = _transformMeasurement(data[k].baseline, units);
-            data[k].target = _transformMeasurement(data[k].target, units);
+            data[k].baseline = _transformMeasurement(data[k].baseline);
+            data[k].target = _transformMeasurement(data[k].target);
             for (var j = 0; j < data[k].measurements.length; j++) {
-                data[k].measurements[j] = _transformMeasurement(data[k].measurements[j], units);
+                data[k].measurements[j] = _transformMeasurement(data[k].measurements[j]);
             }
             data[k].subtargets = _makeSubtargets(data[k]);
 
@@ -746,11 +744,10 @@ var artf = (function ($) {
     }
 
     // Format and transform measurements to make them useful for the visualization
-    function _transformMeasurement (measurement, units) {
+    function _transformMeasurement (measurement) {
         measurement.date          = new Date(measurement.value_date);
         measurement.dateRounded   = _roundDateToHalfYear(measurement.date);
         measurement.value         = parseFloat(measurement.value);
-        measurement.units         = units;
         measurement.displayValue  = measurement.value.toLocaleString();
         measurement.displayString = _parseValueForDisplay(measurement);
         measurement.display       = true;
@@ -802,17 +799,18 @@ var artf = (function ($) {
 
     // Given a value and units, create a string suitable for display
     function _parseValueForDisplay (measurement) {
-        var value = measurement.value,
-            units = measurement.unit_meta,
+        var value        = measurement.value,
+            unit_detail  = measurement.unit_detail,
+            unit_meta    = measurement.unit_meta,
             displayValue = value.toLocaleString(),
             displayUnits = '';
 
-        if (units.toLowerCase() === 'number') {
-            displayUnits = 'units';
-        } else if (units.toLowerCase().substring(0, 7) === 'percent') {
+        if (unit_detail) { //units.toLowerCase() === 'number'
+            displayUnits = unit_detail;
+        } else if (unit_meta.toLowerCase().substring(0, 7) === 'percent') {
             displayUnits = 'percent';
         } else {
-            displayUnits = units;
+            displayUnits = 'units';
         }
 
         return displayValue + ' ' + displayUnits;
