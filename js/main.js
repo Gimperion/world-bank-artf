@@ -35,8 +35,13 @@ var artf = (function ($) {
     var params = _getParams();
     console.log(params);
 
-    var DATA_API_ENDPOINT       = 'data/data.json';
-    var SOCRATA_API_ENDPOINT    = 'http://lou.demo.socrata.com/resource/9sf6-hht4.json';
+    // var DATA_API_ENDPOINT       = 'data/data.json';
+    var INDICATORS_API          = 'https://lou.demo.socrata.com/resource/y2pn-fyfh.json?visualize=TRUE';
+    var RESULTS_API             = 'https://lou.demo.socrata.com/resource/jvcz-3un9.json';
+    var RESULTS_API_2           = 'https://lou.demo.socrata.com/resource/jvcz-3un9.json?$offset=1000';
+    var RESULTS_API_3           = 'https://lou.demo.socrata.com/resource/jvcz-3un9.json?$offset=2000';
+    var RESULTS_API_4           = 'https://lou.demo.socrata.com/resource/jvcz-3un9.json?$offset=3000';
+    var RESULTS_API_5           = 'https://lou.demo.socrata.com/resource/jvcz-3un9.json?$offset=4000';
 
     // This option sets how the filter behaves.
     // If true, filters intersect (AND)
@@ -46,7 +51,7 @@ var artf = (function ($) {
     // These are data fields / columns to filter on.
     // The filter dropdowns are automatically generated,
     // but you will have to add the selects yourself.
-    var FILTER_FIELDS           = ['status', 'project_name', 'sector'];
+    var FILTER_FIELDS           = ['project_status', 'project_name', 'sector'];
 
     // Set visualization options.
     var VIZ_MARGINS             = {top: 25, right: 30, bottom: 0, left: 0},
@@ -87,11 +92,65 @@ var artf = (function ($) {
     // Get data!
     var data = artf.data = [];
 
-    //$.get(SOCRATA_API_ENDPOINT, function (response) {
-    $.get(DATA_API_ENDPOINT, function (response) {
-        var vizData = _transformSocrataResponse(response);
+    // Hack - get all the results, making multiple queries to do so
+    var indicatorsAPIResponse,
+        resultsAPIResponse,
+        results2,
+        results3,
+        results4,
+        results5;
 
-        data = artf.data = _parseData(vizData);
+    $.when(
+        $.get(INDICATORS_API, function (response) {
+            indicatorsAPIResponse = response;
+        }),
+        $.get(RESULTS_API, function (response) {
+            resultsAPIResponse = response;
+        }),
+        $.get(RESULTS_API_2, function (response) {
+            results2 = response;
+        }),
+        $.get(RESULTS_API_3, function (response) {
+            results3 = response;
+        }),
+        $.get(RESULTS_API_4, function (response) {
+            results4 = response;
+        }),
+        $.get(RESULTS_API_5, function (response) {
+            results5 = response;
+        })
+    ).then(function () {
+        resultsAPIResponse = resultsAPIResponse.concat(results2, results3, results4, results5);
+
+        // Add results data to indicators
+        var responseData = _.each(indicatorsAPIResponse, function (element) {
+            var id = element.indicator_id;
+            var results = _.where(resultsAPIResponse, {indicator_id: id});
+
+            // Get latest results only
+            var temp;
+            for (var i = 0; i < results.length; i++) {
+                if (!temp || moment(temp).isBefore(results[i].isrr_date)) {
+                    temp = results[i].isrr_date
+                }
+            }
+            var latestResultsOnly = _.where(results, {isrr_date: temp});
+
+            for (var j = 0; j < latestResultsOnly; j++) {
+                latestResultsOnly[j].date = latestResultsOnly[j].value_date;
+            }
+
+            element.results = latestResultsOnly;
+
+            // Conversions to indicator.baseline, indicator.target, and indicator.measurements
+            element.baseline     = _.findWhere(element.results, {value_type: 'Baseline'});
+            element.target       = _.findWhere(element.results, {value_type: 'End Target'});
+            element.measurements = _.where(element.results, {value_type: 'Current'});
+        })
+
+        console.log(responseData);
+
+        data = artf.data = _parseData(responseData);
 
         $('#loading').hide();
 
@@ -120,6 +179,7 @@ var artf = (function ($) {
 
         // Create SVG viz
         createViz(data);
+
     });
 
     $(document).ready(function () {
@@ -644,13 +704,12 @@ var artf = (function ($) {
             var indicator = _.findWhere(data, { indicator_name: title });
             console.log(indicator);
             $('#info-metadata').append('<strong>Project:</strong> ' + indicator.project_id + ' &mdash; ' + indicator.project_name + '<br>');
-            $('#info-metadata').append('<strong>Status:</strong> ' + indicator.status + '<br>');
+            $('#info-metadata').append('<strong>Status:</strong> ' + indicator.project_status + '<br>');
             $('#info-metadata').append('<strong>Baseline measurement:</strong> ' + indicator.baseline.displayString + '<br>');
             $('#info-metadata').append('<strong>Target goal:</strong> ' + indicator.target.displayString + '<br>');
-            for (var i = 0; i < indicator.description.length; i++) {
-                var paragraph = indicator.description[i];
-                $('#info-description').append('<p>' + paragraph + '</p>');
-            }
+
+            var description = (indicator.indicator_description) ? indicator.indicator_description : 'No description provided.';
+            $('#info-description').append('<p>' + description + '</p>');
             $('#info-description').append('<p><a href="#">View the raw data behind this indicator.</a></p>');
         }
 
@@ -658,20 +717,10 @@ var artf = (function ($) {
 
     // UTILITY FUNCTIONS
 
-    // Transforms Socrata JSON response to JSON structure used by this visualization
-    function _transformSocrataResponse (json) {
-        var data = [];
-
-        var intermediate = _.groupBy(json, 'indicator_name');
-
-        // TODO!
-        return json;
-    }
-
     // Parse dates and values from database API response
     function _parseData (data) {
         for (var k = 0; k < data.length; k++) {
-            var units = data[k].units;
+            var units = data[k].unit_meta;
 
             // Data transformations that will make things handy for us later
             data[k].baseline = _transformMeasurement(data[k].baseline, units);
@@ -698,7 +747,7 @@ var artf = (function ($) {
 
     // Format and transform measurements to make them useful for the visualization
     function _transformMeasurement (measurement, units) {
-        measurement.date          = new Date(Date.parse(measurement.date));
+        measurement.date          = new Date(measurement.value_date);
         measurement.dateRounded   = _roundDateToHalfYear(measurement.date);
         measurement.value         = parseFloat(measurement.value);
         measurement.units         = units;
@@ -754,7 +803,7 @@ var artf = (function ($) {
     // Given a value and units, create a string suitable for display
     function _parseValueForDisplay (measurement) {
         var value = measurement.value,
-            units = measurement.units,
+            units = measurement.unit_meta,
             displayValue = value.toLocaleString(),
             displayUnits = '';
 
@@ -888,6 +937,7 @@ var artf = (function ($) {
 
         for (var i = 0; i < data.length; i++) {
             var test = data[i].baseline.dateRounded;
+            if (!test) continue;
             if (!date || test.getTime() < date.getTime()) {
                 date = test;
             }
@@ -903,6 +953,7 @@ var artf = (function ($) {
         // Assumes that earliest start date for visualization is a baseline date.
         for (var i = 0; i < data.length; i++) {
             var test = data[i].target.dateRounded;
+            if (!test) continue;
             if (!date || test.getTime() > date.getTime()) {
                 date = test;
             }
