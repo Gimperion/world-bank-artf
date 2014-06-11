@@ -37,11 +37,8 @@ var artf = (function ($) {
 
     // var DATA_API_ENDPOINT       = 'data/data.json';
     var INDICATORS_API          = 'https://lou.demo.socrata.com/resource/y2pn-fyfh.json?visualize=TRUE';
-    var RESULTS_API             = 'https://lou.demo.socrata.com/resource/jvcz-3un9.json';
-    var RESULTS_API_2           = 'https://lou.demo.socrata.com/resource/jvcz-3un9.json?$offset=1000';
-    var RESULTS_API_3           = 'https://lou.demo.socrata.com/resource/jvcz-3un9.json?$offset=2000';
-    var RESULTS_API_4           = 'https://lou.demo.socrata.com/resource/jvcz-3un9.json?$offset=3000';
-    var RESULTS_API_5           = 'https://lou.demo.socrata.com/resource/jvcz-3un9.json?$offset=4000';
+    var RESULTS_API             = 'https://lou.demo.socrata.com/resource/jvcz-3un9.json?$where=(unit_meta!=\'Text\' AND unit_meta!=\'Blank\')';
+    var RESULTS_API_2           = 'https://lou.demo.socrata.com/resource/jvcz-3un9.json?$where=(unit_meta!=\'Text\' AND unit_meta!=\'Blank\')&$offset=1000';
 
     // This option sets how the filter behaves.
     // If true, filters intersect (AND)
@@ -109,18 +106,9 @@ var artf = (function ($) {
         }),
         $.get(RESULTS_API_2, function (response) {
             results2 = response;
-        }),
-        $.get(RESULTS_API_3, function (response) {
-            results3 = response;
-        }),
-        $.get(RESULTS_API_4, function (response) {
-            results4 = response;
-        }),
-        $.get(RESULTS_API_5, function (response) {
-            results5 = response;
         })
     ).then(function () {
-        resultsAPIResponse = resultsAPIResponse.concat(results2, results3, results4, results5);
+        resultsAPIResponse = resultsAPIResponse.concat(results2);
 
         // Add results data to indicators
         var responseData = _.each(indicatorsAPIResponse, function (element) {
@@ -143,12 +131,10 @@ var artf = (function ($) {
             element.results = latestResultsOnly;
 
             // Conversions to indicator.baseline, indicator.target, and indicator.measurements
-            element.baseline     = _.findWhere(element.results, {value_type: 'Baseline'});
-            element.target       = _.findWhere(element.results, {value_type: 'End Target'});
-            element.measurements = _.where(element.results, {value_type: 'Current'});
+            element.baseline     = _.findWhere(latestResultsOnly, {value_type: 'Baseline'});
+            element.target       = _.findWhere(latestResultsOnly, {value_type: 'End Target'});
+            element.measurements = _.where(latestResultsOnly, {value_type: 'Current'});
         })
-
-        console.log(responseData);
 
         data = artf.data = _parseData(responseData);
 
@@ -751,6 +737,11 @@ var artf = (function ($) {
         measurement.displayValue  = measurement.value.toLocaleString();
         measurement.displayString = _parseValueForDisplay(measurement);
         measurement.display       = true;
+
+        // If measurement is a text measurement, set display to false
+        if (measurement.unit_meta.toLowerCase() === 'text') {
+            measurement.display = false;
+        }
 
         return measurement;
     }
