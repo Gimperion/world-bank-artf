@@ -952,8 +952,10 @@ var artf = (function ($) {
 
         // Assumes that earliest start date for visualization is a baseline date.
         for (var i = 0; i < data.length; i++) {
+            // Catches bad data without target measurements or target dates
+            if (!data[i].target || !data[i].target.dateRounded) continue;
+
             var test = data[i].target.dateRounded;
-            if (!test) continue;
             if (!date || test.getTime() > date.getTime()) {
                 date = test;
             }
@@ -1054,7 +1056,7 @@ var artf = (function ($) {
         }
     }
 
-    // Get query string params 
+    // Get query string params
     function _getParams () {
         var queryString = window.location.search.substring(1),
             queries     = queryString.split('&'),
@@ -1102,7 +1104,7 @@ var artf = (function ($) {
             case 'false':
             case 'no':
                 return false;
-            default: 
+            default:
                 return string;
         }
     }
