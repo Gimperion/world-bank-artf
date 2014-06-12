@@ -39,6 +39,7 @@ var artf = (function ($) {
     var INDICATORS_API          = 'https://lou.demo.socrata.com/resource/y2pn-fyfh.json?visualize=TRUE';
     var RESULTS_API             = 'https://lou.demo.socrata.com/resource/jvcz-3un9.json?$where=(unit_meta!=\'Text\' AND unit_meta!=\'Blank\')';
     var RESULTS_API_2           = 'https://lou.demo.socrata.com/resource/jvcz-3un9.json?$where=(unit_meta!=\'Text\' AND unit_meta!=\'Blank\')&$offset=1000';
+    var RESULTS_API_3           = 'https://lou.demo.socrata.com/resource/jvcz-3un9.json?$where=(unit_meta!=\'Text\' AND unit_meta!=\'Blank\')&$offset=2000';
 
     // This option sets how the filter behaves.
     // If true, filters intersect (AND)
@@ -106,9 +107,12 @@ var artf = (function ($) {
         }),
         $.get(RESULTS_API_2, function (response) {
             results2 = response;
+        }),
+        $.get(RESULTS_API_3, function (response) {
+            results3 = response;
         })
     ).then(function () {
-        resultsAPIResponse = resultsAPIResponse.concat(results2);
+        resultsAPIResponse = resultsAPIResponse.concat(results2, results3);
 
         // Add results data to indicators
         var responseData = _.each(indicatorsAPIResponse, function (element) {
@@ -706,6 +710,13 @@ var artf = (function ($) {
     // Parse dates and values from database API response
     function _parseData (data) {
         for (var k = 0; k < data.length; k++) {
+
+            // Catch some errors
+            if (!data[k].baseline || !data[k].target || !data[k].measurements) {
+                data[k].display = false;
+                continue;
+            }
+
             // Data transformations that will make things handy for us later
             data[k].baseline = _transformMeasurement(data[k].baseline);
             data[k].target = _transformMeasurement(data[k].target);
