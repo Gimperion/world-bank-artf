@@ -157,9 +157,11 @@ var artf = (function ($) {
         }
 
         // Default behaviors
+        /*
         if (!params.sector && params.clear !== true) {
             params.sector = 'Agriculture';
         }
+        */
         if (!params.limit && params.clear !== true) {
             params.limit = 5;
         }
