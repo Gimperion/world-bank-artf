@@ -4,6 +4,9 @@
 
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
+$page-width-default:    695px;
+$page-width-iframed:    680px;
+
 html, body {
     font: 11px/16px Verdana, Geneva, sans-serif;
     overflow-x: hidden;
@@ -38,17 +41,32 @@ div {
 
 /* LAYOUT (GENERIC) */
 
-body.iframed {
-    margin: 0;
+body {
+    &:not(.iframed) {
+        #legend-container,
+        .container {
+            width: $page-width-default;
+        }
+    }
+    &.iframed {
+        margin: 0;
+        #legend-container {
+            left: 0;
+        }
+        #legend-container,
+        .container {
+            width: $page-width-iframed;
+        }
+    }
 }
 
 .container {
-    width: 695px;
+    width: $page-width-default;
+    &.float-legend {
+        margin-bottom: 180px; /* Space for floating legend */
+    }
 }
 
-.container.float-legend {
-    margin-bottom: 180px; /* Space for floating legend */
-}
 
 .row {
     margin-bottom: 10px;
@@ -56,11 +74,11 @@ body.iframed {
 
 .column {
     display: inline-block;
+    &:not(:first-of-type) {
+        margin-left: 8px;
+    }
 }
 
-.column:not(:first-of-type) {
-    margin-left: 8px;
-}
 
 /* LAYOUT (SPECIFIC) */
 
@@ -103,9 +121,6 @@ body.iframed {
     z-index: 300;
 }
 
-body.iframed #legend-container {
-    left: 0;
-}
 
 .reset-container {
     position: absolute;

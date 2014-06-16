@@ -11,7 +11,7 @@ var autoprefix    = require('gulp-autoprefixer'),
 gulp.task('css', function () {
     gulp.src('./stylesheets/styles.scss')
         .pipe(sass(), { errLogToConsole: true })
-        .pipe(autoprefix('last 2 versions', 'Explorer > 8'))
+        .pipe(autoprefix('last 2 versions', 'Explorer > 7'))
         .pipe(cssimport())
         .pipe(entityconvert({ type: 'css' }))
         .pipe(minifyCSS({ keepSpecialComments: 0 }))
