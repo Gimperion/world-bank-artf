@@ -36,10 +36,16 @@ var artf = (function ($) {
     console.log(params);
 
     // var DATA_API_ENDPOINT       = 'data/data.json';
+    var INDICATORS_API          = 'http://finances.worldbank.org/resource/7ycu-8b2d.json?visualize=TRUE';
+    var RESULTS_API             = 'http://finances.worldbank.org/resource/9uua-nnaq.json?$where=(unit_meta!=\'Text\' AND unit_meta!=\'Blank\')';
+    var RESULTS_API_2           = 'http://finances.worldbank.org/resource/9uua-nnaq.json?$where=(unit_meta!=\'Text\' AND unit_meta!=\'Blank\')&$offset=1000';
+    var RESULTS_API_3           = 'http://finances.worldbank.org/resource/9uua-nnaq.json?$where=(unit_meta!=\'Text\' AND unit_meta!=\'Blank\')&$offset=2000';
+    /*
     var INDICATORS_API          = 'http://lou.demo.socrata.com/resource/y2pn-fyfh.json?visualize=TRUE';
     var RESULTS_API             = 'http://lou.demo.socrata.com/resource/jvcz-3un9.json?$where=(unit_meta!=\'Text\' AND unit_meta!=\'Blank\')';
     var RESULTS_API_2           = 'http://lou.demo.socrata.com/resource/jvcz-3un9.json?$where=(unit_meta!=\'Text\' AND unit_meta!=\'Blank\')&$offset=1000';
     var RESULTS_API_3           = 'http://lou.demo.socrata.com/resource/jvcz-3un9.json?$where=(unit_meta!=\'Text\' AND unit_meta!=\'Blank\')&$offset=2000';
+    */
 
     // This option sets how the filter behaves.
     // If true, filters intersect (AND)
