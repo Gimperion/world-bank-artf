@@ -1,112 +1,112 @@
 <!DOCTYPE html>
 <head>
-    <title>Afghanistan Reconstruction Trust Fund - Indicator Visualization</title>
-    <link href='css/styles.css' rel='stylesheet' type='text/css'>
+  <title>Afghanistan Reconstruction Trust Fund - Indicator Visualization</title>
+  <link href='css/styles.css' rel='stylesheet' type='text/css'>
 </head>
 <body>
 
-    <div class='container float-legend'>
-        <div id='header'>
-            <h2>ARTF indicator visualization</h2>
-        </div>
-        <div id='filters'>
-            <form id='filter'>
-                <h3>Filter by</h3>
-                <div class='row'>
-                    <div class='column'>
-                        <label for='filter-status'>Status</label>
-                        <select id='filter-status' data-field='project_status'>
-                            <option value='' default>(all projects)</option>
-                        </select>
-                    </div>
-                    <div class='column'>
-                        <label for='filter-sector'>Sector</label>
-                        <select id='filter-sector' data-field='sector'>
-                            <option value='' default>(all sectors)</option>
-                        </select>
-                    </div>
-                    <div class='column'>
-                        <label for='filter-project_name'>Project</label>
-                        <select id='filter-project_name' data-field='project_name'>
-                            <option value='' default>(all projects)</option>
-                        </select>
-                    </div>
-                    <div class='column reset-container'>
-                        <button type='reset' id='filter-reset'>Clear filters</button>
-                    </div>
-                </div>
-            </form>
-        </div>
-        <div id='viz'>
-            <div id='loading'>
-                <div class='three-quarters'>
-                    Loading...
-                </div>
-            </div>
-        </div>
-        <div id='legend-container'>
-            <div id='hide-legend'><span title='hide legend'>×</a></div>
-            <div id='legend'>
-                <h3>Legend</h3>
-                <div class='legend-items'>
-                    <div class='legend-column'>
-                        <div class='legend-item legend-pos1'><span>Baseline measurement</span></div>
-                        <div class='legend-item legend-pos2'><span>Projected measurement</span></div>
-                    </div>
-                    <div class='legend-column'>
-                        <div class='legend-item legend-pos3'><span>Target goal</span></div>
-                        <div class='legend-item legend-pos4'><span>Actual measurement</span></div>
-                    </div>
-                    <div class='legend-column'>
-                        <div class='legend-item legend-pos5'><span>Difference between measured and projected value</span></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div id='more-nav'>
-            <p>Showing <span class='page-limit'>0</span> of <span class='indicator-count'>100</span> indicators. <a href='#' class='show-all'>Show all indicators in this filter.</a></p>
-        </div>
-        <div id='info'>
-            <h2 id='info-title'>More information</h2>
-            <div id='info-metadata'></div>
-            <div id='info-description'>
-                <p>Select an indicator to learn more.</p>
-            </div>
-        </div>
+  <div class='container float-legend'>
+    <div id='header'>
+      <h2>ARTF indicator visualization</h2>
     </div>
-
-    <div id='debug'>
-        <div id='debug-close'>×</div>
-        <div class='debug-content'>
-            <h3>Options</h3>
-
-            <label for='debug-color'>Color scheme</label>
-            <select id='debug-color'>
-                <option value='1' default>ARTF</option>
-                <option value='2'>All blue</option>
-                <option value='3'>Original</option>
+    <div id='filters'>
+      <form id='filter'>
+        <h3>Filter by</h3>
+        <div class='row'>
+          <div class='column'>
+            <label for='filter-status'>Status</label>
+            <select id='filter-status' data-field='project_status'>
+              <option value='' default>(all projects)</option>
             </select>
-
-            <label for='debug-trend'>Trend & projection circles</label>
-            <select id='debug-trend'>
-                <option value='1' default>All</option>
-                <option value='2'>Future only</option>
+          </div>
+          <div class='column'>
+            <label for='filter-sector'>Sector</label>
+            <select id='filter-sector' data-field='sector'>
+              <option value='' default>(all sectors)</option>
             </select>
+          </div>
+          <div class='column'>
+            <label for='filter-project_name'>Project</label>
+            <select id='filter-project_name' data-field='project_name'>
+              <option value='' default>(all projects)</option>
+            </select>
+          </div>
+          <div class='column reset-container'>
+            <button type='reset' id='filter-reset'>Clear filters</button>
+          </div>
         </div>
+      </form>
     </div>
+    <div id='viz'>
+      <div id='loading'>
+        <div class='three-quarters'>
+          Loading...
+        </div>
+      </div>
+    </div>
+    <div id='legend-container'>
+      <div id='hide-legend'><span title='hide legend'>×</a></div>
+      <div id='legend'>
+        <h3>Legend</h3>
+        <div class='legend-items'>
+          <div class='legend-column'>
+            <div class='legend-item legend-pos1'><span>Baseline measurement</span></div>
+            <div class='legend-item legend-pos2'><span>Projected measurement</span></div>
+          </div>
+          <div class='legend-column'>
+            <div class='legend-item legend-pos3'><span>Target goal</span></div>
+            <div class='legend-item legend-pos4'><span>Actual measurement</span></div>
+          </div>
+          <div class='legend-column'>
+            <div class='legend-item legend-pos5'><span>Difference between measured and projected value</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id='more-nav'>
+      <p>Showing <span class='page-limit'>0</span> of <span class='indicator-count'>100</span> indicators. <a href='#' class='show-all'>Show all indicators in this filter.</a></p>
+    </div>
+    <div id='info'>
+      <h2 id='info-title'>More information</h2>
+      <div id='info-metadata'></div>
+      <div id='info-description'>
+        <p>Select an indicator to learn more.</p>
+      </div>
+    </div>
+  </div>
 
-    <script src='//cdnjs.cloudflare.com/ajax/libs/jquery/1.11.1/jquery.js'></script>
+  <div id='debug'>
+    <div id='debug-close'>×</div>
+    <div class='debug-content'>
+      <h3>Options</h3>
 
-    <!-- polyfills lack of support for XDomainRequest in jQuery for IE8/9 -->
-    <!--[if lte IE 9]>
-      <script src='js/vendor/jQuery.XDomainRequest.js'></script>
-    <![endif]-->
+      <label for='debug-color'>Color scheme</label>
+      <select id='debug-color'>
+        <option value='1' default>ARTF</option>
+        <option value='2'>All blue</option>
+        <option value='3'>Original</option>
+      </select>
 
-    <script src='//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.6.0/underscore-min.js'></script>
-    <script src='//cdnjs.cloudflare.com/ajax/libs/d3/3.4.2/d3.min.js'></script>
-    <script src='//cdnjs.cloudflare.com/ajax/libs/moment.js/2.6.0/moment.min.js'></script>
+      <label for='debug-trend'>Trend & projection circles</label>
+      <select id='debug-trend'>
+        <option value='1' default>All</option>
+        <option value='2'>Future only</option>
+      </select>
+    </div>
+  </div>
 
-    <script src='js/main.js'></script>
+  <script src='//cdnjs.cloudflare.com/ajax/libs/jquery/1.11.1/jquery.js'></script>
+
+  <!-- polyfills lack of support for XDomainRequest in jQuery for IE8/9 -->
+  <!--[if lte IE 9]>
+    <script src='js/vendor/jQuery.XDomainRequest.js'></script>
+  <![endif]-->
+
+  <script src='//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.6.0/underscore-min.js'></script>
+  <script src='//cdnjs.cloudflare.com/ajax/libs/d3/3.4.2/d3.min.js'></script>
+  <script src='//cdnjs.cloudflare.com/ajax/libs/moment.js/2.6.0/moment.min.js'></script>
+
+  <script src='js/main.js'></script>
 
 </body>
 </html>

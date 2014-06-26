@@ -5,54 +5,54 @@
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 svg {
-    /* force Firefox to display properly - why is this bug occurring? */
-    overflow: visible;
-    height: 100%;
+  /* force Firefox to display properly - why is this bug occurring? */
+  overflow: visible;
+  height: 100%;
 }
 
 /* reset all pointer events */
 svg path, svg line, svg rect, svg circle, svg text, svg g {
-    pointer-events: none;
+  pointer-events: none;
 }
 
 .axis path, .axis line {
-    fill: none;
-    stroke: #aaa;
-    shape-rendering: crispEdges;
+  fill: none;
+  stroke: #aaa;
+  shape-rendering: crispEdges;
 }
 
 .axis line {
-    stroke: #e6e7e8;
+  stroke: #e6e7e8;
 }
 
 .tick:nth-of-type(2n+1) line {
-    stroke: #aaa;
+  stroke: #aaa;
 }
 
 .tick text {
-    fill: #999;
+  fill: #999;
 }
 
 g rect.background {
-    fill: white;
-    fill-opacity: 0;
-    cursor: pointer;
-    pointer-events: fill;
+  fill: white;
+  fill-opacity: 0;
+  cursor: pointer;
+  pointer-events: fill;
 }
 
 g.indicator.active rect.background {
-    fill: whitesmoke;
-    fill-opacity: 1;
+  fill: whitesmoke;
+  fill-opacity: 1;
 }
 
 line.indicator-line {
-    stroke: #e1e1e1;
-    stroke-width: 1;
+  stroke: #e1e1e1;
+  stroke-width: 1;
 }
 
 text.label {
-    /* cursor: pointer; */
-    text-align: right;
+  /* cursor: pointer; */
+  text-align: right;
 }
 
 text.value {
@@ -62,53 +62,53 @@ text.indicator-name {
 }
 
 text.indicator-details {
-    font-size: 10px;
-    fill: #9a9a9a;
+  font-size: 10px;
+  fill: #9a9a9a;
 }
 
 g.indicator.active text.indicator-name {
-    font-weight: 700;
+  font-weight: 700;
 }
 
 text.label-today {
-    font-size: 9px;
-    font-weight: 700;
-    fill: #888;
+  font-size: 9px;
+  font-weight: 700;
+  fill: #888;
 }
 
 circle.highlight {
 }
 
 circle.circle-target {
-    fill: white;
-    fill-opacity: 0;
-    stroke-width: 2;
-    stroke-opacity: 1;
-    stroke: white;
+  fill: white;
+  fill-opacity: 0;
+  stroke-width: 2;
+  stroke-opacity: 1;
+  stroke: white;
 }
 
 circle.circle-subtargets {
-    fill-opacity: 0;
-    stroke-width: 1;
-    stroke-opacity: 1;
-    stroke: white;
-    display: none;
+  fill-opacity: 0;
+  stroke-width: 1;
+  stroke-opacity: 1;
+  stroke: white;
+  display: none;
 }
 
 circle.circle-latest {
-    fill-opacity: 0.5;
-    display: none;
+  fill-opacity: 0.5;
+  display: none;
 }
 
 circle.circle-subtargets.show,
 circle.circle-latest.show,
 g.indicator.active circle {
-    display: block;
+  display: block;
 }
 
 text.label {
-    font-weight: 700;
-    font-size: 0.9em;
+  font-weight: 700;
+  font-size: 0.9em;
 }
 
 text.label-baseline {
@@ -121,12 +121,12 @@ text.label-target {
 }
 
 text.hidden {
-    display: none;
+  display: none;
 }
 
 g.today line {
-    stroke: red;
-    stroke-width: 2;
-    stroke-opacity: 0.2;
-    stroke-dasharray: 5, 4;
+  stroke: red;
+  stroke-width: 2;
+  stroke-opacity: 0.2;
+  stroke-dasharray: 5, 4;
 }
