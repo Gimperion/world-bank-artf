@@ -214,7 +214,7 @@ var artf = (function ($) {
 
     // Detect if iframed
     if (window.self !== window.top) {
-      $('body').addClass('iframed');
+      $('body').addClass('not-iframed');
     }
 
     // Only show the debug window when this page is viewed directly

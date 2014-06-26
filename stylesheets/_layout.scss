@@ -13,7 +13,7 @@ html, body {
 }
 
 body {
-  margin: 10px;
+  margin: 0;
 }
 
 * {
@@ -39,38 +39,34 @@ div {
   position: relative;
 }
 
-/* LAYOUT (GENERIC) */
-
+// IF NOT IFRAMED, SOME SPECIAL DISPLAY RULES
 body {
-  &:not(.iframed) {
+  &.not-iframed {
+    margin: 10px;
+
+    #header {
+      display: block;
+    }
+
+    #legend-container {
+      left: 10px;
+    }
+
     #legend-container,
     .container {
       width: $page-width-default;
     }
   }
-
-  &.iframed {
-    margin: 0;
-    #header {
-      display: none;
-    }
-    #legend-container {
-      left: 0;
-    }
-    #legend-container,
-    .container {
-      width: $page-width-iframed;
-    }
-  }
 }
 
+/* LAYOUT (GENERIC) */
+
 .container {
-  width: $page-width-default;
+  width: $page-width-iframed;
   &.float-legend {
     margin-bottom: 180px; /* Space for floating legend */
   }
 }
-
 
 .row {
   margin-bottom: 10px;
@@ -85,6 +81,10 @@ body {
 
 
 /* LAYOUT (SPECIFIC) */
+
+#header {
+  display: none;
+}
 
 #viz {
   margin-top: 10px;
@@ -119,8 +119,8 @@ body {
 #legend-container {
   position: fixed;
   bottom: 0;
-  left: 10px;
-  width: 695px;
+  left: 0;
+  width: $page-width-iframed;
   padding: 10px 0;
   background-color: white;
   z-index: 300;
