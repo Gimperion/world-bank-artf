@@ -51,7 +51,7 @@ var artf = (function ($) {
   var FILTER_FIELDS           = ['project_status', 'project_name', 'sector'];
 
   // Set visualization options.
-  var VIZ_MARGINS             = {top: 25, right: 30, bottom: 0, left: 0},
+  var VIZ_MARGINS             = {top: 25, right: 20, bottom: 0, left: 0},
       VIZ_WIDTH               = document.querySelector('.container').offsetWidth,
       VIZ_VIEWPORT_WIDTH      = VIZ_WIDTH - VIZ_MARGINS.right - VIZ_MARGINS.left,
       VIZ_CHART_AREA_WIDTH    = VIZ_VIEWPORT_WIDTH,
