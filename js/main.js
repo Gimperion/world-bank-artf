@@ -212,8 +212,9 @@ var artf = (function ($) {
       createViz(data);
     });
 
-    // Detect if iframed
-    if (window.self !== window.top) {
+    // Detect if NOT iframed
+    // The site assumes iframed by default, so that users don't see a flash of content
+    if (window.self === window.top) {
       $('body').addClass('not-iframed');
     }
 
