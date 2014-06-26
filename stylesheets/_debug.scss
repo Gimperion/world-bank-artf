@@ -1,0 +1,69 @@
+
+#debug {
+  display: none;
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 260px;
+  padding: 10px;
+  background-color: #fffff1;
+  border: 1px solid lightgray;
+  z-index: 20;
+
+  -webkit-transition: right 250ms ease-out;
+  transition: right 250ms ease-out;
+}
+
+#debug-close {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  width: 30px;
+  height: 30px;
+  text-align: center;
+  line-height: 30px;
+  cursor: pointer;
+  z-index: 30;
+}
+
+#debug-close:hover {
+  background-color: #f9f9e9;
+}
+
+#debug h3 {
+  margin-top: 5px;
+}
+
+#debug label {
+  margin-top: 10px;
+}
+
+.debug-content {
+  width: 240px;
+}
+
+#debug.hide {
+  right: 0px;
+  width: 30px;
+  height: 30px;
+  overflow: hidden;
+}
+
+#debug.hide .debug-content {
+  display: none;
+}
+
+#debug.hide #debug-close {
+  top: 0;
+  right: 0;
+}
+
+#debug.hide #debug-close:after {
+  content: '!';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 30px;
+  height: 30px;
+  background-color: #fffff1;
+}
