@@ -153,12 +153,16 @@ var artf = (function ($) {
       params.sector = 'Agriculture';
     }
     */
+    if (!params.status && params.clear !== true) {
+      params.status = 'Active';
+    }
     if (!params.limit && params.clear !== true) {
       params.limit = 5;
     }
 
     // TODO: Update params in query string
     $('#filter-sector').val(params.sector);
+    $('#filter-status').val(params.status);
 
     // Create SVG viz
     createViz(data);
@@ -707,6 +711,7 @@ var artf = (function ($) {
       $('#info-metadata').append('<strong>Status:</strong> ' + indicator.project_status + '<br>');
       $('#info-metadata').append('<strong>Baseline measurement:</strong> ' + indicator.baseline.displayString + '<br>');
       $('#info-metadata').append('<strong>Target goal:</strong> ' + indicator.target.displayString + '<br>');
+      $('#info-metadata').append('<strong>Progress gauge:</strong> ' + indicator.progressText + '<br>');
 
       var description = (indicator.indicator_description) ? indicator.indicator_description : 'No description provided.';
       $('#info-description').append('<p>' + description + '</p>');
@@ -750,6 +755,7 @@ var artf = (function ($) {
       data[k].targetIsIncreasing = _isTargetIncreasing(data[k]);
       data[k].projectedValue = _getProjectedValue(data[k]);
       data[k].progress = _getProgress(data[k]);
+      data[k].progressText = _getProgressText(data[k].progress);
     }
 
     return data;
@@ -955,6 +961,10 @@ var artf = (function ($) {
     // Catch-all: return 0 for 'no data'
     if (!subgoal) return 0;
 
+    // The formula below will behave incorrectly when the latest value is a measurement of zero.
+    // Momentarily catch this
+    if (latest.value === 0) return 0;
+
     var idealDiff = Math.abs(subgoal.value - baseline.value),
         actualDiff = Math.abs(latest.value - baseline.value);
 
@@ -964,6 +974,24 @@ var artf = (function ($) {
       return 3;
     } else {
       return 1;
+    }
+  }
+
+  function _getProgressText (code) {
+    switch (code) {
+      case 1:
+        return 'Off-track';
+        break;
+      case 2:
+        return 'On-track';
+        break;
+      case 3:
+        return 'In progress';
+        break;
+      case 0:
+      default:
+        return 'No data or insufficient data';
+        break;
     }
   }
 
@@ -989,17 +1017,24 @@ var artf = (function ($) {
   function _getProjectedValue (indicator) {
     var latest   = _getLatestDatum(indicator.measurements),
         baseline = indicator.baseline,
-        target   = indicator.target;
+        target   = indicator.target,
+        projected;
 
-    // Difference between the latest and baseline values
-    // Divided by time interval to get a rate of change
-    // Multiply by time interval between target and baseline dates to get a projected difference
-    // Add to baseline value to get the projected value at time of target
-    var diff = latest.value - baseline.value;
-    var timeDiff = moment(latest.date).diff(baseline.date, 'months');
-    var rate = diff/timeDiff; // Rate of change per month
-    var timeSpan = moment(target.date).diff(baseline.date, 'months');
-    var projected = baseline.value + (rate * timeSpan);
+    // If the target date has already passed, just forward the latest measurement
+    // No projection is actually occurring, because it no longer matters.
+    if (moment(target.date).isBefore(moment())) {
+      projected = latest.value;
+    } else {
+      // Difference between the latest and baseline values
+      // Divided by time interval to get a rate of change
+      // Multiply by time interval between target and baseline dates to get a projected difference
+      // Add to baseline value to get the projected value at time of target
+      var diff = latest.value - baseline.value;
+      var timeDiff = moment(latest.date).diff(baseline.date, 'months');
+      var rate = diff/timeDiff; // Rate of change per month
+      var timeSpan = moment(target.date).diff(baseline.date, 'months');
+      projected = baseline.value + (rate * timeSpan);      
+    }
 
     return projected;
   }
