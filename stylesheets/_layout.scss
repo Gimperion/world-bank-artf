@@ -63,9 +63,6 @@ body {
 
 .container {
   width: $page-width-iframed;
-  &.float-legend {
-    margin-bottom: 180px; /* Space for floating legend */
-  }
 }
 
 .row {
@@ -79,6 +76,24 @@ body {
   }
 }
 
+.info-box {
+  border-radius: 5px;
+  border: 1px solid lightgray;
+  overflow: hidden;
+  & > div {
+    padding: 4px 12px 4px;
+  }
+  & > div:not(:first-of-type) {
+    border-top: 1px solid lightgray;
+  }
+}
+
+.viz-area {
+  margin-top: 16px;
+  margin-bottom: 10px;
+
+  transition: height 250ms ease-out;
+}
 
 /* LAYOUT (SPECIFIC) */
 
@@ -86,32 +101,12 @@ body {
   display: none;
 }
 
-#viz {
-  margin-top: 10px;
-  margin-bottom: 10px;
-
-  -webkit-transition: height 250ms ease-out;
-  transition: height 250ms ease-out;
-}
-
-#legend, #filter {
-  border-radius: 5px;
-  border: 1px solid lightgray;
-  padding: 4px 18px 6px;
-}
-
 #legend {
-  margin: 2px 0 10px 0;
-
   img {
     margin-top: -10px;
     margin-left: -5px;
     width: 100%;
     height: auto;
-  }
-
-  h3 {
-    margin-top: 5px;
   }
 }
 
@@ -124,6 +119,8 @@ body {
   padding: 10px 0;
   background-color: white;
   z-index: 300;
+
+  margin: 2px 0 10px 0;
 
   &.hide {
     bottom: 0;
@@ -156,7 +153,7 @@ body {
 .reset-container {
   position: absolute;
   right: 0;
-  bottom: 0;
+  bottom: 3px;
 }
 
 #hide-legend {
@@ -184,7 +181,8 @@ body {
   background-image: url(../img/legend.png);
   background-repeat: no-repeat;
   height: 40px;
-  background-position: -20px -30px;
+  background-position: -17px -30px;
+  background-size: 110px;
 
   span {
     display: block;
@@ -195,20 +193,32 @@ body {
     padding-top: 10px;
   }
 
-  &.legend-pos1 {
-    background-position-y: 15px;
+  &.legend-item-baseline {
+    background-position-y: -10px;
   }
-  &.legend-pos2 {
-    background-position-y: -45px;    
+  &.legend-item-projected {
+    background-position-y: -70px;
   }
-  &.legend-pos3 {
-    background-position-y: -165px;    
+  &.legend-item-target {
+    background-position-y: -190px;
   }
-  &.legend-pos4 {
-    background-position-y: -105px;    
+  &.legend-item-measure {
+    background-position-y: -130px;
   }
-  &.legend-pos5 {
-    background-position-y: -225px;    
+  &.legend-item-future {
+    background-position-y: -250px;
+  }
+  &.legend-item-dunno {
+    background-position-y: -370px;
+  }
+  &.legend-item-off {
+    background-position-y: -430px;
+  }
+  &.legend-item-on {
+    background-position-y: -490px;
+  }
+  &.legend-item-meh {
+    background-position-y: -550px;
   }
 
   &.legend-no-image {
@@ -221,7 +231,7 @@ body {
 
 #more-nav {
   display: none;
-  
+
   p {
     font-weight: bold;
   }

@@ -84,7 +84,13 @@ var artf = (function ($) {
   // 1-5 is the red-green scale from http://bl.ocks.org/mbostock/5577023
   // TODO: DEPRECATE / REMOVE
   // var INDICATOR_COLOR_SCALE = ['#cdcdcd','#d7191c','#fdae61','#ffffbf','#a6d96a','#1a9641'];
-  var INDICATOR_PROGRESS_COLORS = ['#cdcdcd', '#d7191c', '#1a9641'];
+
+  // Colors:
+  // 0 - No data
+  // 1 - Poor (red)
+  // 2 - Good (green)
+  // 3 - Midway (yellow)
+  var INDICATOR_PROGRESS_COLORS = ['#cdcdcd', '#d7191c', '#1a9641', '#ffff2a'];
 
   // Get data!
   var data = artf.data = [];
@@ -113,28 +119,16 @@ var artf = (function ($) {
 
     // Add results data to indicators
     var responseData = _.each(indicatorsAPIResponse, function (element) {
-      var id = element.indicator_id;
-      var results = _.where(resultsAPIResponse, {indicator_id: id});
+      var id         = element.indicator_id,
+          results    = _.where(resultsAPIResponse, {indicator_id: id}),
+          candidates = _rejectUnusableResults(results);
 
-      // Get latest results only
-      var temp;
-      for (var i = 0; i < results.length; i++) {
-        if (!temp || moment(temp).isBefore(results[i].isrr_date)) {
-          temp = results[i].isrr_date
-        }
-      }
-      var latestResultsOnly = _.where(results, {isrr_date: temp});
-
-      for (var j = 0; j < latestResultsOnly; j++) {
-        latestResultsOnly[j].date = latestResultsOnly[j].value_date;
-      }
-
-      element.results = latestResultsOnly;
+      element.results       = results;
 
       // Conversions to indicator.baseline, indicator.target, and indicator.measurements
-      element.baseline     = _.findWhere(latestResultsOnly, {value_type: 'Baseline'});
-      element.target       = _.findWhere(latestResultsOnly, {value_type: 'End Target'});
-      element.measurements = _.where(latestResultsOnly, {value_type: 'Current'});
+      element.baseline      = _getResultsBaseline(results);
+      element.target        = _getResultsTarget(results);
+      element.measurements  = _getResultsCurrentMeasurements(results);
     })
 
     data = artf.data = _parseData(responseData);
@@ -160,7 +154,7 @@ var artf = (function ($) {
     }
     */
     if (!params.limit && params.clear !== true) {
-      params.limit = 5;
+      //params.limit = 5;
     }
 
     // TODO: Update params in query string
@@ -201,8 +195,6 @@ var artf = (function ($) {
     // Hide legend
     $('#hide-legend').on('click', function (e) {
       $('#legend-container').toggleClass('hide');
-      // $('#legend').slideUp(200);
-      $('.container').toggleClass('float-legend');
     });
 
     $('#more-nav .show-all').on('click', function (e) {
@@ -263,7 +255,7 @@ var artf = (function ($) {
     var svg = d3.select('#viz').append('svg')
       .attr('width', VIZ_WIDTH)
       .append('g')
-      .classed('viz-area', true)
+      .classed('viz-svg', true)
       .attr('transform', 'translate(' + VIZ_MARGINS.left + ',' + VIZ_MARGINS.top + ')');
 
     // If we don't have any data, display a notice
@@ -323,7 +315,7 @@ var artf = (function ($) {
 
     // Determine maximum number to show.
     // Either a parameter limit, or all
-    console.log(params.limit)
+//    console.log(params.limit)
     var vizLimit = (params.limit) ? params.limit : data.length;
 
     $('#more-nav').hide();
@@ -344,8 +336,6 @@ var artf = (function ($) {
 
       if (!data[j]) break;
       else var indicator = data[j];
-
-      console.log(indicator);
 
       // Vertical position of indicator
       var yPos = (j + 1) * VIZ_ROW_SPACING - 10; // Offset closer to year line
@@ -601,7 +591,7 @@ var artf = (function ($) {
     // * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
     // Get the maximum height of the visualization area
-    var vizHeight = document.querySelector('.viz-area').getBoundingClientRect().height;
+    var vizHeight = document.querySelector('.viz-svg').getBoundingClientRect().height;
 
     // Set this height on the SVG element
     $('#viz').css('height', vizHeight);
@@ -610,29 +600,29 @@ var artf = (function ($) {
     var gToday = svg.append('g').attr('class', 'today');
 
     var todayYStart  = -30,
-      todayYEnd    = vizHeight - 30,
-      todayYHeight = todayYEnd - todayYStart
+        todayYEnd    = vizHeight - 30,
+        todayYHeight = todayYEnd - todayYStart
 
     // Create the today line
     var today     = new Date(),
-      todayRounded = _roundDateToHalfYear(today),
-      todayXPos = VIZ_LABEL_AREA_WIDTH + xScale(todayRounded),
-      todayLine = gToday.selectAll('line')
-        .data([today])
-        .enter()
-        .append('line')
-        .attr('x1', todayXPos)
-        .attr('x2', todayXPos)
-        .attr('y1', todayYStart)
-        .attr('y2', todayYEnd); // TODO: Don't hardcode the end point
+        todayRounded = _roundDateToHalfYear(today),
+        todayXPos = VIZ_LABEL_AREA_WIDTH + xScale(todayRounded),
+        todayLine = gToday.selectAll('line')
+          .data([today])
+          .enter()
+          .append('line')
+          .attr('x1', todayXPos)
+          .attr('x2', todayXPos)
+          .attr('y1', todayYStart)
+          .attr('y2', todayYEnd);
 
     // Add a label for the indicator that appears on hover
     var todayLabel = gToday.append('text')
-      .attr('x', todayXPos)
-      .attr('y', -4)
-      .attr('text-anchor', 'middle')
-      .text('Now')
-      .classed('label-today', true);
+          .attr('x', todayXPos)
+          .attr('y', -4)
+          .attr('text-anchor', 'middle')
+          .text('Now')
+          .classed('label-today', true);
 
     // * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
@@ -743,6 +733,60 @@ var artf = (function ($) {
     return data;
   }
 
+  // Remove all measurements that fail to have a parseable numerical
+  // value or a parseable date.
+  function _rejectUnusableResults (results) {
+    return _.reject(results, function (row) {
+      return (!_.isNaN(parseFloat(row.value)) && moment(row.value_date).isValid())
+    });
+  }
+
+  // Select the correct baseline date and value
+  function _getResultsBaseline (results) {
+    var baseline,
+        compared,
+        candidates = _.where(results, {value_type: 'Baseline'});
+
+    // Per Hari instructions (6/25/2014 @4:14 PM)
+    // Pick the earliest date from the value date column for that indicator
+    for (var i = 0; i < candidates.length; i++) {
+      if (!compared || moment(candidates[i].value_date).isBefore(compared)) {
+        compared = candidates[i].value_date
+        baseline = candidates[i]
+      }
+    }
+
+    return baseline;
+  }
+
+  // Select the correct target date and value
+  function _getResultsTarget (results) {
+    var target,
+        compared,
+        candidates = _.where(results, {value_type: 'End Target'});
+
+    // Per Hari instructions (6/25/2014 @4:14 PM)
+    // Pick the value date that corresponds to the latest ISR date
+    for (var i = 0; i < candidates.length; i++) {
+      if (!compared || moment(compared).isBefore(candidates[i].isrr_date)) {
+        compared = candidates[i].isrr_date
+        target = candidates[i]
+      }
+    }
+
+    return target;
+  }
+
+  // Select all results for current measurements
+  function _getResultsCurrentMeasurements (results) {
+    // Per Hari instructions (6/25/2014 @4:14 PM)
+    // Plot all values reported between baseline and target
+
+    // Rather than select the "between" values here,
+    // we will make this decision later.
+    return _.where(results, {value_type: 'Current'});
+  }
+
   // Format and transform measurements to make them useful for the visualization
   function _transformMeasurement (measurement) {
     measurement.date          = new Date(measurement.value_date);
@@ -843,10 +887,12 @@ var artf = (function ($) {
   function _getProgress (indicator) {
     /*
     Progress codes
-    // NEW SCHEMA
+    Per Ditte feedback
+    red: 0-30%, yellow: 31-70% and green 71-100%
     [0] Unknown / no data - GRAY
     [1] Target not reached, off-track - RED
     [2] Target reached, on-track - GREEN
+    [3] Target in the middle - YELLOW
     */
 
     // If there are no measurements, we can't tell what the progress is.
@@ -856,15 +902,15 @@ var artf = (function ($) {
     }
 
     var baseline     = indicator.baseline,
-      target       = indicator.target,
-      measurements = indicator.measurements,
-      subtargets   = indicator.subtargets,
-      latest       = _getLatestDatum(measurements),
-      today        = new Date();
+        target       = indicator.target,
+        measurements = indicator.measurements,
+        subtargets   = indicator.subtargets,
+        latest       = _getLatestDatum(measurements),
+        today        = new Date();
 
     // via Hackpad
     // Take the latest measurement
-    // Is it below or above 75% of where it should be on that date
+    // Is it below or above 70% of where it should be on that date
     // according to a linear progression between the baseline
     // and the target?
 
@@ -888,10 +934,12 @@ var artf = (function ($) {
     if (!subgoal) return 0;
 
     var idealDiff = Math.abs(subgoal.value - baseline.value),
-      actualDiff = Math.abs(latest.value - baseline.value);
+        actualDiff = Math.abs(latest.value - baseline.value);
 
-    if (actualDiff >= 0.75 * idealDiff) {
+    if (actualDiff > 0.70 * idealDiff) {
       return 2;
+    } else if (actualDiff > 0.30 * idealDiff) {
+      return 3;
     } else {
       return 1;
     }
@@ -918,8 +966,8 @@ var artf = (function ($) {
   // Figure out what the projected value is
   function _getProjectedValue (indicator) {
     var latest   = _getLatestDatum(indicator.measurements),
-      baseline = indicator.baseline,
-      target   = indicator.target;
+        baseline = indicator.baseline,
+        target   = indicator.target;
 
     // Difference between the latest and baseline values
     // Divided by time interval to get a rate of change

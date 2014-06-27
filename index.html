@@ -5,74 +5,97 @@
 </head>
 <body>
 
-  <div class='container float-legend'>
+  <div class='container'>
     <div id='header'>
       <h2>ARTF indicator visualization</h2>
     </div>
-    <div id='filters'>
-      <form id='filter'>
-        <h3>Filter by</h3>
-        <div class='row'>
-          <div class='column'>
-            <label for='filter-status'>Status</label>
-            <select id='filter-status' data-field='project_status'>
-              <option value='' default>(all projects)</option>
-            </select>
+
+    <div class='info-box'>
+
+      <div id='filters'>
+        <form id='filter'>
+          <div class='row'>
+            <div class='column'>
+              <h3>Filter by</h3>
+            </div>
+            <div class='column'>
+              <label for='filter-status'>Status</label>
+              <select id='filter-status' data-field='project_status'>
+                <option value='' default>(all projects)</option>
+              </select>
+            </div>
+            <div class='column'>
+              <label for='filter-sector'>Sector</label>
+              <select id='filter-sector' data-field='sector'>
+                <option value='' default>(all sectors)</option>
+              </select>
+            </div>
+            <div class='column'>
+              <label for='filter-project_name'>Project</label>
+              <select id='filter-project_name' data-field='project_name'>
+                <option value='' default>(all projects)</option>
+              </select>
+            </div>
+            <div class='column reset-container'>
+              <button type='reset' id='filter-reset'>Clear filters</button>
+            </div>
           </div>
-          <div class='column'>
-            <label for='filter-sector'>Sector</label>
-            <select id='filter-sector' data-field='sector'>
-              <option value='' default>(all sectors)</option>
-            </select>
+        </form>
+      </div>
+
+      <div id='legend'>
+        <h3>Legend</h3>
+        <div class='legend-items'>
+          <div class='legend-column'>
+            <div class='legend-item legend-item-baseline'><span>Baseline measurement</span></div>
+            <div class='legend-item legend-item-projected'><span>Projected measurement</span></div>
           </div>
-          <div class='column'>
-            <label for='filter-project_name'>Project</label>
-            <select id='filter-project_name' data-field='project_name'>
-              <option value='' default>(all projects)</option>
-            </select>
+          <div class='legend-column'>
+            <div class='legend-item legend-item-target'><span>Target goal</span></div>
+            <div class='legend-item legend-item-measure'><span>Actual measurement</span></div>
           </div>
-          <div class='column reset-container'>
-            <button type='reset' id='filter-reset'>Clear filters</button>
+          <div class='legend-column'>
+            <div class='legend-item legend-item-future'><span>Difference between measured and projected value</span></div>
           </div>
         </div>
-      </form>
+        <div class='legend-items'>
+          <div class='legend-column'>
+            <div class='legend-item legend-item-on'><span>Indicator on-track</span></div>
+          </div>
+          <div class='legend-column'>
+            <div class='legend-item legend-item-off'><span>Indicator off-track</span></div>
+          </div>
+          <div class='legend-column'>
+            <div class='legend-item legend-item-meh'><span>Indicator in progress</span></div>
+          </div>
+        </div>
+      </div>
+
     </div>
-    <div id='viz'>
+
+    <div id='viz' class='viz-area'>
       <div id='loading'>
         <div class='three-quarters'>
           Loading...
         </div>
       </div>
     </div>
-    <div id='legend-container'>
-      <div id='hide-legend'><span title='hide legend'>×</a></div>
-      <div id='legend'>
-        <h3>Legend</h3>
-        <div class='legend-items'>
-          <div class='legend-column'>
-            <div class='legend-item legend-pos1'><span>Baseline measurement</span></div>
-            <div class='legend-item legend-pos2'><span>Projected measurement</span></div>
-          </div>
-          <div class='legend-column'>
-            <div class='legend-item legend-pos3'><span>Target goal</span></div>
-            <div class='legend-item legend-pos4'><span>Actual measurement</span></div>
-          </div>
-          <div class='legend-column'>
-            <div class='legend-item legend-pos5'><span>Difference between measured and projected value</span></div>
-          </div>
+
+    <div id='legend-container' class='float-container info-box'>
+      <span title='hide legend'>×</a>
+      <div id='info'>
+        <h2 id='info-title'>More information</h2>
+        <div id='info-metadata'></div>
+        <div id='info-description'>
+          <p>Select an indicator to learn more.</p>
         </div>
       </div>
     </div>
+
     <div id='more-nav'>
       <p>Showing <span class='page-limit'>0</span> of <span class='indicator-count'>100</span> indicators. <a href='#' class='show-all'>Show all indicators in this filter.</a></p>
     </div>
-    <div id='info'>
-      <h2 id='info-title'>More information</h2>
-      <div id='info-metadata'></div>
-      <div id='info-description'>
-        <p>Select an indicator to learn more.</p>
-      </div>
-    </div>
+
   </div>
 
   <div id='debug'>

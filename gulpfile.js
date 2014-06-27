@@ -18,3 +18,11 @@ gulp.task('css', function () {
     .pipe(debug({ verbose: false }))
     .pipe(gulp.dest('./css'));
 });
+
+gulp.task('watch', function () {
+  // Test: Watcher only exists in this task
+  var watcher = gulp.watch('./stylesheets/**/*.scss', ['css']);
+  watcher.on('change', function (event) {
+    console.log('File ' + event.path + ' was ' + event.type + ', running tasks...');
+  });
+});
