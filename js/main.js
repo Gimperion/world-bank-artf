@@ -136,16 +136,7 @@ var artf = (function ($) {
     $('#loading').hide();
 
     // Get dropdown options for the filters
-    for (var i = 0; i < FILTER_FIELDS.length; i++) {
-      var field   = FILTER_FIELDS[i];
-      var entries = _getEntriesForFilter(data, FILTER_FIELDS[i]);
-
-      // Populate dropdowns with options
-      for (var j = 0; j < entries.length; j++) {
-        if (_.isUndefined(entries[j]) === true) continue;
-        $('select[data-field=' + field +']').append('<option value="' + entries[j] + '">' + entries[j] + '</option>');
-      }
-    }
+    _createDropdowns(data);
 
     // Default behaviors
     /*
@@ -186,6 +177,39 @@ var artf = (function ($) {
       // Redraw visualization
       createViz(data);
     });
+
+    // Filter behavior for sector - only display qualifying projects
+    $('#filter-sector').on('change', function (e) {
+      var selected = $('#filter-sector').val();
+      var status = $('#filter-status').val();
+      var $projectFilter = $('#filter-project_name');
+      var remember = $projectFilter.val();
+
+      if ($(this).val() !== '') {
+        var temp = _.where(data, {sector: selected, project_status: status });
+      } else {
+        var temp = data;
+      }
+      var projectSelections = _getEntriesForFilter(temp, 'project_name');
+
+      $projectFilter.empty();
+      $projectFilter.append('<option value=\'\' default>(all)</option>');
+      // Populate dropdowns with options
+      for (var j = 0; j < projectSelections.length; j++) {
+        if (_.isUndefined(projectSelections[j]) === true) continue;
+        $projectFilter.append('<option value="' + projectSelections[j] + '">' + projectSelections[j] + '</option>');
+      }
+
+      var options = $.map($('#filter-project_name option'), function(option) { return option.value; });
+      if (_.contains(options, remember)) {
+        $projectFilter.val(remember);
+      } else {
+        $projectFilter.val('');
+      }
+      // Seem to have to do this because sometimes when it resets it does
+      // not actually redraw the thing.
+      createViz(data);
+    })
 
     // Resets visualization
     $('#filter-reset').on('click', function (e) {
@@ -743,6 +767,28 @@ var artf = (function ($) {
   }
 
   // UTILITY FUNCTIONS
+
+  function _createDropdowns (data) {
+
+    for (var i = 0; i < FILTER_FIELDS.length; i++) {
+      var field   = FILTER_FIELDS[i];
+      var entries = _getEntriesForFilter(data, FILTER_FIELDS[i]);
+      var $select = $('select[data-field=' + field +']');
+
+      // Reset select
+      $select.empty();
+
+      // Add "all" option
+      $select.append('<option value=\'\' default>(all)</option>');
+                
+      // Populate dropdowns with options
+      for (var j = 0; j < entries.length; j++) {
+        if (_.isUndefined(entries[j]) === true) continue;
+        $select.append('<option value="' + entries[j] + '">' + entries[j] + '</option>');
+      }
+    }
+
+  }
 
   // Parse dates and values from database API response
   function _parseData (data) {
