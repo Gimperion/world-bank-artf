@@ -32,7 +32,7 @@ label {
 
 select {
   margin-left: 0;
-  max-width: 200px;
+  max-width: 160px;
 }
 
 div {
@@ -66,7 +66,6 @@ body {
 }
 
 .row {
-  margin-bottom: 10px;
 }
 
 .column {
@@ -81,7 +80,7 @@ body {
   border: 1px solid lightgray;
   overflow: hidden;
   & > div {
-    padding: 4px 12px 4px;
+    padding: 6px 12px;
   }
   & > div:not(:first-of-type) {
     border-top: 1px solid lightgray;

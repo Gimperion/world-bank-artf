@@ -546,7 +546,7 @@ var artf = (function ($) {
         .attr('text-anchor', 'middle')
         .attr('class', 'hidden label label-baseline')
         .style('fill', colors.baselineLabel)
-        .text(function (d) { return d.displayValue; })
+        .text(function (d) { return d.displayValue; });
 
       // Measurement labels.
       measurementLabel
@@ -557,7 +557,18 @@ var artf = (function ($) {
         .attr('text-anchor', 'middle')
         .attr('class', 'hidden label label-measure')
         .style('fill', colors.measureLabel)
-        .text(function (d) { return d.displayValue; })
+//        .text(function (d) { return d.displayValue; })
+        .text(function (d) {
+          var prefix = d3.formatPrefix(d.value, 2);
+          var scaled = prefix.scale(d.value);
+          if (prefix.symbol) {
+            var convert = d3.format(',.2r');
+          } else {
+            var convert = d3.format(',3');
+          }
+
+          return convert(scaled) + prefix.symbol;
+        })
 
       // Target labels
       targetLabel
@@ -568,7 +579,7 @@ var artf = (function ($) {
         .attr('text-anchor', 'middle')
         .attr('class', 'hidden label label-target')
         .style('fill', colors.targetLabel)
-        .text(function (d) { return d.displayValue; })
+        .text(function (d) { return d.displayValue; });
 
       // Progress indicator
       /*
@@ -971,6 +982,14 @@ var artf = (function ($) {
     // Momentarily catch this
     if (latest.value === 0) return 0;
 
+    // Catch when the latest value is actually lower than the baseline
+    // (or viceversa for decreasing targets)
+    if ((indicator.targetIsIncreasing === true && latest.value < baseline.value) ||
+    (indicator.targetIsIncreasing === false && latest.value > baseline.value)) {
+      return 1; //(this is bad)
+    }
+
+    // Assumes that the latest value is progressing in the same direction
     var idealDiff = Math.abs(subgoal.value - baseline.value),
         actualDiff = Math.abs(latest.value - baseline.value);
 
