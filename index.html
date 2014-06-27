@@ -46,30 +46,41 @@
       <div id='legend'>
         <span id='hide-legend' title='hide legend' class='hide-button'>×</span>
         <h3>Legend</h3>
-        <div class='legend-items'>
-          <div class='legend-column'>
-            <div class='legend-item legend-item-baseline'><span>Baseline measurement</span></div>
-            <div class='legend-item legend-item-projected'><span>Projected measurement</span></div>
-          </div>
-          <div class='legend-column'>
-            <div class='legend-item legend-item-target'><span>Target goal</span></div>
-            <div class='legend-item legend-item-measure'><span>Actual measurement</span></div>
-          </div>
-          <div class='legend-column'>
-            <div class='legend-item legend-item-future'><span>Difference between measured and projected value</span></div>
-          </div>
-        </div>
-        <div class='legend-items'>
-          <div class='legend-column'>
-            <div class='legend-item legend-item-on'><span>Indicator on-track</span></div>
-          </div>
-          <div class='legend-column'>
-            <div class='legend-item legend-item-off'><span>Indicator off-track</span></div>
-          </div>
-          <div class='legend-column'>
-            <div class='legend-item legend-item-meh'><span>Indicator in progress</span></div>
-          </div>
-        </div>
+
+        <table class='legend-items'>
+          <tbody>
+            <tr>
+              <td>
+                <div class='legend-item legend-item-baseline'><span>Baseline measurement</span></div>
+              </td>
+              <td>
+                <div class='legend-item legend-item-target'><span>Target goal</span></div>
+              </td>
+              <td>
+                <div class='legend-item legend-item-on'><span>Indicator on-track</span></div>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <div class='legend-item legend-item-projected'><span>Projected measurement</span></div>
+              </td>
+              <td>
+                <div class='legend-item legend-item-measure'><span>Actual measurement</span></div>
+              </td>
+              <td>
+                <div class='legend-item legend-item-meh'><span>Indicator in progress</span></div>
+              </td>
+            </tr>
+            <tr>
+              <td colspan='2'>
+                <div class='legend-item legend-item-future'><span>Difference between measured and projected value</span></div>
+              </td>
+              <td>
+                <div class='legend-item legend-item-off'><span>Indicator off-track</span></div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </div>
 
     </div>
