@@ -494,13 +494,19 @@ var artf = (function ($) {
       // Latest measurement circle
       latestCircle
         .attr('cx', function (d, i) {
+
+          // Note: Commenting out the logic to only show if the target
+          // is in the future. Now a projected value will always display.
+          // However, indicators with past targets will have provided a
+          // fast-forwared latest measurement value rather than projecting out.
+
           // Only display if the target is in the future.
-          if (indicator.target.dateRounded >= _roundDateToHalfYear(new Date())) {
+          //if (indicator.target.dateRounded >= _roundDateToHalfYear(new Date())) {
             return VIZ_LABEL_AREA_WIDTH + xScale(indicator.target.dateRounded);
-          } else {
+          //} else {
             // If hidden, just move it way off the page
-            return -1000;
-          }
+          //  return -1000;
+          //}
         })
         .attr('cy', yPos)
         .attr('r', function (d) {
