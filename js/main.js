@@ -154,7 +154,7 @@ var artf = (function ($) {
     }
     */
     if (!params.limit && params.clear !== true) {
-      //params.limit = 5;
+      params.limit = 5;
     }
 
     // TODO: Update params in query string
@@ -192,11 +192,28 @@ var artf = (function ($) {
       createViz(data);
     });
 
-    // Hide legend
+    // Set up show/hide legend button
     $('#hide-legend').on('click', function (e) {
-      $('#legend-container').toggleClass('hide');
+      if ($('#hide-legend').hasClass('hide')) {
+        $('.legend-items').show();
+        $('#hide-legend').removeClass('hide');
+      } else {
+        $('.legend-items').hide();
+        $('#hide-legend').addClass('hide');        
+      }
     });
 
+    // Set up hide more info button
+    $('#hide-more-info').on('click', function (e) {
+      $('#more-info').hide();
+      $('body').css({marginBottom: 0});
+    });
+
+    // Set a body bottom margin to account for more info box
+    var extraMargin = $('#more-info').height() + 40;
+    $('body').css({marginBottom: extraMargin});
+
+    // Set up 'show all' link
     $('#more-nav .show-all').on('click', function (e) {
       e.preventDefault();
       params.limit = 0;
@@ -693,7 +710,12 @@ var artf = (function ($) {
 
       var description = (indicator.indicator_description) ? indicator.indicator_description : 'No description provided.';
       $('#info-description').append('<p>' + description + '</p>');
-      $('#info-description').append('<p><a href="#">View the raw data behind this indicator.</a></p>');
+// Removed because raw data sits underneath the iframe
+//      $('#info-description').append('<p><a href="http://finances.worldbank.org/d/7ycu-8b2d/">View the raw data behind this indicator.</a></p>');
+
+      $('#more-info').show();
+      var extraMargin = $('#more-info').height() + 40;
+      $('body').css({marginBottom: extraMargin});
     }
 
   }
