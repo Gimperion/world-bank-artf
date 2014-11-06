@@ -48,7 +48,8 @@ var artf = (function ($) {
   // These are data fields / columns to filter on.
   // The filter dropdowns are automatically generated,
   // but you will have to add the selects yourself.
-  var FILTER_FIELDS           = ['project_status', 'project_name', 'sector'];
+  // var FILTER_FIELDS           = ['project_status', 'project_name', 'sector'];
+  var FILTER_FIELDS           = ['project_name', 'sector'];
 
   // Set visualization options.
   var VIZ_MARGINS             = {top: 25, right: 20, bottom: 0, left: 0},
@@ -749,7 +750,7 @@ var artf = (function ($) {
       var indicator = _.findWhere(data, { indicator_name: title });
       console.log(indicator);
       $('#info-metadata').append('<strong>Project:</strong> ' + indicator.project_id + ' &mdash; ' + indicator.project_name + '<br>');
-      $('#info-metadata').append('<strong>Status:</strong> ' + indicator.project_status + '<br>');
+      // $('#info-metadata').append('<strong>Status:</strong> ' + indicator.project_status + '<br>');
       $('#info-metadata').append('<strong>Baseline measurement:</strong> ' + indicator.baseline.displayString + '<br>');
       $('#info-metadata').append('<strong>Target goal:</strong> ' + indicator.target.displayString + '<br>');
       $('#info-metadata').append('<strong>Progress gauge:</strong> ' + indicator.progressText + '<br>');
