@@ -145,16 +145,16 @@ var artf = (function ($) {
       params.sector = 'Agriculture';
     }
     */
-    if (!params.status && params.clear !== true) {
-      params.status = 'Active';
-    }
+    // if (!params.status && params.clear !== true) {
+      // params.status = 'Active';
+    // }
     if (!params.limit && params.clear !== true) {
       params.limit = 5;
     }
 
     // TODO: Update params in query string
     $('#filter-sector').val(params.sector);
-    $('#filter-status').val(params.status);
+    // $('#filter-status').val(params.status);
 
     // Create SVG viz
     createViz(data);
@@ -182,12 +182,12 @@ var artf = (function ($) {
     // Filter behavior for sector - only display qualifying projects
     $('#filter-sector').on('change', function (e) {
       var selected = $('#filter-sector').val();
-      var status = $('#filter-status').val();
+      // var status = $('#filter-status').val();
       var $projectFilter = $('#filter-project_name');
       var remember = $projectFilter.val();
 
       if ($(this).val() !== '') {
-        var temp = _.where(data, {sector: selected, project_status: status });
+        var temp = _.where(data, {sector: selected});
       } else {
         var temp = data;
       }
